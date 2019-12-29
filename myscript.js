@@ -95,7 +95,7 @@ function showAll(){
 
 
  // I only have this to test when things break
-const container = document.querySelector('#container');
-const content = document.createElement('div');
-content.textContent = 'This is here for test purposes';
-container.appendChild(content);
+// const container = document.querySelector('#container');
+// const content = document.createElement('div');
+// content.textContent = 'This is here for test purposes';
+// container.appendChild(content);
