@@ -8,9 +8,9 @@ const assert = require('assert')
 let Schema=mongoose.Schema;
 
 let WordScehmaJLPT= new Schema({
-    name:{type:String,required:false, unique:true},
+    name:{type:String,required:false},
     English:{type:String,required:false},
-    Kanji:{type:String,required:false},
+    Kanji:{type:String,required:false, unique:true},
     Hiragana:{type:String,required:false},
     nLevel:{type:String, required:false, min:1, max:5},
     length:Number
@@ -53,4 +53,7 @@ saveItem=(item)=>{
             }
         })
 };
-saveItem(test);
+//saveItem(test);
+findItem=(item)=>{
+    N1.find({name:"Test4"})
+}
