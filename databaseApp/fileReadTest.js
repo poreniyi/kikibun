@@ -1,4 +1,5 @@
 let fs=require('fs')
+let N5=require  ('./dataApp');
 //let myReadStream=fs.createReadStream(__dirname+"/JLPT:5.txt",'utf8');
 let myReadStream=fs.createReadStream(__dirname+"/lesson:1.txt",'utf8');
 
@@ -26,7 +27,7 @@ let function2=()=>{
         let english='';
         let kanji='';
         let length='';
-        if(line[2]===undefined){
+        if(line[2]===undefined || line[2]=="none"){
             kanji='none';
             english=line[1];
             length=line[1].length;
@@ -35,16 +36,18 @@ let function2=()=>{
             kanji=line[1];
             length=kanji.length;
         }
-        databaseArray.push(
-        {name:line[1],
+        let currentWord={
         English:english,
         Kanji:kanji,
         Hiragana:line[0],
-        nLevel:5,
-        length:length}
-        );
+        length:length,
+        chapter:1
+        }
+        N5.create(currentWord).then(function(data){
+            console.log(data);
+        });
     }
-    console.log(databaseArray);
+    //console.log(databaseArray);
 }
 
 streamFunction(myReadStream);
