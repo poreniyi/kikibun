@@ -27,7 +27,8 @@ let Genki=mongoose.model("Genki",WordScehmaGenki);
 let JLPT=mongoose.model('JLPT Word',WordScehmaJLPT);
 
 let N5=mongoose.model('N2',WordScehmaJLPT);
+module.exports  ={
+    Genki:Genki,
+    JLPT:JLPT,
+}
 
-module.exports=N5;
-module.exports=Genki;
-module.exports=JLPT;
