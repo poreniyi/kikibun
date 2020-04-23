@@ -1,10 +1,10 @@
 const mongoose=require('mongoose');
-const mongoDB='mongodb+srv://admin:specialpass@cluster0-2tj27.mongodb.net/test?retryWrites=true&w=majority';
 const unqieValidator=require('mongoose-unique-validator');
+
+const mongoDB='mongodb+srv://admin:specialpass@cluster0-2tj27.mongodb.net/test?retryWrites=true&w=majority';
 mongoose.connect(mongoDB, {useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true }).then(res => console.log('Connected to Database'));
 const db=mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-const assert = require('assert')
 let Schema=mongoose.Schema;
 
 let WordScehmaJLPT= new Schema({
@@ -29,22 +29,22 @@ let WordScehmaGenki= new Schema({
 
 let N1=mongoose.model('N1',WordScehmaJLPT);
 let N2=mongoose.model('N2',WordScehmaJLPT);
+let N3=mongoose.model('N1',WordScehmaJLPT);
+let N4=mongoose.model('N2',WordScehmaJLPT);
+let N5=mongoose.model('N2',WordScehmaJLPT);
 
-let test=new N1({
-    name:"Test4",
+
+let test={
+    name:"Wa",
     English:"Test field English",
-    Kanji:"Some kanji",
-    Hiragana:"Some kana",
+    Kanji:"犬",
+    Hiragana:"いぬ",
     nLevel:5,
     length:"20",
-});
-// test.save(function (err){
-//     if (err) return handlError(err);
-//     else{
-//         console.log("Item saved");
-//     }
-// });
-
+};
+// N5.create(test).then(function(word){
+//     console.log(word);
+// })
 saveItem=(item)=>{
         N1(item).save(function(err){
             if(err) console.log(err);
@@ -53,7 +53,5 @@ saveItem=(item)=>{
             }
         })
 };
-//saveItem(test);
-findItem=(item)=>{
-    N1.find({name:"Test4"})
-}
+
+module.exports=N5;

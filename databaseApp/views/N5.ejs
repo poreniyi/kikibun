@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>N5 Vocab</title>
 </head>
 <body>
-    <p>
-        View engine ABCD
-    </p>
-    <h1><%=data.text %></h1>
-    <h2> N<%=data.NLVL %></h2>
-    <h3>Genki Chapter:<%=data.Genki %></h3>
     <ul>
-        
+        <% data.forEach(function(item){%>
+                <li>
+                    <%= item.Kanji%>
+                </li>
+       <% }); %>
     </ul>
 </body>
 </html>
