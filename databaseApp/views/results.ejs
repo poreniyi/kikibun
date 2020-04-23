@@ -9,11 +9,17 @@
     <p>
         View engine ABCD
     </p>
-    <h1><%=data.text %></h1>
-    <h2> N<%=data.NLVL %></h2>
-    <h3>Genki Chapter:<%=data.Genki %></h3>
+    <h1><%=data.Kanji %></h1>
+    <h2><%=data.English %></h2>
+    <h3><%=data.Hiragna %></h3>
+    <h4><%=data %></h4>
+
     <ul>
-        
+        <% data.forEach(function(item){%>
+                <li>
+                    <%= item.Kanji%>
+                </li>
+       <% }); %>
     </ul>
 </body>
 </html>
