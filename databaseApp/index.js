@@ -9,7 +9,7 @@ const db=mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 
-const  routes=require("./routes")
+const  routes=require("./routes");
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(routes);

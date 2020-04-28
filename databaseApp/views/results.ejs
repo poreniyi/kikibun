@@ -7,19 +7,18 @@
 </head>
 <body>
     <p>
-        View engine ABCD
+        Results View
     </p>
-    <h1><%=data.Kanji %></h1>
-    <h2><%=data.English %></h2>
-    <h3><%=data.Hiragna %></h3>
-    <h4><%=data %></h4>
+    <p>
+        Length is:<%=data.length%>
+        And the data is
+        <%=data%>
+
+    </p>
+   
 
     <ul>
-        <% data.forEach(function(item){%>
-                <li>
-                    <%= item.Kanji%>
-                </li>
-       <% }); %>
+    
     </ul>
 </body>
 </html>
