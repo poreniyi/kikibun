@@ -2,7 +2,7 @@ const express=require('express');
 const router=express.Router();
 const N5=require("../databaseApp/dataApp");
 path = require('path')
-
+const Parser=require('../Parser/GenkiParser');
 const database=require("../databaseApp/dataApp");
 const Genki=database.Genki;
 const JLPT=database.JLPT;
@@ -15,7 +15,7 @@ router.post('/results.html',async(req,res)=>{
         try{
             let text=req.body.text;
             console.log(req.body);
-            let result = await myfunction(req.body.text);
+            let result = await Parser.Chapter1(req.body.text.trim());
             console.log("MY RESULT IS:" +result);
             res.render('results',{ data: result, originalSentence:text});
         }
