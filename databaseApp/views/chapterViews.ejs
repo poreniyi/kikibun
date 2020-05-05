@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../assets/chapterViewsStyles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N5 Vocab</title>
+</head>
+<body>
+    <form method="post">
+        <input type ="submit">
+        <table name="Table" id ="Happy">
+            <tr>
+                <th>Kanji</th>
+                <th>Hiragana</th>
+                <th>English</th>
+                <th>Part of Speech?</th>
+            </tr>
+        
+                 <% words.forEach(function(item){%>
+            <tr>
+                <%if(item.Kanji){%>
+                <td>
+                    <%= item.Kanji%>
+                </td>
+                <%}%>
+                <td>
+                    <%= item.Hiragana%>
+                </td>
+                
+                <td>
+                    <%= item.English%>
+                </td>
+                <td>
+                    <input type="hidden" id="postId" name="postId" value="">
+                    <select id="select">
+                        <option>Verb</option>
+                        <option>Noun</option>
+                        <option>Adjective</option>
+                        <option>Particle</option>
+                    </select>
+                  
+            </tr>
+         <% }); %>    
+        </table>
+    </form> 
+</body>
+</html>
