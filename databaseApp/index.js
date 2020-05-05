@@ -1,9 +1,9 @@
 var express=require('express');
 let app=express();
 const mongoose=require('mongoose');
-
+require('dotenv').config();
 let bodyParser=require('body-parser');
-const mongoDB='mongodb+srv://admin:specialpass@cluster0-2tj27.mongodb.net/test?retryWrites=true&w=majority';
+const mongoDB=process.env.URL;
 mongoose.connect(mongoDB, {useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true }).then(res => console.log('Connected to Database'));
 const db=mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
