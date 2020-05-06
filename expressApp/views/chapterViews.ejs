@@ -4,11 +4,20 @@
     <link rel="stylesheet" type="text/css" href="../assets/chapterViewsStyles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>N5 Vocab</title>
+    <title>
+        Genki Chapter:<%=chapter%> Vocab
+    </title>
 </head>
 <body>
     <form method="post">
-        <input type ="submit">
+        <input id="submitButton" class="Submit" type ="button" value="Submit Button">
+        <input type="submit">
+        <input id="None" class="A" type ="button" value="Show">
+        <input id="Adj" class="b" type ="button" value="Show Adjectives">
+        <input id="Verb" class="b" type ="button" value="Show Verbs">
+        <input id="Particle" class="b" type ="button" value="Show Particles">
+        <input id="Noun" class="b" type ="button" value="Show Nouns">
+
         <table name="Table" id ="Happy">
             <tr>
                 <th>Kanji</th>
@@ -18,9 +27,9 @@
             </tr>
         
                  <% words.forEach(function(item){%>
-            <tr>
+            <tr class="tr">
                 <%if(item.Kanji){%>
-                <td>
+                <td class='KanjiData'>
                     <%= item.Kanji%>
                 </td>
                 <%}%>
@@ -32,17 +41,22 @@
                     <%= item.English%>
                 </td>
                 <td>
-                    <input type="hidden" id="postId" name="postId" value="">
-                    <select id="select">
-                        <option>Verb</option>
-                        <option>Noun</option>
-                        <option>Adjective</option>
-                        <option>Particle</option>
+                    <select class="select">
+                        <option value="None">POS?</option>
+                        <option value="Verb">Verb</option>
+                        <option value="Noun">Noun</option>
+                        <option value="Adjective">Adjective</option>
+                        <option value="Particle">Particle</option>
+                        <input type="hidden" name="POS" value="">
+                        <input type="hidden" name="hasBeenChanged" value="False">
+                        <input type="hidden" name="Kanji" value=  <%=item._id%>   >
                     </select>
+                    
                   
             </tr>
          <% }); %>    
         </table>
     </form> 
+    <script src="../../assets/ChapterViews.js"></script>
 </body>
 </html>
