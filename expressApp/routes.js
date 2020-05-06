@@ -8,7 +8,6 @@ const Genki=database.Genki;
 const JLPT=database.JLPT;
 
 router.get('/',function(req,res){
-    //res.sendFile(__dirname , "../HtmlFiles/index.html");
     res.sendFile(path.join(__dirname, '..', 'HtmlFiles', 'index.html'));
 });
 router.post('/results.html',async(req,res)=>{
@@ -24,30 +23,20 @@ router.post('/results.html',async(req,res)=>{
         }
 });
 
+router.get("/GenkiVocabList",async(req,res)=>{
+    let data= await Genki.find({});
+    console.log(req.query);
+    res.render('chapterViews',{
+        chapter:req.query.chapter,
+        words:data});
+});
 
-myfunction= async (string)=>{
-    let wordArray=[];
-    let index=0;
-    let result=[]
-    const regex = /.+は.+です/gm;
-    if (regex.test(string)){
-        console.log("passed test");
-       let split=string.split('は');
-        split[0]=split[0];
-        split[1]=split[1].slice(0,-2);
-        const DB= await Genki.find({});
-        const data=DB.filter((item)=>{
-                return split.includes(item.Kanji);
-        })
-       return   data;
-    }else{;
-        return [];
-    }
-};
+router.post("/GenkiVocabList", (req,res)=>{
+    console.log(req.body.hasBeenChanged);
+    res.send("Results Sent");
+});
 
 
-
- 
 makeGenkiVocabRoutes= ()=>{
     for(let i=1;i<23;i++){
         let paths="/Chapter:";
