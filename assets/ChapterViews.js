@@ -3,14 +3,33 @@ let hiddenListPOS=document.getElementsByName("POS");
 let GenkiID=document.getElementsByName("Kanji");
 let changedStatus=[...document.getElementsByName("hasBeenChanged")];
 let submitButton=document.querySelector("#submitButton");
-console.log(submitButton.value);
+let pageForward=document.querySelector("#Page");
+let pageBack=document.querySelector("#PageBack");
 let tableForm=document.querySelector("form");
 
+pageBack.addEventListener('click', ()=>{
+    let url=window.location.href;
+    let urlSplit=url.split("page=");
+    urlSplit[1]=parseInt((urlSplit[1]));
+    urlSplit[1]--;
+    let newUrl=urlSplit.join("page=");
+    console.log(`The current url is ${window.location.href}`);
+    console.log(`The current urlSplit is: ${urlSplit[1]}`);
+    console.log(`The new url is: ${newUrl}`);
+    window.location=newUrl;
+})
+pageForward.addEventListener("click",()=>{
+    let url=window.location.href;
+    let urlSplit=url.split("page=");
+    urlSplit[1]=parseInt((urlSplit[1]));
+    urlSplit[1]++;
+    let newUrl=urlSplit.join("page=");
+    console.log(`The current url is ${window.location.href}`);
+    console.log(`The current urlSplit is: ${urlSplit[1]}`);
+    console.log(`The new url is: ${newUrl}`);
+    window.location=newUrl;
+});
 
-console.log(`changedStatus length is; ${changedStatus.length}`);
-console.log(changedStatus[0].value)
-console.log(`hiddenListPOS length is ${hiddenListPOS.length}`)
-console.log("Select length is"+selectList.length);
 submitButton.addEventListener("click",()=>{
     for(let i=0 ;i<selectList.length;i++){
                 if(selectList[i].value!="None"){
