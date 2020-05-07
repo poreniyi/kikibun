@@ -27,23 +27,24 @@ router.get("/GenkiVocabList",async(req,res)=>{
     let chapter = parseInt(req.query.chapter);
     let pageSize = 20;
     let page = parseInt(req.query.page)
-    let size = await Genki.estimatedDocumentCount({Chapter:chapter})
-    console.log(`The collection size is ${size}`);
      if(chapter<24 && chapter>0 &&page>0){
-        console.log(chapter)
+        let size = await Genki.estimatedDocumentCount({Chapter:chapter})
+        console.log(`The collection size is ${size}`);
+
         let max=pageSize*Math.floor(size/pageSize)+1;
         let overflow= size-max
                 console.log(`max is ${max}`);
         let totalDocs=pageSize*page;
         let data;
-        if(totalDocs>size){
-             data= await Genki.find({Chapter:chapter}).limit(overflow).skip(max);          
-        }else{
+        if(totalDocs>size&& page==max){
+            console.log(`page is ${req.query.page}`)
+             //data= await Genki.find({Chapter:chapter}).limit(overflow).skip(max);          
+        }else if(page>0 &&page<max){
+            console.log(`Max is:${max} and page is: ${page}`)
             let skipAmount=(page-1)*20;
              data= await Genki.find({Chapter:chapter}).limit(pageSize).skip(skipAmount);
         }
         if( data){
-            console.log(req.query);
             res.render('chapterViews',{
                 chapter:req.query.chapter,
                 words:data});
@@ -55,7 +56,10 @@ router.get("/GenkiVocabList",async(req,res)=>{
 
 router.post("/GenkiVocabList", (req,res)=>{
     console.log(req.body.hasBeenChanged);
-    res.send("Results Sent");
+    
+    res.send("Results Sent",{
+        data:,
+    });
 });
 
 
