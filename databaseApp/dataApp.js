@@ -18,9 +18,16 @@ let WordScehmaGenki= new Schema({
         Kanji:{type:String,required:false},
         Hiragana:{type:String,required:false},
         Chapter:{type:String, required:false, min:1, max:23},
-        length:Number
+        length:Number,
         }
 )
+WordScehmaGenki.add({
+  POs:{
+    type:String,
+    enum:['Particle','Noun','Verb','Adjedtive'],
+    required:false,
+  }
+});
 WordScehmaGenki.plugin(unqieValidator);
 
 let Genki=mongoose.model("Genki",WordScehmaGenki);
@@ -28,13 +35,7 @@ let JLPT=mongoose.model('JLPT Word',WordScehmaJLPT);
 
 let N5=mongoose.model('N2',WordScehmaJLPT);
 module.exports  ={
+    GenkiScehma:WordScehmaGenki,
     Genki:Genki,
     JLPT:JLPT,
 }
-WordScehmaGenki.set('toJSON', {
-    transform: (document, returnedObject) => {
-      returnedObject.id =  returnedObject._id.toString();
-      delete returnedObject._id;
-      delete returnedObject.__v;
-    },
-  });
