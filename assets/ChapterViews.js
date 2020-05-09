@@ -6,29 +6,41 @@ let submitButton=document.querySelector("#submitButton");
 let pageForward=document.querySelector("#Page");
 let pageBack=document.querySelector("#PageBack");
 let tableForm=document.querySelector("form");
+let pageButtons=[...document.querySelectorAll('.Pagebtn')];
 
-pageBack.addEventListener('click', ()=>{
-    let url=window.location.href;
-    let urlSplit=url.split("page=");
-    urlSplit[1]=parseInt((urlSplit[1]));
-    urlSplit[1]--;
-    let newUrl=urlSplit.join("page=");
-    console.log(`The current url is ${window.location.href}`);
-    console.log(`The current urlSplit is: ${urlSplit[1]}`);
-    console.log(`The new url is: ${newUrl}`);
-    window.location=newUrl;
+for(let i=0;i<selectList.length;i++){
+    let valuetoSwitchto=hiddenListPOS[i].value.trim();
+    switch(valuetoSwitchto){
+        case "Verb": 
+        break;
+        case "Noun": 
+        break;
+        case "Adjective": 
+        break;
+        case "Particle": 
+        selectList[i].options[0].text=`The original POS is: ${valuetoSwitchto}`;
+        break;
+    }
+}
+
+pageButtons.forEach(element=>{
+    element.addEventListener('click',()=>{
+        let url=window.location.href;
+        let urlSplit=url.split("page=");
+        urlSplit[1]=parseInt((urlSplit[1]));
+        if(element.value.includes("Next")){
+            urlSplit[1]++;
+        }else{
+            urlSplit[1]--;
+        }
+        let newUrl=urlSplit.join("page=");
+        console.log(`The current url is ${window.location.href}`);
+        console.log(`The current urlSplit is: ${urlSplit[1]}`);
+        console.log(`The new url is: ${newUrl}`);
+        window.location=newUrl;
+    })
 })
-pageForward.addEventListener("click",()=>{
-    let url=window.location.href;
-    let urlSplit=url.split("page=");
-    urlSplit[1]=parseInt((urlSplit[1]));
-    urlSplit[1]++;
-    let newUrl=urlSplit.join("page=");
-    console.log(`The current url is ${window.location.href}`);
-    console.log(`The current urlSplit is: ${urlSplit[1]}`);
-    console.log(`The new url is: ${newUrl}`);
-    window.location=newUrl;
-});
+
 
 submitButton.addEventListener("click",()=>{
     for(let i=0 ;i<selectList.length;i++){
@@ -40,6 +52,9 @@ submitButton.addEventListener("click",()=>{
     tableForm.submit();
 });
 
+/*
+to show POS
+*/
 
 // let buttons=document.querySelectorAll(".b");
 // let displayButton=document.querySelector(".A");
@@ -60,6 +75,7 @@ submitButton.addEventListener("click",()=>{
 //     })
 // });
 
+//show all
 // displayButton.addEventListener("click",()=>{
 //     table.forEach((tr)=>{
 //         if(displayButton.value==="Show"){
