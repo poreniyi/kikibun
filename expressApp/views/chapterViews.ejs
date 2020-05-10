@@ -11,8 +11,8 @@
 <body>
     <form method="post">
         <input id="submitButton" class="Submit" type ="button" value="Submit Button">
-        <input id="PageBack" type ="button" value="Previous Page">
-        <input id="Page" type ="button" value="Next Page">
+        <input id="PageBack" type ="button" class="Pagebtn" value="Previous Page">
+        <input id="Page" type ="button" class="Pagebtn" value="Next Page">
         <input id="None" class="A" type ="button" value="Show">
         <input id="Adj" class="b" type ="button" value="Show Adjectives">
         <input id="Verb" class="b" type ="button" value="Show Verbs">
@@ -41,18 +41,18 @@
                 <td>
                     <%= item.English%>
                 </td>
-                <td>
+                <td>    
                     <select class="select">
-                        <option value="None">POS?</option>
-                        <option value="Verb">Verb</option>
-                        <option value="Noun">Noun</option>
-                        <option value="Adjective">Adjective</option>
-                        <option value="Particle">Particle</option>
-                        <input type="hidden" name="POS" value="">
-                        <input type="hidden" name="hasBeenChanged" value="False">
-                        <input type="hidden" name="Kanji" value=  <%=item._id%>   >
-                    </select>
-                    
+                    <option value="None">PartOfSpeech?</option>
+                    <option value="Verb">Verb</option>
+                    <option value="Noun">Noun</option>
+                    <option value="Adjective">Adjective</option>
+                    <option value="Particle">Particle</option>
+                    <input type="hidden" name="POS" value=<%=item.POS%> >
+                    <input type="hidden" name="hasBeenChanged" value="False">
+                    <input type="hidden" name="Id" value=  <%=item._id%>   >
+                </select>
+                </td>    
                   
             </tr>
          <% }); %>    
