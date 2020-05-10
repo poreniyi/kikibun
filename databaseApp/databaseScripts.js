@@ -16,23 +16,31 @@ closeDB=async()=>{
     console.log("connection clossed");
   });
 }
-// GenkiScehma.add({
-//     POS:{
-//       type:String,
-//       enum:['Particle','Noun','Verb','Adjedtive'],
-//       required:false,
-//     }
-//   });
+
+//   GenkiScehma.path('Chapter',Number);
    updateThis=async(dbId,field,value)=>{
-    //  await Genki.updateOne({_id:dbId},
-    //   {food:value});
-    const doc=await Genki.findOneAndUpdate(
-      {_id:dbId},
-      {[field]:value},
-      {new:true},
-    );
-     console.log(`The Db object Hiragana is now: ${doc.Hiragana}`);
-     console.log(`The Db object is: ${doc}`);
+     await Genki.updateOne(
+       {_id : dbId},
+      {[field] : value});
+    // const doc=await Genki.findOneAndUpdate(
+    //   {_id:dbId},
+    //   {[field]:value},
+    //   {new:true},
+    // );
+    //  //console.log(`The Db object Hiragana is now: ${doc.Hiragana}`);
+    //  await console.log(`The Db object is: ${doc}`);
   }
-connectToDB();
- updateThis("5eb36b21661ebf416d33c9d1","Hiragana","HappyFightAreNice");
+
+  
+//connectToDB();
+console.log(`The path of POS is:${GenkiScehma.path('POS')}`);
+ //updateThis("5eb36b21661ebf416d33c9d1","Hiragana","Not Happy Feet");
+//updateThis("5eb36b21661ebf416d33c9d1","POS","Noun");
+updateAll=async()=>{
+  await Genki.updateMany({}, {Chapter:1});
+} 
+
+module.exports={
+  updateThis:updateThis,
+}
+//updateAll();

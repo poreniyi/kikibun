@@ -17,17 +17,19 @@ let WordScehmaGenki= new Schema({
         English:{type:String,required:false},
         Kanji:{type:String,required:false},
         Hiragana:{type:String,required:false},
-        Chapter:{type:String, required:false, min:1, max:23},
+        Chapter:{type:Number, required:false, min:1, max:23},
         length:Number,
         }
 )
 WordScehmaGenki.add({
-  POs:{
+  POS:{
     type:String,
-    enum:['Particle','Noun','Verb','Adjedtive'],
+    enum:['Particle','Noun','Verb','Adjective'],
     required:false,
   }
 });
+WordScehmaGenki.path('POS')
+
 WordScehmaGenki.plugin(unqieValidator);
 
 let Genki=mongoose.model("Genki",WordScehmaGenki);
