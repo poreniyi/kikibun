@@ -2,6 +2,7 @@ let selectList=document.querySelectorAll('.select');
 let hiddenListPOS=document.getElementsByName("POS");
 let GenkiID=document.getElementsByName("Kanji");
 let changedStatus=[...document.getElementsByName("hasBeenChanged")];
+let idList=[...document.getElementsByName("Id")];
 let submitButton=document.querySelector("#submitButton");
 let pageForward=document.querySelector("#Page");
 let pageBack=document.querySelector("#PageBack");
@@ -12,12 +13,19 @@ for(let i=0;i<selectList.length;i++){
     let valuetoSwitchto=hiddenListPOS[i].value.trim();
     switch(valuetoSwitchto){
         case "Verb": 
+        selectList[i].remove(1);
+        selectList[i].options[0].text=`The original POS is: ${valuetoSwitchto}`;
         break;
         case "Noun": 
+        selectList[i].remove(2);
+        selectList[i].options[0].text=`The original POS is: ${valuetoSwitchto}`;
         break;
-        case "Adjective": 
+        case "Adjective":
+        selectList[i].remove(3); 
+        selectList[i].options[0].text=`The original POS is: ${valuetoSwitchto}`;
         break;
         case "Particle": 
+        selectList[i].remove(4);
         selectList[i].options[0].text=`The original POS is: ${valuetoSwitchto}`;
         break;
     }
@@ -43,12 +51,21 @@ pageButtons.forEach(element=>{
 
 
 submitButton.addEventListener("click",()=>{
+    let xhr = new XMLHttpRequest(); 
+            let url = window.location.href; 
     for(let i=0 ;i<selectList.length;i++){
                 if(selectList[i].value!="None"){
-                    changedStatus[i].value="True";
+                    //git changedStatus[i].value="True";
                     hiddenListPOS[i].value=selectList[i].value
+         }else{
+             hiddenListPOS[i].value="";
+             idList="";
          }
     }
+    // xhr.open("POST", url, true); 
+    // var data = JSON.stringify({ "name": name.value, "email": email.value }); 
+
+    // xhr.send(data); 
     tableForm.submit();
 });
 
