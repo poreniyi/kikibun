@@ -7,6 +7,8 @@ const database=require("../databaseApp/dataApp");
 const Genki=database.Genki;
 const JLPT=database.JLPT;
 let dbScripts=require('../databaseApp/databaseScripts');
+const unqieValidator=require('mongoose-unique-validator');
+
 router.get('/',function(req,res){
     res.sendFile(path.join(__dirname, '..', 'HtmlFiles', 'index.html'));
 });
