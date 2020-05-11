@@ -4,9 +4,9 @@ const mongoose=require('mongoose');
 require('dotenv').config();
 let bodyParser=require('body-parser');
 const mongoDB=process.env.URL;
-console.log(`This is the DB url: ${mongoDB} and the type is: ${typeof mongoDB}`);
-// mongoose.connect(mongoDB, {useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true }).then(res => console.log('Connected to Database'));
-// const db=mongoose.connection;
+//console.log(`This is the DB url: ${mongoDB} and the type is: ${typeof mongoDB}`);
+mongoose.connect(mongoDB, {useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true }).then(res => console.log('Connected to Database'));
+const db=mongoose.connection;
 // db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 
