@@ -33,7 +33,7 @@ closeDB=async()=>{
 
   
 //connectToDB();
-console.log(`The path of POS is:${GenkiScehma.path('POS')}`);
+//console.log(`The path of POS is:${GenkiScehma.path('POS')}`);
  //updateThis("5eb36b21661ebf416d33c9d1","Hiragana","Not Happy Feet");
 //updateThis("5eb36b21661ebf416d33c9d1","POS","Noun");
 updateAll=async()=>{
