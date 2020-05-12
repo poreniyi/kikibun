@@ -14,7 +14,7 @@ const db=mongoose.connection;
 
 const  routes=require("./routes");
 app.set('view engine', 'ejs');
-//app.set('views',path.join(__dirname), './views' );
+app.set('views',path.join(__dirname), './views' );
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(routes);
 app.use('/assets',express.static('../assets'));
