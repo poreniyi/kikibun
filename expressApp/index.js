@@ -14,7 +14,7 @@ const db=mongoose.connection;
 
 const  routes=require("./routes");
 app.set('view engine', 'ejs');
-app.set('views',path.join(__dirname), 'views' );
+app.set('views',path.join(__dirname), './views' );
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(routes);
 app.use('/assets',express.static('../assets'));
@@ -22,6 +22,7 @@ app.use(function(err,req,res, next){
     res.status(422).send({ error: err.message});
 })
 
-app.listen(process.env.PORT || 3000,function(){
-    console.log("now listening for requests on port 3000")
+app.listen(3000 || process.env.PORT ,function(){
+    let port=(process.env.PORT || 3000);
+    console.log(`now listening for requests on port ${port}`);
 });
