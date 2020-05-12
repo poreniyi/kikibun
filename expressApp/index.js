@@ -2,6 +2,8 @@ var express=require('express');
 let app=express();
 const mongoose=require('mongoose');
 require('dotenv').config();
+path = require('path')
+
 let bodyParser=require('body-parser');
 const mongoDB=process.env.URL;
 //console.log(`This is the DB url: ${mongoDB} and the type is: ${typeof mongoDB}`);
@@ -12,6 +14,7 @@ const db=mongoose.connection;
 
 const  routes=require("./routes");
 app.set('view engine', 'ejs');
+app.set('views',path.join(__dirname), 'views' );
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(routes);
 app.use('/assets',express.static('../assets'));
