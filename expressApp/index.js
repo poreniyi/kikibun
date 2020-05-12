@@ -22,8 +22,8 @@ app.use(function(err,req,res, next){
     res.status(422).send({ error: err.message});
 })
 
-app.listen(3000 || process.env.PORT ,function(){
+app.listen(process.env.PORT||3000   ,function(){
     let port=(process.env.PORT || 3000);
-    //console.log(`now listening for requests on port ${port}`);
-    console.log(`now listening for requests`);
+    console.log(`now listening for requests on port ${port}`);
+    //console.log(`now listening for requests`);
 });
