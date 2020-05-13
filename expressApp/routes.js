@@ -9,8 +9,11 @@ const JLPT=database.JLPT;
 let dbScripts=require('../databaseApp/databaseScripts');
 const unqieValidator=require('mongoose-unique-validator');
 
+router.get('/About',function(req,res){
+    res.render("About");
+});
 router.get('/',function(req,res){
-    res.sendFile(path.join(__dirname, '..', 'HtmlFiles', 'index.html'));
+    res.render("Home");
 });
 router.post('/results.html',async(req,res)=>{
         try{
