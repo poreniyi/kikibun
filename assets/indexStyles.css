@@ -1,3 +1,7 @@
+* {
+  margin: 0;
+  padding: 0;
+  }
 body {
   background-color: lightblue;
 }
@@ -15,11 +19,13 @@ textarea:invalid {
 }
 
 textarea:invalid:required {
-  background-image: linear-gradient(to right, pink, lightgreen);
+  /* background-image: linear-gradient(to right, red, red); */
+  background-color: #f5655b;
 }
 
 textarea:valid {
   border: 2px solid black;
+  /* background-image:linear-gradient(to right, green, green); */
 }
 textarea{
   resize: none;
