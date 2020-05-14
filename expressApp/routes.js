@@ -93,7 +93,8 @@ router.post("/GenkiVocabList", (req,res)=>{
         dbScripts.updateThis(element.id,"POS",element.POS);
     })
     console.log(`The length is:${objList.length} `);
-    res.send("Results Sent");
+    res.redirect('back');
+    //res.send("Results Sent");
 });
 
 
