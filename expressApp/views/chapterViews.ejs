@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="../assets/chapterViewsStyles.css">
+    <link rel="stylesheet" type="text/css" href="../assets/StyleSheets/chapterViewsStyles.css">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
@@ -11,7 +12,7 @@
 <%- include ('partials/nav.ejs') %>
 <body>
     <form method="post">
-        <input id="submitButton" class="Submit" type ="button" value="Submit Button">
+        <input id="submitButton" class="Submit" type ="button" value="Update POS">
         <input id="PageBack" type ="button" class="Pagebtn" value="Previous Page">
         <input id="Page" type ="button" class="Pagebtn" value="Next Page">
         <input id="None" class="A" type ="button" value="Show">
@@ -27,12 +28,16 @@
                 <th>English</th>
                 <th>Part of Speech?</th>
             </tr>
-        
+            <% let counter=1%>
                  <% words.forEach(function(item){%>
+                
+              
             <tr class="tr">
                 <%if(item.Kanji){%>
                 <td class='KanjiData'>
-                    <%= item.Kanji%>
+                    
+                    <%=`#${counter} ${item.Kanji}`%>
+                    <%  counter++%>
                 </td>
                 <%}%>
                 <td>
@@ -56,9 +61,10 @@
                 </td>    
                   
             </tr>
+           
          <% }); %>    
         </table>
     </form> 
-    <script src="../../assets/ChapterViews.js"></script>
+    <script src="../../assets/Scripts/ChapterViews.js"></script>
 </body>
 </html>
