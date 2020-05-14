@@ -30,9 +30,15 @@ closeDB=async()=>{
     //  //console.log(`The Db object Hiragana is now: ${doc.Hiragana}`);
     //  await console.log(`The Db object is: ${doc}`);
   }
-
+  //connectToDB();
+documentExists=async(text)=>{
+  let data=await Genki.findOne({Kanji:text}) ? true: false;
+  console.log(`${text} is a document in DB?: ${data}`);
+  return data;
+}
   
-//connectToDB();
+//documentExists("私aa");
+
 //console.log(`The path of POS is:${GenkiScehma.path('POS')}`);
  //updateThis("5eb36b21661ebf416d33c9d1","Hiragana","Not Happy Feet");
 //updateThis("5eb36b21661ebf416d33c9d1","POS","Noun");
@@ -42,5 +48,6 @@ updateAll=async()=>{
 
 module.exports={
   updateThis:updateThis,
+  documentExists:documentExists,
 }
 //updateAll();
