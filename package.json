@@ -4,22 +4,26 @@
   "description": "soap+mick",
   "main": "./expressApp/index.js",
   "engines": {
-    "node":"13.2.x"
+    "node": "13.2.x"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.2",
     "express": "^4.17.1",
+    "kuromoji": "^0.1.2",
+    "kuromojin": "^2.0.0",
     "mongoose": "^5.9.10",
     "mongoose-unique": "0.0.5",
     "mongoose-unique-validator": "^2.0.3",
+    "nlcst-parse-japanese": "^1.2.0",
     "validator": "^13.0.0"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./expressApp/index.js"
+    "start": "node ./expressApp/index.js",
+    "dev": "nodemon ./expressApp/index.js"
   },
   "repository": {
     "type": "git",
