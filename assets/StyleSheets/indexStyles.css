@@ -3,12 +3,12 @@
   padding: 0;
   }
 body {
+  padding-top: 50px;
   background-color: lightblue;
 }
 
 h1 {
   color: navy;
-  margin-left: 20px;
 }
 h3{
     color:green;
