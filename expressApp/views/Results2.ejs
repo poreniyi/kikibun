@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../../assets/StyleSheets/Results2Styles.css">
+
+</head>
+<body>
+    <p id="text">
+        <% let counter =0%>
+        <%data.forEach(element=> { %> 
+            <div class="tokens" name=<%=counter %>  id=<%=element.POS%>> <%=element.text%> 
+            </div>
+       <% }) %>
+    </p>
+    
+    <h2>    Word Info</h2>
+
+    <p id="bottom"> 
+        <%data.forEach(element=> { %> 
+            <div class="info"  name = "info">  <%=element.pos%> </div> 
+            
+       <% }) %>
+        
+       </p>
+    <button id="hiraki"type="button">開く</button>
+    <button  name ="Verb" id="Verb" class ="show" type="button">Show Verbs</button>
+    <button name = "Noun" class ="show" type="button">Show Nouns</button>
+    <button name = "Particle" class ="show" type="button">Show Particles</button>
+    <button  name="Na-adjective" class ="show" type="button">Show Na-adjectives</button>
+    <button  name="I-adjective" class ="show" type="button">Show I-adjectives</button>
+ <script src= "../../assets/Scripts/Results2Script.js"></script>
+</body>
+</html>
