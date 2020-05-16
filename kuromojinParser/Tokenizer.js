@@ -9,34 +9,56 @@ let kuromojin=require('kuromojin');
 
 
 
-let pos={
+let objPos={
    名詞:"Noun",
    動詞:"Verb",
    助詞:"Particle",
-   形容詞:"I-adjedctive",
-   形容動詞語幹:"Na-Adjective",
+   形容詞:"I-adjective",
+   形容動詞語幹:"Na-adjective",
 }
 
 kuromojin.tokenize(`帰りました`).then(results=>{
    //console.log(results);
 })
-tokenize= async ()=>{
-    let tokens=await kuromojin.tokenize(`帰りました`);
-    console.log(tokens);
+tokenize= async (text)=>{
+    let tokens=await kuromojin.tokenize(text);
+    //console.log(tokens);
+    console.log(`The legnth of the tokens is:${tokens.length}`);
     let tokenArray=[];
-    tokens.forEach(element=>{
+    let previousAdded;
+    for(let i=0;i<tokens.length;i++){
+        let element=tokens[i];
         let obj= new Object();
+        let surface=element.surface_form;
+        let englishPos,pos;
+        let conjugations=[];
+        obj.text=element.basic_form;
         if(element.pos=="名詞"){
-            obj.pos = (element.pos_detail_1=="形容動詞語幹")  ? "形容動詞語幹" : "名詞"
+            pos = (element.pos_detail_1=="形容動詞語幹")  ? "形容動詞語幹" : "名詞"
+        }else if(!objPos.hasOwnProperty(element.pos)){
+            previousAdded.conjugations.push(element.pos);
+            previousAdded.text+=(`+${element.surface_form}`)
+            continue ;
         }else{
-            obj.pos=element.pos;
+            pos=element.pos;
         }
+        obj.POS=objPos[pos],//Eng
+        obj.pos=pos,//jp
+        obj.text=surface;
+        obj.conjugations=conjugations;
+        previousAdded=obj;
         tokenArray.push(obj);
-    });
-    console.log(tokenArray);
+    }
+   
+    console.log(`Length of array is ${tokenArray.length} and the array is: ${tokenArray}`);
+    // return {
+    //    // tokens:tokens,
+    //     tokenArray:tokenArray,
+    // };
+    return tokenArray;
 }
-tokenize();
+//tokenize(`帰りました食べた食べる`);
 
 module.exports={
-    tokenizer:tokenize,
+    tokenize:tokenize,
 }
