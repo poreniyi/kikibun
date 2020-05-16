@@ -1,0 +1,49 @@
+div{
+    display:inline-block
+}
+body {
+    background-color: lightblue;
+  }
+  #red{
+        color:red;
+  }
+ 
+ #Verb:hover{
+    color:blue;
+    cursor: pointer;
+ }
+ .VerbActive{
+    color:blue;
+ }
+.I-adjectiveActive{
+    color:rgb(0, 255, 21); 
+}
+#I-adjective:hover{
+    color:rgb(0, 255, 21);
+    cursor: pointer; 
+}
+.Na-adjectiveActive{
+    color:rgb(0, 255, 21); 
+}
+#Na-adjective:hover{
+    color:rgb(0, 255, 21); 
+    cursor: pointer;
+}
+ .NounActive{
+    color: pink;
+ }
+ #Noun:hover{
+    color:pink;
+    cursor: pointer;
+ }
+ .ParticleActive{
+    color: saddlebrown;
+ }
+ #Particle:hover{
+    color:saddlebrown;
+    cursor: pointer;
+ }
+.info{
+    display: none;
+}
+
