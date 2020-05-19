@@ -60,20 +60,19 @@ myFunc=(string)=>{
   console.log(time);
 }
 //setInterval(myFunc,5000,"Mario");
-let myWriteStream=fs.createWriteStream(__dirname + '/Happy.txt', {flags: 'a'});
+let myWriteStream=fs.createWriteStream(__dirname + '/Happy.txt');//, {flags: 'a'}
 
-getArticleLinks(articleLinks).then(results=>{
+writeArticleToFile = async()=>{
   let counter=1;
- results.forEach(element=>{
-   let name='Article'+String(counter)+'.txt';
-   console.log(name);
-  let writeStream=fs.createWriteStream(name);
-   getNHKArticle(element.url,writeStream);
-  console.log(element+counter);
-   counter++
- })
-}).catch(console.err);
+   let content= await getArticleLinks(articleLinks);
+   content.forEach(element =>{
+    let name='Article'+String(counter)+'.txt';
+    let writeStream=fs.createWriteStream(name);
+    getNHKArticle(element.url,writeStream);
+    console.log(name);
+    counter++;
+   })
+}
 
 
-getNHKArticle(link,myWriteStream);
-
+writeArticleToFile();
