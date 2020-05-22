@@ -9,35 +9,46 @@ let WordScehmaJLPT= new Schema({
     Kanji:{type:String,required:false, unique:true},
     Hiragana:{type:String,required:false},
     nLevel:{type:String, required:false, min:1, max:5},
-    length:Number
+    length:Number,
     }
 );
+let pos=[
+  'Noun',
+  'Verb',
+  'Particle',
+  'I-adjective',
+  'Na-adjective',
+  'Filler',
+  'Interjection',
+  'Adverb',
+  'Connection',
+  'Auxillary Verb',
+  'none',
+]
+
 WordScehmaJLPT.plugin(unqieValidator);
-let WordScehmaGenki= new Schema({
+let WordSchemaGenki= new Schema({
         English:{type:String,required:false},
         Kanji:{type:String,required:false},
-        Hiragana:{type:String,required:false},
+        Hiragana:{type:[String],required:false},
         Chapter:{type:Number, required:false, min:1, max:23},
+        POS:{type:String, required:false,enum:pos},
         length:Number,
         }
 )
-WordScehmaGenki.add({
-  POS:{
-    type:String,
-    enum:['Particle','Noun','Verb','Adjective'],
-    required:false,
-  }
-});
-WordScehmaGenki.path('POS')
 
-WordScehmaGenki.plugin(unqieValidator);
 
-let Genki=mongoose.model("Genki",WordScehmaGenki);
+WordSchemaGenki.plugin(unqieValidator);
+
+let Genki=mongoose.model("GenkiWord",WordSchemaGenki);
 let JLPT=mongoose.model('JLPT Word',WordScehmaJLPT);
+let testobj={
+  Hiragana:pos,
+  length:0,
+}
 
 let N5=mongoose.model('N2',WordScehmaJLPT);
 module.exports  ={
-    GenkiScehma:WordScehmaGenki,
     Genki:Genki,
     JLPT:JLPT,
 }

@@ -30,7 +30,14 @@ closeDB=async()=>{
     //  //console.log(`The Db object Hiragana is now: ${doc.Hiragana}`);
     //  await console.log(`The Db object is: ${doc}`);
   }
-  //connectToDB();
+let insertIntoDB=require('./fileReadTest').insertIntoDB;
+  connectToDB();
+  insertIntoDB();
+
+//   Genki.create(testObj).then(function(data){
+//     console.log(data);
+// });
+
 documentExists=async(text)=>{
   let data=await Genki.findOne({Kanji:text}) ? true: false;
   console.log(`${text} is a document in DB?: ${data}`);
