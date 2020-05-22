@@ -30,7 +30,7 @@ closeDB=async()=>{
     //  //console.log(`The Db object Hiragana is now: ${doc.Hiragana}`);
     //  await console.log(`The Db object is: ${doc}`);
   }
-let insertIntoDB=require('./fileReadTest').insertIntoDB;
+let insertIntoDB=require('./addToDB').insertIntoDB;
   connectToDB();
   insertIntoDB();
 
