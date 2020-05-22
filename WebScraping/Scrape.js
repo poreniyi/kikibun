@@ -62,6 +62,20 @@ myFunc=(string)=>{
 //setInterval(myFunc,5000,"Mario");
 let myWriteStream=fs.createWriteStream(__dirname + '/Happy.txt');//, {flags: 'a'}
 
+readArticles= () =>{
+  let counter=1;
+  while(counter<6){
+    let name="Article"+counter+".txt";
+    let myReadStream=fs.createReadStream(name, 'utf8');
+    myReadStream.on('data',(chunk)=>{
+      console.log(`Now reading file ${name}`);
+      let sentences=chunk.split('。');
+      console.log(`There are ${sentences.length} sentences`);
+    })
+    counter++;
+  }
+}
+readArticles();
 writeArticleToFile = async()=>{
   let counter=1;
    let content= await getArticleLinks(articleLinks);
@@ -75,4 +89,6 @@ writeArticleToFile = async()=>{
 }
 
 
-writeArticleToFile();
+module.exports={
+  writeArticleToFile:writeArticleToFile,
+}
