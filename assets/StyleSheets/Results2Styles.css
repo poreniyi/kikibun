@@ -4,43 +4,47 @@ div{
 body {
     background-color: lightblue;
   }
-  #red{
-        color:red;
-  }
+ :root{
+    --verbColor: #2d5da8;
+    --nounColor: #ef6d43;
+    --iadjectiveColor: #8e43ef;
+   --naadjectiveColor:#3aa13f;  /* #B72FD0 */
+    --particleColor: saddlebrown;
+ }
  
  #Verb:hover{
-    color:blue;
+    color:var(--verbColor);
     cursor: pointer;
  }
  .VerbActive{
-    color:blue;
+    color:var(--verbColor);
  }
 .I-adjectiveActive{
-    color:rgb(0, 255, 21); 
+    color:var(--iadjectiveColor); 
 }
 #I-adjective:hover{
-    color:rgb(0, 255, 21);
+    color:var(--iadjectiveColor);
     cursor: pointer; 
 }
 .Na-adjectiveActive{
-    color:rgb(0, 255, 21); 
+    color:var(--naadjectiveColor); 
 }
 #Na-adjective:hover{
-    color:rgb(0, 255, 21); 
+    color:var(--naadjectiveColor); 
     cursor: pointer;
 }
  .NounActive{
-    color: pink;
+    color: var(--nounColor);
  }
  #Noun:hover{
-    color:pink;
+    color:var(--nounColor);
     cursor: pointer;
  }
  .ParticleActive{
-    color: saddlebrown;
+    color: var(--particleColor);
  }
  #Particle:hover{
-    color:saddlebrown;
+    color:var(--particleColor);
     cursor: pointer;
  }
 .info{
