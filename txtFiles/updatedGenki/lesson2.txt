@@ -1,0 +1,48 @@
+これ+none+this one
+それ+none+that one
+あれ+none+that one (over there)
+どれ+none+which one
+この+none+this ...
+その+none+that ...
+あの+none+that ... (over there)
+どの+none+which ...
+あそこ+none+over there
+どこ+none+where
+だれ+none+who
+おいしい+none+delicious
+さかな+魚+fish
+とんかつ+none+pork cutlet
+にく+肉+meat
+メニュー+none+menu
+やさい+野菜+vegetable
+えんぴつ+鉛筆+pencil
+かさ+傘+umbrella
+かばん+none+bag
+くつ+靴+shoes
+さいふ+財布+wallet
+ジーンズ+none+jeans
+じしょ+辞書+dictionary
+じてんしゃ+自転車+bicycle
+しんぶん+新聞+newspaper
+テープ+none+tape
+とけい+時計+watch; clock
+トレーナー+none+sweat shirt
+ノート+none+notebook
+ペン+none+pen
+ぼうし+帽子+hat; cap
+ほん+本+book
+おてあらい+お手洗い+restroom
+きっさてん+喫茶店+cafe
+ぎんこう+銀行+bank
+としょかん+図書館+library
+ゆうびんきょく+郵便局+post office
+けいざい+経済+economics
+いくら+none+how much
+えん+円+...yen
+たかい+高い+expensive
+いらっしゃいませ+none+Welcome (to our store)
+（を）おねがいします+none+..., please.
+（を）ください+none+Please give me...
+じゃあ+none+then...; if that is the case,...
+（を）どうぞ+none+Here it is.
+どうも+none+Thank you.

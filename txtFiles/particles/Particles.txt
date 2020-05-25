@@ -1,0 +1,59 @@
+Name	Form	Alternatives	POS acted on
+Topic Particle	は		
+Question	か		
+Possesive	の		
+			
+Inclusive	も		
+Negatation Topic	じゃない	じゃありません	ではありません
+Agreement	ね		
+Authorative Decree	よ		
+			
+Present Formal of Verbs	ます		
+Negative Formal of Verbs	ません		
+Direct Object	へ		
+Place	を		
+goal of movment/time	で		
+goal of movment	に		
+Invitation	ませんか		
+			
+Introduce/Present	があります	がいます	
+Past tense Topic	でした		
+Past tense Negative Topic	じゃなかったです		
+Past tense formal Verbs	ました		
+Past tense negative formal Verbs	ませんでした		
+Connect nouns/with whom	と		
+			
+Modifying noun	な		
+I-Adj Present			
+I-Adj present negative	くない	くありません	
+I-Adj past present	かった		
+I-Adj past negative	くなかったです		
+Volitional/Let's	ましょう		
+			
+Te form	て	で	
+Polite Request	ください		
+You may do	もいい		
+You must not do	てはいけない		
+So	から		
+			
+Action in progress or a past event  that is connected with the past	ている		Verb
+Noun na adj te	で		Noun na adj
+Iadj te	くて		Iadj
+Move to another place to do an action	にいく		Verb
+			
+Short form	だ		Noun/NaAdj
+Short form			Iadj
+Short form			Verb
+Short form Negative	じゃない		Noun/NaAdj
+Short form Negative	ない		Iadj
+Short form Negative	ない		Verb
+Quote	と思います	と言っていました	VErb
+Refrain from doing something	ないでください		Verb
+Treat verbs/adjs as nouns	の		Verb
+			
+Past tense Short	だ	た	Verb
+Past tense Short	かった		Iadj
+Past tense Short	だった		Noun/Naadj
+Past tense Short negative	なかった		Verb
+Past tense Short negative	なかった		Iadj
+Past tense Short negative	じゃなかった		Noun/Naadj

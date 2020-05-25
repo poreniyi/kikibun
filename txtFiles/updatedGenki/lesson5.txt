@@ -1,0 +1,54 @@
+うみ+海+sea
+きって+切手+postal stamps
+きっぷ+切符+ticket
+サーフィン+none+surfing
+しゅくだい+宿題+homework
+たべもの+食べ物+food
+たんじょうび+誕生日+birthday
+テスト+none+test
+てんき+天気+weather
+のみもの+飲み物+drink
+はがき+葉書+postcard
+バス+none+bus
+ひこうき+飛行機+airplane
+へや+部屋+room
+ぼく+僕+I (used by men)
+やすみ+休み+holiday; day off; absence
+りょこう+旅行+travel
+あたらしい+新しい+new
+あつい+暑い+hot (weather)
+あつい+熱い+hot (objects)
+いそがしい+忙しい+busy (people/days)
+おおきい+大きい+large
+おもしろい+面白い+interesting
+こわい+怖い+frightening
+さむい+寒い+cold (weather-not used for objects)
+たのしい+楽しい+fun
+ちいさい+小さい+small
+つまらない+none+boring
+ふるい+古い+old (thing - not used for people)
+むずかしい+難しい+difficult
+やさしい+none+easy (problem); kind (person)
+やすい+安い+inexpensive; cheap (thing)
+きらい（な）+嫌い+disgusted with; to dislike
+きれい（な）+none+beautiful; clean
+げんき（な）+元気+healthy; energetic
+しずか（な）+静か+quiet
+すき（な）+好き+fond of; to like
+だいきらい（な）+大嫌い+to hate
+だいすき（な）+大好き+very fond of; to love
+にぎやか（な）+none+lively
+ハンサム（な）+none+handsome
+ひま（な）+暇+not busy; to have a lot of free time
+およぐ+泳ぐ+to swim
+きく+聞く+to ask
+のる+乗る+to ride; to board
+やる+none+to do; to perform
+でかける+出かける+to go out
+いっしょに+一緒に+together
+それから+none+and then
+だいじょうぶ+大丈夫+It's okay.; Not to worry.; Everything is under control.
+とても+none+very
+どんな+none+what kind of...
+まい+枚+[counter for flat objects]
+まで+none+to (a place); as far as (a place); till (a time)

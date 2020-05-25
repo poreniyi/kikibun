@@ -1,0 +1,6 @@
+{"Name":"Past tense Short","Form":["だ","た"],"POS":["Verb\r"]}
+{"Name":"Past tense Short","Form":["かった"],"POS":["Iadj\r"]}
+{"Name":"Past tense Short","Form":["だった"],"POS":["Noun","Naadj\r"]}
+{"Name":"Past tense Short negative","Form":["なかった"],"POS":["Verb\r"]}
+{"Name":"Past tense Short negative","Form":["なかった"],"POS":["Iadj\r"]}
+{"Name":"Past tense Short negative","Form":["じゃなかった"],"POS":["Noun","Naadj"]}
