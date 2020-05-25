@@ -37,6 +37,11 @@ let WordSchemaGenki= new Schema({
         }
 )
 
+let ParticleSchema= new Schema({
+  Name:{type:String,required:false},
+  Form:{type:[String],required:true},
+  POSActedOn:{type:[String],required:true},
+})
 
 WordSchemaGenki.plugin(unqieValidator);
 

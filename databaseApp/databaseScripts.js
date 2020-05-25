@@ -31,24 +31,20 @@ closeDB=async()=>{
     //  await console.log(`The Db object is: ${doc}`);
   }
 let insertIntoDB=require('./addToDB').insertIntoDB;
-  connectToDB();
-  insertIntoDB();
 
 //   Genki.create(testObj).then(function(data){
 //     console.log(data);
 // });
 
-documentExists=async(text)=>{
-  let data=await Genki.findOne({Kanji:text}) ? true: false;
+documentExists=async(text,chapter)=>{
+  let data=await Genki.findOne({Chapter:{$lte:chapter},Kanji:text}) ? true:  await Genki.findOne({Chapter:{$lte:chapter},Hiragana:text, Kanji:"none"})?true :false;
   console.log(`${text} is a document in DB?: ${data}`);
   return data;
+  //return data2||data;
 }
   
 //documentExists("私aa");
 
-//console.log(`The path of POS is:${GenkiScehma.path('POS')}`);
- //updateThis("5eb36b21661ebf416d33c9d1","Hiragana","Not Happy Feet");
-//updateThis("5eb36b21661ebf416d33c9d1","POS","Noun");
 updateAll=async()=>{
   await Genki.updateMany({}, {Chapter:1});
 } 
