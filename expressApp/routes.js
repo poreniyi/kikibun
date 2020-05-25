@@ -16,16 +16,55 @@ router.get('/',function(req,res){
     res.render("Home");
 });
 router.post('/results.html',async(req,res)=>{
-        try{
-            let text=req.body.text;
-            console.log(req.body);
-            let result = await Parser.Chapter1(req.body.text.trim());
-            console.log("MY RESULT IS:" +result);
-            res.render('results',{ data: result, originalSentence:text});
+     let text=req.body.text;
+     console.log("Results page: \n")
+        // try{
+        //     console.log(req.body);
+        //     let result = await Parser.Chapter1(req.body.text.trim());
+        //     console.log("MY RESULT IS:" +result);
+        //     res.render('results',{ 
+        //         data: result, 
+        //         originalSentence:text});
+        // }
+        // catch(error){
+        //     console.log(error);
+        // }
+        // part 2
+        // try{
+        //     console.log(req.body.Genki);
+        //     results = await tokenizer.tokenize(req.body.text)
+        //     res.render('Results2',{data:results})
+        // }catch(error){
+        //     console.log(error);
+        // }      
+        let result;
+        //results = await tokenize2('よかったいい食べなかった学生');
+        results =await tokenize2(text);
+        console.log(`Genki:${req.body.Genki}`);
+        for(let i=0;i<results.length;i++){
+            let word=results[i].base;
+            if(await dbScripts.documentExists(word,req.body.Genki)){
+                results[i].setStatus();
+            }
         }
-        catch(error){
-            console.log(error);
+        for(let i=0;i<results.length;i++){
+            process.stdout.write(`Surface Form:${results[i].surfaceForm}`);
+            results[i].conjugatedParts.forEach(element=>{
+                console.log(`${element}`);
+            })
         }
+        let testArr=[];
+        let apple=await Genki.find({Kanji:'食べる'});
+        let pie=await Genki.find({Hiragana:'いい'});
+        testArr.push(pie);
+        testArr.push(apple);
+        res.send({
+            vocab:results,
+            stuff:testArr,
+        })
+       // res.send({data:results ,stuff:pie});
+        
+        
 });
 
 router.get("/GenkiVocabList",async(req,res)=>{
@@ -37,9 +76,12 @@ router.get("/GenkiVocabList",async(req,res)=>{
         console.log("NO page");
        data=await Genki.find({Chapter:chapter});  
     }else if(chapter<24 && chapter>0 &&page>0){
-        let size = await Genki.estimatedDocumentCount({Chapter:chapter})
-        console.log(`The collection size is ${size}`);
-        let max=pageSize*Math.floor(size/pageSize)+1;
+        //let size = await Genki.estimatedDocumentCount({Chapter:chapter})
+        let size = await Genki.countDocuments({Chapter:chapter});
+     
+
+        console.log(`Chapter ${chapter}: has:${size} words`);
+        let max=pageSize*(Math.floor(size/pageSize));
         let overflow= size-max
                 console.log(`max is ${max}`);
         let totalDocs=pageSize*page;
@@ -96,6 +138,25 @@ router.post("/GenkiVocabList", (req,res)=>{
     res.redirect('back');
     //res.send("Results Sent");
 });
+
+let tokenizer=require('../kuromojinParser/Tokenizer');
+let tokenOne=tokenizer.tokenizeOne;
+let tokenize2=tokenizer.tokenize2;
+router.get("/test", async (req,res)=>{
+    let results;
+    // results= await Parser.Chapter1Update('私は高校生です。');
+   // results= await Genki.find({length:{$gte:5}})
+    //results = await tokenize2('よかったいい食べなかった学生');
+    let string=('まだ来ていませんよく話した思う私の犬食べてください私も質問をしてもいいですか');
+    //results = await tokenizer.tokenize(string);
+  results = await tokenizer.grammarTokenizer(string);
+  //  results= await tokenizer.tokenizeOne('です');
+      //results= await tokenOne('です');
+       // console.log(results);
+    //results=await Parser.Chapter1Update('空港高校生');
+    //res.render('Results2',{data:results})
+    res.send(results);
+})
 
 
 
