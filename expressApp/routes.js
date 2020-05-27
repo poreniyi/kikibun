@@ -5,6 +5,7 @@ path = require('path')
 const Parser=require('../Parser/GenkiParser');
 const database=require("../databaseApp/dataApp");
 const Genki=database.Genki;
+const Particles=database.Particles;
 const JLPT=database.JLPT;
 let dbScripts=require('../databaseApp/databaseScripts');
 const unqieValidator=require('mongoose-unique-validator');
@@ -142,20 +143,27 @@ router.post("/GenkiVocabList", (req,res)=>{
 let tokenizer=require('../kuromojinParser/Tokenizer');
 let tokenOne=tokenizer.tokenizeOne;
 let tokenize2=tokenizer.tokenize2;
+let insertParticles=require('../databaseApp/addParticles').addParticles;
 router.get("/test", async (req,res)=>{
     let results;
+    addParticles();
+
     // results= await Parser.Chapter1Update('私は高校生です。');
    // results= await Genki.find({length:{$gte:5}})
     //results = await tokenize2('よかったいい食べなかった学生');
-    let string=('まだ来ていませんよく話した思う私の犬食べてください私も質問をしてもいいですか');
-    //results = await tokenizer.tokenize(string);
-  results = await tokenizer.grammarTokenizer(string);
+    let string=('まだ来ていませんよく話したと思う私の犬食べてください私も質問をしてもいいですかあるんです');
+    // string=('犬があるんです');
+   tokens = await tokenizer.tokenize(string);
+  grammar = await tokenizer.grammarTokenizer(string);
   //  results= await tokenizer.tokenizeOne('です');
       //results= await tokenOne('です');
        // console.log(results);
     //results=await Parser.Chapter1Update('空港高校生');
     //res.render('Results2',{data:results})
-    res.send(results);
+    res.send({
+        tokens:tokens,
+        grammar:grammar
+    });
 })
 
 
