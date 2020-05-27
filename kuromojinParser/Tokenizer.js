@@ -1,4 +1,3 @@
-
 let kuromojin=require('kuromojin');
 let word=require('./Words');
 let Word=word.Word;
@@ -106,53 +105,69 @@ grammarTokenizer=async (text)=>{
   //console.log(Object.values(objPos));
   let tokens=await kuromojin.tokenize(text);
   //console.log(tokens);
-  console.log(`The legnth of the tokens is:${tokens.length}`);
   let tokenArray=[];
   let prePart;
-  let perviousWord;
+  let previousWord;
   for(let i=0;i<tokens.length;i++){
       let element=tokens[i];
       let word= new Word(element.basic_form,element.surface_form);
       let pos;
+  
+      if(element.conjugated_type!="*" && element.pos_detail_1!='自立'){
+          console.log(`PRevious word is:${previousWord.surfaceForm} the element is${element.surface_form}`)
+         previousWord.addToPreviousConjugation(element.surface_form);
+           continue
+        }
+      if(element.pos_detail_1=='非自立' && element.conjugated_type!="*"){
+        previousWord.addConjugatedPart(element.surface_form);
+        console.log(element.surface_form);
+        continue;
+      }
 
       if(prePart){
           word.addBefore(prePart);
           prePart='';
       }
-      if(element.pos_detail_1=='格助詞'|| element.pos=='副詞'){
+      if((element.pos_detail_1=='格助詞'&& element.pos_detail_2=='引用')|| element.pos=='副詞'){
         prePart=element.surface_form;
         continue;
       }
       if(element.pos=="名詞"){
           pos = (element.pos_detail_1=="形容動詞語幹")  ? "形容動詞語幹" : "名詞"
-          if(perviousWord){
-              perviousWord.setTextGivenForm();
+          if(previousWord){
+              previousWord.setTextGivenForm();
           } 
       }else if(!exclusivePos.hasOwnProperty(element.pos)|| element.pos_detail_1=="非自立"){
-          perviousWord.addConjugatedPart(element.surface_form);
+          if(element.conjugated_type!="*"){
+            previousWord.addToPreviousConjugation(element.surface_form);
+          }else{
+            previousWord.addConjugatedPart(element.surface_form);
+          }
           if(i==tokens.length-1){
-              perviousWord.setTextGivenForm();
+              previousWord.setTextGivenForm();
           }
           continue ;
+      }if(element.pos_detail_1=='非自立'){
+        previousWord.addConjugatedPart(element.surface_form);
+        continue;
       }else{
           pos=element.pos;
-          if(perviousWord){
-              perviousWord.setTextGivenForm();
+          if(previousWord){
+              previousWord.setTextGivenForm();
           } 
       }
       word.setEnPos(objPos[pos]);
       word.setJpPos(pos);      
-      perviousWord=word;
+      previousWord=word;
       tokenArray.push(word)
       let wordArray=[];
       wordArray.push(word);      
   }
  
-  console.log(`Length of token array is ${tokenArray.length} and the array is: ${tokenArray}`);
   return tokenArray;
 }
+//let string=('まだ来ていませんよく話したと思う私の犬食べてください私も質問をしてもいいですかあるんです');
 
-//tokenize(`帰りました食べた食べる`);
 
 module.exports={
     tokenize:tokenize,

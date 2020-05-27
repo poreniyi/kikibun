@@ -29,6 +29,12 @@ Word.prototype.getJpPos=function(){
 Word.prototype.addConjugatedPart=function(string){
     this.conjugatedParts.push(string);
 }
+Word.prototype.addToPreviousConjugation=function(string){
+    if(this.conjugatedParts.length>0){
+        this.conjugatedParts[this.conjugatedParts.length-1]+=string;
+    }else  this.conjugatedParts.push(string)
+
+}
 Word.prototype.addBefore=function(string){
     this.before.push(string);
 }
