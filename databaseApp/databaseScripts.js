@@ -32,6 +32,7 @@ closeDB=async()=>{
   }
 let insertIntoDB=require('./addToDB').insertIntoDB;
 
+
 //   Genki.create(testObj).then(function(data){
 //     console.log(data);
 // });

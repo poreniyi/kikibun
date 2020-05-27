@@ -61,9 +61,9 @@ let makeWords=async (array,iterator)=>{
         if (currentWord.POS=="none") console.log(currentWord);
        // databaseArray.push(currentWord);
        // console.log(currentWord);
-        Genki.create(currentWord).then(function(data){
-            console.log(data);
-        });
+        // Genki.create(currentWord).then(function(data){
+        //     console.log(data);
+        // });
     })
 
 }

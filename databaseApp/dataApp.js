@@ -40,13 +40,17 @@ let WordSchemaGenki= new Schema({
 let ParticleSchema= new Schema({
   Name:{type:String,required:false},
   Form:{type:[String],required:true},
+  Before:{type:[String],required:false},
   POSActedOn:{type:[String],required:true},
+  Chapter:{type:Number},
+  NLvl:{type:Number}
 })
 
 WordSchemaGenki.plugin(unqieValidator);
 
 let Genki=mongoose.model("GenkiWord",WordSchemaGenki);
 let JLPT=mongoose.model('JLPT Word',WordScehmaJLPT);
+let Particles=mongoose.model('Particle',ParticleSchema);
 let testobj={
   Hiragana:pos,
   length:0,
@@ -56,4 +60,5 @@ let N5=mongoose.model('N2',WordScehmaJLPT);
 module.exports  ={
     Genki:Genki,
     JLPT:JLPT,
+    Particles,Particles,
 }
