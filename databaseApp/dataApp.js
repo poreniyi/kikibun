@@ -45,16 +45,16 @@ let ParticleSchema= new Schema({
   Chapter:{type:Number},
   NLvl:{type:Number}
 })
+ParticleSchema.virtual('FullForm').get(()=>{
+  return this.Form.join('');
+})
 
 WordSchemaGenki.plugin(unqieValidator);
 
 let Genki=mongoose.model("GenkiWord",WordSchemaGenki);
 let JLPT=mongoose.model('JLPT Word',WordScehmaJLPT);
 let Particles=mongoose.model('Particle',ParticleSchema);
-let testobj={
-  Hiragana:pos,
-  length:0,
-}
+
 
 let N5=mongoose.model('N2',WordScehmaJLPT);
 module.exports  ={

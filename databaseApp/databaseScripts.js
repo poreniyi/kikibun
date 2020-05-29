@@ -1,5 +1,6 @@
 let Genki=require("./dataApp").Genki;
-let GenkiScehma=require("./dataApp").GenkiScehma;
+let Particles=require("./dataApp").Particles;
+
 
 const mongoose=require('mongoose');
 
@@ -17,7 +18,6 @@ closeDB=async()=>{
   });
 }
 
-//   GenkiScehma.path('Chapter',Number);
    updateThis=async(dbId,field,value)=>{
      await Genki.updateOne(
        {_id : dbId},
@@ -43,6 +43,12 @@ documentExists=async(text,chapter)=>{
   return data;
   //return data2||data;
 }
+
+particleExists=async(text,chapter)=>{
+  let data=await Particles.findOne({Form:text,Chapter:{$lte:chapter}}) ? true: false
+  console.log(`${text} is a partcle in DB?: ${data}`);
+  return data;
+}
   
 //documentExists("私aa");
 
@@ -53,5 +59,6 @@ updateAll=async()=>{
 module.exports={
   updateThis:updateThis,
   documentExists:documentExists,
+  particleExists,particleExists,
 }
 //updateAll();
