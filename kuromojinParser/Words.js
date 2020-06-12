@@ -9,7 +9,8 @@
     this.JpPOS;
     this.status;
     this.length=kanji.length;
-    this.StatusKnown=false;
+    this.StatusKnown=true;
+    this.GrammarKnown=true;
 };
 Word.prototype.sayKanji=function(){    
     console.log(this.base);   
@@ -33,7 +34,9 @@ Word.prototype.addToPreviousConjugation=function(string){
     if(this.conjugatedParts.length>0){
         this.conjugatedParts[this.conjugatedParts.length-1]+=string;
     }else  this.conjugatedParts.push(string)
-
+}
+Word.prototype.getLastConjugation=function(){
+    return this.conjugatedParts[this.conjugatedParts.length -1];
 }
 Word.prototype.addBefore=function(string){
     this.before.push(string);
@@ -54,10 +57,24 @@ Word.prototype.getGivenForm=function(){
     return this.givenform;
 }
 Word.prototype.setStatus=function(text){
-    this.StatusKnown=true;
+    this.StatusKnown=!this.StatusKnown;
     console.log(this.StatusKnown);
 
 }
+Word.prototype.MakeGrammarUnknown=function(){
+    this.GrammarKnown=false;
+}
+function conjugation(text){
+    this.status=true;
+    this.text=text;
+}
+conjugation.prototype.addConjugation=function(string){
+    this.text+=string;
+}
+conjugation.setNotKnown=function(){
+    this.status=false;
+}
 module.exports={
     Word:Word,
+    Conjugation:conjugation,
 }
