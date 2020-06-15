@@ -178,11 +178,20 @@ grammarTokenizer=async (text)=>{
         let token=tokens[i];
         let word= new Word(token.basic_form,token.surface_form);
         let conjugation= new Conjugation(token.surface_form);
-       
-
+    //beforePart
+    if(token.pos_detail_1.includes('副詞')||token.pos.includes('副詞')){
+       // previousWord.addBefore(token.surface_form);
+        prePart=conjugation;
+        console.log(`Before part is present and it is ${prePart}`);
+        continue;
+    }
+    if(token.word_id==92760){
+        prePart=conjugation;
+        continue;
+    }
     //adding to previous
         // this checks for ん and　And adds it to previous conjugation；
-        if((token.word_id===22540|| token.word_id==23430) &&previousWord.getLastConjugation()){
+        if((token.word_id===22540|| token.word_id==23430||token.word_id==23650||token.word_id==3447280|| token.word_id==92740 ||(token.word_id==1249100&& token.pos_detail_1=='非自立')) &&previousWord.getLastConjugation()){
             //console.log(`${token.surface_form} and the previous word is ${previousWord}`);
             console.log(`This is the alst conjugation ${previousWord.getLastConjugation()}`);
             previousWord.getLastConjugation().addConjugation(token.surface_form);
@@ -190,7 +199,8 @@ grammarTokenizer=async (text)=>{
         }   
         //for ない
         if(token.word_id==23470){
-            previousWord.addToPreviousConjugation(token.surface_form);
+            previousWord.getLastConjugation().addConjugation(token.surface_form);
+            console.log('adding to previous conjugation')
             continue;
         }
     
@@ -202,7 +212,12 @@ grammarTokenizer=async (text)=>{
         console.log(`The previous wrod is${previousWord.base} pos is ${prePos} conjugatedpart is ${token.surface_form}`);
         continue;
     }
-
+    if(token.word_id==352790){
+        console.log(`This is the alst conjugation ${previousWord.getLastConjugation()}`);
+        previousWord.addConjugatedPart(conjugation);
+        continue;
+    }
+    
     // this if statement adds conjugation to the previous word　いfit's a particle or not indepedent
     if(token.pos=='助動詞'||token.pos_detail_1=='非自立' || token.pos==('助詞')){
         // console.log(`previousWord is ${previousWord} and the conjugation is ${token.surface_form}`)
@@ -217,6 +232,12 @@ grammarTokenizer=async (text)=>{
             word.setEnPos(exclusivePos[token.pos])
             word.setJpPos(token.pos)
             previousWord=word;
+            if(prePart){
+                previousWord.addBefore(prePart);
+                console.log(`Attempting to add prePart`)
+                prePart='';
+            }
+        
             prePos= previousWord.getEnPos();
             console.log(prePos);
         }     

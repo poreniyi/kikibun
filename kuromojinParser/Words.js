@@ -65,14 +65,15 @@ Word.prototype.MakeGrammarUnknown=function(){
     this.GrammarKnown=false;
 }
 function conjugation(text){
-    this.status=true;
+    this.status='unknown';
     this.text=text;
+    this.POS;
 }
 conjugation.prototype.addConjugation=function(string){
     this.text+=string;
 }
 conjugation.setNotKnown=function(){
-    this.status=false;
+    this.status='known';
 }
 module.exports={
     Word:Word,
