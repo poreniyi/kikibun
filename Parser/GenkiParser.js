@@ -1,5 +1,8 @@
 let Genki=require('../databaseApp/dataApp').Genki;
+let Particles=require('../databaseApp/dataApp').Particles;
+
 let dbScripts=require('../databaseApp/databaseScripts');
+const particleFound=dbScripts.particleExists;
 let tokenizer=require('../kuromojinParser/Tokenizer');
 
 Chapter1= async (string)=>{
@@ -33,9 +36,35 @@ Chapter1= async (string)=>{
    return results;
  } 
    
-
+GenkiParser=async (tokens,chapter)=>{
+    for(let i=0; i<tokens.length; i++){
+        let singleToken=tokens[i];
+        let afterPart=singleToken.conjugatedParts;
+        let beforePart=singleToken.before;
+       // console.log(`The element is ${singleToken} the before is ${beforePart} and the after is ${afterPart}`);
+        if (beforePart.length!=0){
+           if(beforePart.every(async element=>{
+               // return await particleFound(element,chapter);
+           })){
+               console.log(beforePart);
+                //singleToken.MakeGrammarUnknown();
+           }
+        }
+       for(let j=0 ; j<afterPart.length; j++){
+           let element=afterPart[j];
+           let text=afterPart[j].text;
+           console.log(`The text of the element is ${text}`);
+           if(await particleFound(text,chapter)==true){
+               element.makeKnown();
+           }
+       }
+       
+    }
+    return tokens;
+}
 
 module.exports={
     Chapter1:Chapter1,
     Chapter1Update,Chapter1Update,
+    GenkiParser:GenkiParser,
 };
