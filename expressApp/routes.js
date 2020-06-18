@@ -143,18 +143,36 @@ router.post("/GenkiVocabList", (req,res)=>{
 let tokenizer=require('../kuromojinParser/Tokenizer');
 let tokenOne=tokenizer.tokenizeOne;
 let tokenize2=tokenizer.tokenize2;
-let insertParticles=require('../databaseApp/addParticles').addParticles;
+let UpdatedParser=Parser.GenkiParser;
 router.get("/test", async (req,res)=>{
     let results;
-    addParticles();
 
     // results= await Parser.Chapter1Update('私は高校生です。');
    // results= await Genki.find({length:{$gte:5}})
     //results = await tokenize2('よかったいい食べなかった学生');
-    let string=('まだ来ていませんよく話したと思う私の犬食べてください私も質問をしてもいいですかあるんです');
-    // string=('犬があるんです');
-   tokens = await tokenizer.tokenize(string);
-  grammar = await tokenizer.grammarTokenizer(string);
+    string=('食べていませんでした');
+   // string='食べていました食べた';
+    // string=('犬があります家がありました');
+    // string=('犬じゃありません犬ではありません');
+    // string='犬がない食べない'
+    // string=('食べてる');
+    //  string=('犬があるんです');
+    // string= '話した';
+   // string='話した犬がいた'
+    let tokens;
+    let grammar;
+    let vocab;
+    try{
+        tokens = await tokenizer.tokenize(string);
+        grammar = await tokenizer.grammarTokenizer(string);
+    }catch(err){
+        console.log(err);
+    }
+ 
+    // let test='と';
+    // let found= await Particles.findOne({Form:test,Chapter:{$lte:1}}) ?true : false;
+    // console.log(`The result of the test on ${test} is ${found}`);
+    grammar= await UpdatedParser(grammar, 22);
   //  results= await tokenizer.tokenizeOne('です');
       //results= await tokenOne('です');
        // console.log(results);
