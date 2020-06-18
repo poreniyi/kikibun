@@ -72,7 +72,7 @@ function conjugation(text){
 conjugation.prototype.addConjugation=function(string){
     this.text+=string;
 }
-conjugation.setNotKnown=function(){
+conjugation.prototype.makeKnown=function(){
     this.status='known';
 }
 module.exports={
