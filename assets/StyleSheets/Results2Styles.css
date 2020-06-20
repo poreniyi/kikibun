@@ -1,5 +1,9 @@
+
+
 div{
-    display:inline-block
+   /* float: left; */
+}
+h2{
 }
 body {
     background-color: lightblue;
@@ -51,3 +55,15 @@ body {
     display: none;
 }
 
+p#text{
+  background-color: red;
+}
+p{
+   background-color: red;
+
+}
+.text{
+   background-color: green;
+}
+.conjugations{
+}

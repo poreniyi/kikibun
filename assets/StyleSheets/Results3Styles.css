@@ -1,0 +1,16 @@
+body{
+    padding-top: 20px;
+}
+.Grammar{
+    
+}
+#box{
+    display:inline-flex;
+    flex-wrap:wrap;
+}
+/* div{
+    display: inline;
+}
+div,p{
+    letter-spacing: 0px;
+} */

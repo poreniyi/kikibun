@@ -3,20 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Results</title>
     <link rel="stylesheet" type="text/css" href="../../assets/StyleSheets/Results2Styles.css">
 
 </head>
 <body>
-    <p id="text">
+    <h1>Original Text</h1>
+    <h2>Grammar</h2>
+    <p id>VOCAB</p>
+    <h2>Vocab</h2>
+    <p class="text" id="text"> 
         <% let counter =0%>
         <%data.forEach(element=> { %> 
-            <div class="tokens" name=<%=counter %>  id=<%=element.POS%>> <%=element.text%> 
-            </div>
+            <%element.conjugatedParts.forEach(part =>{ %>
+                <div class="conjugations">s</div>
+            <% })%>
        <% }) %>
+       I AM LEGEND
     </p>
-    
-    <h2>    Word Info</h2>
+    <p>Test</p>
+    <h2>Word Info</h2>
 
     <p id="bottom"> 
         <%data.forEach(element=> { %> 
