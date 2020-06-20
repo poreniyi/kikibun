@@ -228,8 +228,12 @@ grammarTokenizer=async (text)=>{
         // makes new word
 
         if(exclusivePos.hasOwnProperty(token.pos)){ //Noun na dj iadj and verb
-            tokenArray.push(word); 
-            word.setEnPos(exclusivePos[token.pos])
+            tokenArray.push(word);
+            if(token.pos=='名詞'){
+                token.pos_detail_1=='形容動詞語幹' ? word.setEnPos("Na-Adjective"): word.setEnPos("Noun");
+            } else{
+                word.setEnPos(exclusivePos[token.pos])
+            }
             word.setJpPos(token.pos)
             previousWord=word;
             if(prePart){
@@ -246,12 +250,37 @@ grammarTokenizer=async (text)=>{
 
   return tokenArray;
 }
-//let string=('まだ来ていませんよく話したと思う私の犬食べてください私も質問をしてもいいですかあるんです犬がいた食べに行く食べていました');
-
+vocabTokenizer=async(text)=>{
+    let thePos={
+        助動詞:'Verb',
+        動詞:"Verb",
+        形容詞:"I-adjective",
+     
+    }
+    let tokens=await kuromojin.tokenize(text);
+    let wordArray=[];
+    let pos;
+    tokens.forEach(element=>{
+        if(element.pos=="名詞"){
+            pos=element.pos_detail_1=='形容動詞語幹' ? "Na-Adjective":"Noun"
+        }else if (thePos.hasOwnProperty(element.pos)){
+            pos=thePos[element.pos];
+        } else{
+            pos="Particle";
+        }
+    let word={
+        text:element.surface_form,
+        POS:pos
+    }
+    wordArray.push(word);
+    })
+    return wordArray;
+}
 
 module.exports={
     tokenize:tokenize,
     tokenizeOne:tokenizeOne,
     tokenize2:tokenize2,
     grammarTokenizer: grammarTokenizer,
+    vocabTokenizer:vocabTokenizer,
 }
