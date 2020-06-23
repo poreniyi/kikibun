@@ -252,20 +252,24 @@ grammarTokenizer=async (text)=>{
 }
 vocabTokenizer=async(text)=>{
     let thePos={
-        助動詞:'Verb',
         動詞:"Verb",
-        形容詞:"I-adjective",
+        形容詞:"I-Adjective",
      
     }
     let tokens=await kuromojin.tokenize(text);
     let wordArray=[];
     let pos;
+    let counter=0;
     tokens.forEach(element=>{
         if(element.pos=="名詞"){
             pos=element.pos_detail_1=='形容動詞語幹' ? "Na-Adjective":"Noun"
         }else if (thePos.hasOwnProperty(element.pos)){
             pos=thePos[element.pos];
-        } else{
+        } else if(element.word_id==23760){//forです
+            pos="Verb";
+        }else if(element.pos=='助動詞'){
+            pos=wordArray[counter-1].POS;
+        }else{
             pos="Particle";
         }
     let word={
@@ -273,6 +277,7 @@ vocabTokenizer=async(text)=>{
         POS:pos
     }
     wordArray.push(word);
+    counter++;
     })
     return wordArray;
 }
