@@ -10,24 +10,43 @@
 
 <body>
     <h1>Original</h1>
+    <p title ="Tool TOp">
+        <%=original%>
+    </p>
+    <h2>Vocab</h2>
+    <div class="box" id='Grammar'>
+        <%vocab.forEach(element=>{ %>
+            <div class=<%=element.POS%>>
+                <%=element.text%>
+            </div>
+        <% })%>
+
+    </div>
     <h2>Grammar</h2>
     <p class="Grammar">
-        <div id="box">
+        <div class="box">
             <% let counter =0%>
-
             <%data.forEach(element=> { %> 
                 <%element.before.forEach(part=>{%>
                     <div class='before'><%=part.text%></div>
                     <% })%>
-                    <div class="tokens" name=<%=counter %>  id=<%=element.POS%>><%=element.surfaceForm%> 
+                    <div class="surface" name=<%=counter %>>
+                        <%=element.surfaceForm%> 
+                        <span class='tooltiptext'> <%=element.base%></span>
                     </div>
                     <%element.conjugatedParts.forEach(part =>{ %>
-                        <div class="conjugations"><%=part.text%></div>
-                    <% })%>
-              
+                        <div  title="Conjugation tooltip"class="conjugations"><%=part.text%></div>
+                    <% })%>       
            <% }) %>
         </div>      
     </p>
-    <h2>Vocab</h2>
+
+    <h2>Info</h2>
+    <button type="button">Hey</button>
+    <button type="button">Hey</button>
+    <button type="button">Hey</button>
+    <button type="button">Hey</button>
+    <button type="button">Hey</button>
+
 </body>
 </html>
