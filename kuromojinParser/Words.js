@@ -10,6 +10,7 @@
     this.status;
     this.length=kanji.length;
     this.statusKnown=false;
+    this.Chapter;
     this.grammarKnown=false;
 };
 Word.prototype.sayKanji=function(){    
