@@ -41,6 +41,8 @@ GenkiParser=async (tokens,chapter)=>{
         let singleToken=tokens[i];
         let afterPart=singleToken.conjugatedParts;
         let beforePart=singleToken.before;
+        let base=singleToken.base;
+        singleToken.statusKnown= await Genki.findOne({Kanji:base,Chapter:{$lte:chapter}})? true:  await Genki.findOne({Chapter:{$lte:chapter},Hiragana:base, Kanji:"none"})?true :false;
        // console.log(`The element is ${singleToken} the before is ${beforePart} and the after is ${afterPart}`);
         if (beforePart.length!=0){
            if(beforePart.every(async element=>{
