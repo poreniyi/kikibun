@@ -9,8 +9,8 @@
     this.JpPOS;
     this.status;
     this.length=kanji.length;
-    this.StatusKnown=true;
-    this.GrammarKnown=true;
+    this.statusKnown=false;
+    this.grammarKnown=false;
 };
 Word.prototype.sayKanji=function(){    
     console.log(this.base);   
@@ -68,6 +68,7 @@ function conjugation(text){
     this.status='unknown';
     this.text=text;
     this.POS;
+    this.description;
 }
 conjugation.prototype.addConjugation=function(string){
     this.text+=string;
