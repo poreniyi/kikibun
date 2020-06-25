@@ -43,6 +43,14 @@ GenkiParser=async (tokens,chapter)=>{
         let beforePart=singleToken.before;
         let base=singleToken.base;
         singleToken.statusKnown= await Genki.findOne({Kanji:base,Chapter:{$lte:chapter}})? true:  await Genki.findOne({Chapter:{$lte:chapter},Hiragana:base, Kanji:"none"})?true :false;
+        if(singleToken.statusKnown){
+          //  singleToken.Chapter=await  Genki.findOne({Kanji:base}).select(' -_id Chapter'));
+            //singleToken.Chapter= await Genki.findOne({Kanji:base}).Chapter;
+            let chapter=(await Genki.findOne({Kanji:base}) ||await Genki.findOne({Hiragana:base}));
+            singleToken.Chapter=chapter.Chapter;
+            //singleToken.Chapter="2";
+           console.log(`The Chaper is: ${chapter}`);
+        }
        // console.log(`The element is ${singleToken} the before is ${beforePart} and the after is ${afterPart}`);
         if (beforePart.length!=0){
            if(beforePart.every(async element=>{
