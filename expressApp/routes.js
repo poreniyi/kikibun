@@ -9,6 +9,12 @@ const Particles=database.Particles;
 const JLPT=database.JLPT;
 let dbScripts=require('../databaseApp/databaseScripts');
 const unqieValidator=require('mongoose-unique-validator');
+let tokenizer=require('../kuromojinParser/Tokenizer');
+const { grammarTokenizer } = require('../kuromojinParser/Tokenizer');
+let tokenOne=tokenizer.tokenizeOne;
+let tokenize2=tokenizer.tokenize2;
+let vocabTokenizer=tokenizer.vocabTokenizer;
+let UpdatedParser=Parser.GenkiParser;
 
 router.get('/About',function(req,res){
     res.render("About");
@@ -17,53 +23,24 @@ router.get('/',function(req,res){
     res.render("Home");
 });
 router.post('/results.html',async(req,res)=>{
-     let text=req.body.text;
-     console.log("Results page: \n")
-        // try{
-        //     console.log(req.body);
-        //     let result = await Parser.Chapter1(req.body.text.trim());
-        //     console.log("MY RESULT IS:" +result);
-        //     res.render('results',{ 
-        //         data: result, 
-        //         originalSentence:text});
-        // }
-        // catch(error){
-        //     console.log(error);
-        // }
-        // part 2
-        // try{
-        //     console.log(req.body.Genki);
-        //     results = await tokenizer.tokenize(req.body.text)
-        //     res.render('Results2',{data:results})
-        // }catch(error){
-        //     console.log(error);
-        // }      
-        let result;
-        //results = await tokenize2('よかったいい食べなかった学生');
-        results =await tokenize2(text);
-        console.log(`Genki:${req.body.Genki}`);
-        for(let i=0;i<results.length;i++){
-            let word=results[i].base;
-            if(await dbScripts.documentExists(word,req.body.Genki)){
-                results[i].setStatus();
-            }
+     let text=req.body.text.trim();
+     console.log("Results page: \n");
+     console.log(`The Genki Chapter is ${req.body.Genki} and the JLPT lvl is ${req.body.JLPT}`);
+        try{
+            let results=await grammarTokenizer(text);
+            let vocab = await vocabTokenizer(text);
+            console.log(results);
+            res.render('Results3',
+            {   original:text,
+                data:results,
+                vocab:vocab,
+                Chapter:eq.body.Genki,
+                NLVL:req.body.JLPT,
+            });
+        }catch(err){
+            console.log(err);
         }
-        for(let i=0;i<results.length;i++){
-            process.stdout.write(`Surface Form:${results[i].surfaceForm}`);
-            results[i].conjugatedParts.forEach(element=>{
-                console.log(`${element}`);
-            })
-        }
-        let testArr=[];
-        let apple=await Genki.find({Kanji:'食べる'});
-        let pie=await Genki.find({Hiragana:'いい'});
-        testArr.push(pie);
-        testArr.push(apple);
-        res.send({
-            vocab:results,
-            stuff:testArr,
-        })
-       // res.send({data:results ,stuff:pie});
+      
         
         
 });
@@ -140,17 +117,10 @@ router.post("/GenkiVocabList", (req,res)=>{
     //res.send("Results Sent");
 });
 
-let tokenizer=require('../kuromojinParser/Tokenizer');
-let tokenOne=tokenizer.tokenizeOne;
-let tokenize2=tokenizer.tokenize2;
-let UpdatedParser=Parser.GenkiParser;
-router.get("/test", async (req,res)=>{
-    let results;
 
-    // results= await Parser.Chapter1Update('私は高校生です。');
-   // results= await Genki.find({length:{$gte:5}})
-    //results = await tokenize2('よかったいい食べなかった学生');
-    string=('食べていませんでした');
+router.get("/test", async (req,res)=>{
+    string='毎日歩くよく話す時々食べる中国のほうが日本より静かな花大きいです食べます犬があります';
+
    // string='食べていました食べた';
     // string=('犬があります家がありました');
     // string=('犬じゃありません犬ではありません');
@@ -172,15 +142,14 @@ router.get("/test", async (req,res)=>{
     // let test='と';
     // let found= await Particles.findOne({Form:test,Chapter:{$lte:1}}) ?true : false;
     // console.log(`The result of the test on ${test} is ${found}`);
-    grammar= await UpdatedParser(grammar, 22);
-  //  results= await tokenizer.tokenizeOne('です');
-      //results= await tokenOne('です');
-       // console.log(results);
-    //results=await Parser.Chapter1Update('空港高校生');
-    //res.render('Results2',{data:results})
+    grammar= await UpdatedParser(grammar, 4);
+    vocab = await vocabTokenizer(string);
+    tokens='';
+    //grammar='';
     res.send({
         tokens:tokens,
-        grammar:grammar
+        grammar:grammar,
+        vocab:vocab,
     });
 })
 
