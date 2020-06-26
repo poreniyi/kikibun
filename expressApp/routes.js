@@ -34,7 +34,7 @@ router.post('/results.html',async(req,res)=>{
             {   original:text,
                 data:results,
                 vocab:vocab,
-                Chapter:eq.body.Genki,
+                Chapter:req.body.Genki,
                 NLVL:req.body.JLPT,
             });
         }catch(err){
