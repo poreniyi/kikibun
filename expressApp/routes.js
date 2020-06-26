@@ -144,12 +144,15 @@ router.get("/test", async (req,res)=>{
     // console.log(`The result of the test on ${test} is ${found}`);
     grammar= await UpdatedParser(grammar, 4);
     vocab = await vocabTokenizer(string);
+    let sizeofINdex= await Genki.find({Hiragana:{$size:2}});
+    console.log(`Things with more than 1 hirgana are ${sizeofINdex}`);
     tokens='';
     //grammar='';
     res.send({
         tokens:tokens,
         grammar:grammar,
         vocab:vocab,
+        size:sizeofINdex,
     });
 })
 
