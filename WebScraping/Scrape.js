@@ -5,22 +5,26 @@ const $ = require('cheerio');
 const puppeteer = require('puppeteer');
 const fs= require('fs');
 
-getNHKArticle= (url,stream) =>{
+getTextOfArticle= (url,stream) =>{
   rp(url)
   .then(function(html){
     //success!
-    let articleText=$('#js-article-body', html).text();
-    articleText=articleText.trim();
-    stream.write(articleText);
-    return articleText;
+    Cheers=$.load(html);
+    Cheers('rt').remove();
+    let articleText =Cheers('#js-article-body').text().trim();
+    let title=Cheers('.article-main__title').text().trim();
+    $('ruby').remove();
+    let today=new Date();
+    let date= `${today.getMonth()}/${today.getDay()}/${today.getFullYear()}`;
+    let fullText=date+'。'+title+"。"+articleText;
+    stream.write(fullText);
+    return fullText;
   })
   .catch(function(err){
     //handle error
     console.log(err)
   });
 }
-let readStream=fs.createReadStream(__dirname + '/links.txt',  'utf8');
-
 
 getArticleLinks=  (url) =>{
   return new Promise(async (resolve, reject) => {
@@ -34,17 +38,14 @@ getArticleLinks=  (url) =>{
             items.forEach((item) => {
               let begin=window.location;
               let data= begin+item.getAttribute('href').slice(2);
-             // myWriteStream.write(data+"\n");
                 results.push({
                    url: data,
-                    text: item.innerText,
                 });
-                //console.log(item);
             });
             return results;
         })
-        
         browser.close();
+        console.log(urls);
         return resolve(urls);
     } catch (e) {
         return reject(e);
@@ -70,25 +71,32 @@ readArticles= () =>{
     myReadStream.on('data',(chunk)=>{
       console.log(`Now reading file ${name}`);
       let sentences=chunk.split('。');
+      console.log(`The title of the article is ${sentences[1]}`);
+      console.log(`The date of the article is ${sentences[0]}`);
       console.log(`There are ${sentences.length} sentences`);
     })
     counter++;
   }
 }
-readArticles();
-writeArticleToFile = async()=>{
+writeArticlesToFile = async()=>{
   let counter=1;
-   let content= await getArticleLinks(articleLinks);
-   content.forEach(element =>{
+   let articleLinksList= await getArticleLinks(articleLinks);
+   articleLinksList.forEach(element =>{
     let name='Article'+String(counter)+'.txt';
     let writeStream=fs.createWriteStream(name);
-    getNHKArticle(element.url,writeStream);
-    console.log(name);
+    console.log(`The url is ${element.url} its type is:${typeof element.url}`);
+    let text=getTextOfArticle(element.url,writeStream);
+    console.log(`The ${name} has been written to`);
     counter++;
    })
 }
+let testLink='https://www3.nhk.or.jp/news/easy/k10012483421000/k10012483421000.html';
+//getTextOfArticle(testLink);
+//writeArticlesToFile();
+//readArticles();
+
 
 
 module.exports={
-  writeArticleToFile:writeArticleToFile,
+  writeArticlesToFile:writeArticlesToFile,
 }
