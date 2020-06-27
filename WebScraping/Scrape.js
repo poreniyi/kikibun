@@ -4,6 +4,14 @@ const articleLinks='https://www3.nhk.or.jp/news/easy/';
 const $ = require('cheerio');
 const puppeteer = require('puppeteer');
 const fs= require('fs');
+myFunc=(string)=>{
+  let today=new Date();
+  let date= `${today.getMonth()}/${today.getDay()}/${today.getFullYear()}`;
+  let time=`${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+  console.log(string);
+  console.log(date)
+  console.log(time);
+}
 
 getTextOfArticle= (url,stream) =>{
   rp(url)
@@ -13,11 +21,16 @@ getTextOfArticle= (url,stream) =>{
     Cheers('rt').remove();
     let articleText =Cheers('#js-article-body').text().trim();
     let title=Cheers('.article-main__title').text().trim();
-    $('ruby').remove();
     let today=new Date();
     let date= `${today.getMonth()}/${today.getDay()}/${today.getFullYear()}`;
     let fullText=date+'。'+title+"。"+articleText;
-    stream.write(fullText);
+    let obj={
+      date:date,
+      title:title,
+      text:articleText
+    }
+    let chunk=JSON.stringify(obj);
+    stream.write(chunk);
     return fullText;
   })
   .catch(function(err){
@@ -52,16 +65,8 @@ getArticleLinks=  (url) =>{
     }
 })
 }
-myFunc=(string)=>{
-  let today=new Date();
-  let date= `${today.getMonth()}/${today.getDay()}/${today.getFullYear()}`;
-  let time=`${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
-  console.log(string);
-  console.log(date)
-  console.log(time);
-}
+
 //setInterval(myFunc,5000,"Mario");
-let myWriteStream=fs.createWriteStream(__dirname + '/Happy.txt');//, {flags: 'a'}
 
 readArticles= () =>{
   let counter=1;
@@ -70,10 +75,9 @@ readArticles= () =>{
     let myReadStream=fs.createReadStream(name, 'utf8');
     myReadStream.on('data',(chunk)=>{
       console.log(`Now reading file ${name}`);
-      let sentences=chunk.split('。');
-      console.log(`The title of the article is ${sentences[1]}`);
-      console.log(`The date of the article is ${sentences[0]}`);
-      console.log(`There are ${sentences.length} sentences`);
+      let data=JSON.parse(chunk);
+      console.log(`Title of article is:${data.title} and the date of the article is ${data.date}`);
+      console.log(`The text of the article is ${data.text}`);
     })
     counter++;
   }
@@ -93,7 +97,7 @@ writeArticlesToFile = async()=>{
 let testLink='https://www3.nhk.or.jp/news/easy/k10012483421000/k10012483421000.html';
 //getTextOfArticle(testLink);
 //writeArticlesToFile();
-//readArticles();
+readArticles();
 
 
 
