@@ -4,6 +4,8 @@ const articleLinks='https://www3.nhk.or.jp/news/easy/';
 const $ = require('cheerio');
 const puppeteer = require('puppeteer');
 const fs= require('fs');
+const path = require('path');
+
 myFunc=(string)=>{
   let today=new Date();
   let date= `${today.getMonth()}/${today.getDay()}/${today.getFullYear()}`;
@@ -70,17 +72,26 @@ getArticleLinks=  (url) =>{
 
 readArticles= () =>{
   let counter=1;
+  let articles=[];
   while(counter<6){
     let name="Article"+counter+".txt";
-    let myReadStream=fs.createReadStream(name, 'utf8');
-    myReadStream.on('data',(chunk)=>{
+    fs.readFile(path.join(__dirname,"..","txtFiles","NHKArticles",name),'utf8',(err,data)=>{
       console.log(`Now reading file ${name}`);
-      let data=JSON.parse(chunk);
-      console.log(`Title of article is:${data.title} and the date of the article is ${data.date}`);
-      console.log(`The text of the article is ${data.text}`);
+      let article=JSON.parse(data);
+      articles.push(article);
+      // console.log(`Title of article is:${article.title} and the date of the article is ${article.date}`);
+      // console.log(`The text of the article is ${article.text}`);
     })
+    // myReadStream.on('data',(chunk)=>{
+    //   console.log(`Now reading file ${name}`);
+    //   let data=JSON.parse(chunk);
+    //   articles.push(data);
+    //   console.log(`Title of article is:${data.title} and the date of the article is ${data.date}`);
+    //   console.log(`The text of the article is ${data.text}`);
+    // })
     counter++;
   }
+  return articles;
 }
 writeArticlesToFile = async()=>{
   let counter=1;
@@ -97,10 +108,11 @@ writeArticlesToFile = async()=>{
 let testLink='https://www3.nhk.or.jp/news/easy/k10012483421000/k10012483421000.html';
 //getTextOfArticle(testLink);
 //writeArticlesToFile();
-readArticles();
+//readArticles();
 
 
 
 module.exports={
   writeArticlesToFile:writeArticlesToFile,
+  getData:readArticles,
 }
