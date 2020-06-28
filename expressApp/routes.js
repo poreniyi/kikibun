@@ -123,32 +123,13 @@ router.post("/GenkiVocabList", (req,res)=>{
     //res.send("Results Sent");
 });
 
-router.get("/NHK",  async(req,res)=>{
-    let data;
-    let name='Article1.txt';
-    try{
-        let readStream=fs.createReadStream(path.join(__dirname,"..","txtFiles","NHKArticles",name),'utf8');
-        readStream.on('data',chunk=>{
-          console.log(chunk);
-          console.log(typeof chunk);
-          let article=JSON.parse(chunk);
-    res.render('NHK',{
-        articles:chunk,
-        pie:"HEY",
-    });
-
-        })
-        readStream.on('end',()=>{
-          console.log(`File has been read`);
-          // console.log(`Data is ${articles}`)
-        }) 
-    }
-    catch(err){
-        console.log(err);
-    }
-    console.log(`The data is ${data}`);
-
-   
+router.get("/NHK",async  (req,res)=>{
+   let articles= await getArticleData();
+//    console.log(array);
+res.render("NHK",{
+    articles:articles,
+    pie:2
+})
 });
 
 router.get("/test", async (req,res)=>{

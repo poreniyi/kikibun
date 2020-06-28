@@ -69,31 +69,16 @@ getArticleLinks=  (url) =>{
 }
 
 
-readArticles= () =>{
-let counter=0;
-let articles;
-
-while(counter<6){
-    counter++;
+readArticles= async() =>{
+let counter=1;
+let articles=[];
+for(let i=1;i<6;i++){
+  let name="Article"+i+'.txt';
+    const data= await  fs.promises.readFile(path.join(__dirname,"..","txtFiles","NHKArticles",name),'utf8');
+    const JSONdata=JSON.parse(data);
+    articles.push(JSONdata);
   }
-  let name='Article1.txt';
-  let readStream=fs.createReadStream(path.join(__dirname,"..","txtFiles","NHKArticles",name),'utf8');
-  // fs.readFile(path.join(__dirname,"..","txtFiles","NHKArticles",name),'utf8',function(data){
-  //   data=JSON.parse(data);
-  //   console.log(`File read data is ${data}`);
-  //   return data;
-  // })  
-  readStream.on('data',chunk=>{
-    console.log(chunk);
-    console.log(typeof chunk);
-    let article=JSON.parse(chunk);
-    articles+=article;
-  })
-  readStream.on('end',()=>{
-    console.log(`File has been read`);
-    // console.log(`Data is ${articles}`)
-    return articles;
-  })
+  return articles;
 }
 writeArticlesToFile = async()=>{
   let counter=1;
