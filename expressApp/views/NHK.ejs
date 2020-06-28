@@ -10,9 +10,12 @@
 <%- include ('partials/nav.ejs') %>
 
 <body>
-  
-    <%let obj=JSON.parse(articles)%>
-    <%=obj.text%>
+    <%articles.forEach(element=>{%>
+        <h2><%=element.title%></h2>
+        <div>
+        <%=element.text%>
+        </div>
+        <%})%>
     <%=pie%>
 </body>
 </html>
