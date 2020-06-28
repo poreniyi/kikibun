@@ -68,30 +68,32 @@ getArticleLinks=  (url) =>{
 })
 }
 
-//setInterval(myFunc,5000,"Mario");
 
 readArticles= () =>{
-  let counter=1;
-  let articles=[];
-  while(counter<6){
-    let name="Article"+counter+".txt";
-    fs.readFile(path.join(__dirname,"..","txtFiles","NHKArticles",name),'utf8',(err,data)=>{
-      console.log(`Now reading file ${name}`);
-      let article=JSON.parse(data);
-      articles.push(article);
-      // console.log(`Title of article is:${article.title} and the date of the article is ${article.date}`);
-      // console.log(`The text of the article is ${article.text}`);
-    })
-    // myReadStream.on('data',(chunk)=>{
-    //   console.log(`Now reading file ${name}`);
-    //   let data=JSON.parse(chunk);
-    //   articles.push(data);
-    //   console.log(`Title of article is:${data.title} and the date of the article is ${data.date}`);
-    //   console.log(`The text of the article is ${data.text}`);
-    // })
+let counter=0;
+let articles;
+
+while(counter<6){
     counter++;
   }
-  return articles;
+  let name='Article1.txt';
+  let readStream=fs.createReadStream(path.join(__dirname,"..","txtFiles","NHKArticles",name),'utf8');
+  // fs.readFile(path.join(__dirname,"..","txtFiles","NHKArticles",name),'utf8',function(data){
+  //   data=JSON.parse(data);
+  //   console.log(`File read data is ${data}`);
+  //   return data;
+  // })  
+  readStream.on('data',chunk=>{
+    console.log(chunk);
+    console.log(typeof chunk);
+    let article=JSON.parse(chunk);
+    articles+=article;
+  })
+  readStream.on('end',()=>{
+    console.log(`File has been read`);
+    // console.log(`Data is ${articles}`)
+    return articles;
+  })
 }
 writeArticlesToFile = async()=>{
   let counter=1;
@@ -114,5 +116,5 @@ let testLink='https://www3.nhk.or.jp/news/easy/k10012483421000/k10012483421000.h
 
 module.exports={
   writeArticlesToFile:writeArticlesToFile,
-  getData:readArticles,
+  readArticles:readArticles,
 }

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Articles</title>
+    <link rel='stylesheet' type="text/css" href='../../assets/StyleSheets/NHK.css'>
+
 </head>
 <%- include ('partials/nav.ejs') %>
 
 <body>
-    <%articles.forEach(element=>{%>
-
-    <%})%>
+  
+    <%let obj=JSON.parse(articles)%>
+    <%=obj.text%>
+    <%=pie%>
 </body>
 </html>

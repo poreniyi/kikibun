@@ -9,12 +9,14 @@ const Particles=database.Particles;
 const JLPT=database.JLPT;
 let dbScripts=require('../databaseApp/databaseScripts');
 const unqieValidator=require('mongoose-unique-validator');
+const fs=require('fs');
 let tokenizer=require('../kuromojinParser/Tokenizer');
 const { grammarTokenizer } = require('../kuromojinParser/Tokenizer');
 let tokenOne=tokenizer.tokenizeOne;
 let tokenize2=tokenizer.tokenize2;
 let vocabTokenizer=tokenizer.vocabTokenizer;
 let UpdatedParser=Parser.GenkiParser;
+const getArticleData=require('../WebScraping/Scrape').readArticles;
 
 router.get('/About',function(req,res){
     res.render("About");
@@ -23,16 +25,20 @@ router.get('/',function(req,res){
     res.render("Home");
 });
 router.post('/results.html',async(req,res)=>{
-     let text=req.body.text.trim();
-     console.log("Results page: \n");
-     console.log(`The Genki Chapter is ${req.body.Genki} and the JLPT lvl is ${req.body.JLPT}`);
+    let text=req.body.text.trim();
+    let sentences=text.split("。");
+    console.log("Results page: \n");
+    console.log(`The Genki Chapter is ${req.body.Genki} and the JLPT lvl is ${req.body.JLPT}`);
         try{
+            for(let i =0;i<sentences.length;i++){
+                sentences[i]=await grammarTokenizer(sentences[i]);
+            }
             let results=await grammarTokenizer(text);
             let vocab = await vocabTokenizer(text);
             console.log(results);
             res.render('Results3',
             {   original:text,
-                data:results,
+                grammar:sentences,
                 vocab:vocab,
                 Chapter:req.body.Genki,
                 NLVL:req.body.JLPT,
@@ -117,6 +123,33 @@ router.post("/GenkiVocabList", (req,res)=>{
     //res.send("Results Sent");
 });
 
+router.get("/NHK",  async(req,res)=>{
+    let data;
+    let name='Article1.txt';
+    try{
+        let readStream=fs.createReadStream(path.join(__dirname,"..","txtFiles","NHKArticles",name),'utf8');
+        readStream.on('data',chunk=>{
+          console.log(chunk);
+          console.log(typeof chunk);
+          let article=JSON.parse(chunk);
+    res.render('NHK',{
+        articles:chunk,
+        pie:"HEY",
+    });
+
+        })
+        readStream.on('end',()=>{
+          console.log(`File has been read`);
+          // console.log(`Data is ${articles}`)
+        }) 
+    }
+    catch(err){
+        console.log(err);
+    }
+    console.log(`The data is ${data}`);
+
+   
+});
 
 router.get("/test", async (req,res)=>{
     string='毎日歩くよく話す時々食べる中国のほうが日本より静かな花大きいです食べます犬があります';
