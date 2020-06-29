@@ -10,12 +10,32 @@
 <%- include ('partials/nav.ejs') %>
 
 <body>
-    <%articles.forEach(element=>{%>
-        <h2><%=element.title%></h2>
-        <div>
-        <%=element.text%>
-        </div>
-        <%})%>
-    <%=pie%>
+    <% let counter=0%>
+    <h2>Select An Article</h2>
+    <span>Article Title</span>
+    <%if(Selected!="none"){%>
+        <input id='Selected' type=button value=<%=Selected%>>
+        The Selected Article#<%=Selected%>
+        <%}%>
+    <select id='articleSelect'>
+        <option>Select An Article</option>
+        <%articles.forEach(element=>{%>
+            <option><%=element.title%></option>        
+            <%})%>   
+    </select>
+    <%articles.forEach(element =>{%>
+        <div  class="selectText" id=<%=counter%> hidden><%=element.text%></div>
+        <%counter++%>
+    <%})%>
+    <div name='articleText'id='articleText'></div>
+    <form  id='form' method='POST'>
+    <button hidden>Grammar</button>
+    <button hidden>Vocab</button>
+    <input hidden id='articleNumber' name='articleNumber'>
+    </form>
+
+  
+ 
+ <script src='../../assets/Scripts/NHK.js'></script>
 </body>
 </html>

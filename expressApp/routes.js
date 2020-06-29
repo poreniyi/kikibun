@@ -127,10 +127,21 @@ router.get("/NHK",async  (req,res)=>{
    let articles= await getArticleData();
 //    console.log(array);
 res.render("NHK",{
+    Selected:'none',
     articles:articles,
     pie:2
 })
 });
+router.post('/NHK',async (req,res)=>{
+    let articles= await getArticleData();
+   let articleNumber=req.body.articleNumber;
+   console.log(`Test input is ${articleNumber}`);
+    res.render("NHK",{
+        articles:articles,
+        Selected:articleNumber,
+    }
+    );
+})
 
 router.get("/test", async (req,res)=>{
     string='毎日歩くよく話す時々食べる中国のほうが日本より静かな花大きいです食べます犬があります';
