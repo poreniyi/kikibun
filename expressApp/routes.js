@@ -125,9 +125,18 @@ router.post("/GenkiVocabList", (req,res)=>{
 
 router.get("/NHK",async  (req,res)=>{
    let articles= await getArticleData();
+   let articleDate=new Date(articles[0].date);
+   console.log(`The Date of this article is:${articleDate}`);
+   let today=new Date();
+   let todayDate=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+   if(todayDate>articleDate){
+        console.log(`User viewing old article. It is ${todayDate.getDate()-articleDate.getDate()} days old`);
+   }
+   console.log(`Todays date is ${todayDate}`);
+   console.log(`Article's date is ${articleDate}`);
+
 //    console.log(array);
 res.render("NHK",{
-    Selected:'none',
     articles:articles,
     pie:2
 })
