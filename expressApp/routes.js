@@ -133,16 +133,23 @@ res.render("NHK",{
 })
 });
 router.post('/NHK',async (req,res)=>{
-    let articles= await getArticleData();
-   let articleNumber=req.body.articleNumber;
-   console.log(`Test input is ${articleNumber}`);
-    res.render("NHK",{
-        articles:articles,
-        Selected:articleNumber,
-    }
-    );
-})
+   let articleText=req.body.Text;
+   let sentences=articleText.split('。');
+   let grammarSentences,vocabSentences=[];
+   for(let i=0;i<sentences.length;i++){
+    grammarSentences=await grammarTokenizer(sentences[i]); 
+    vocabSentences=await grammarTokenizer(sentences[i]); 
+   }
+   console.log(`Article Text is: ${articleText}`);
+   res.render('Results3',
+   {   original:articleText,
+       grammar:grammarSentences,
+       vocab:vocabSentences,
+    //    Chapter:req.body.Genki,
+    //    NLVL:req.body.JLPT,
+   });
 
+})
 router.get("/test", async (req,res)=>{
     string='毎日歩くよく話す時々食べる中国のほうが日本より静かな花大きいです食べます犬があります';
 

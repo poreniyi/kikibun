@@ -13,10 +13,6 @@
     <% let counter=0%>
     <h2>Select An Article</h2>
     <span>Article Title</span>
-    <%if(Selected!="none"){%>
-        <input id='Selected' type=button value=<%=Selected%>>
-        The Selected Article#<%=Selected%>
-        <%}%>
     <select id='articleSelect'>
         <option>Select An Article</option>
         <%articles.forEach(element=>{%>
@@ -31,7 +27,7 @@
     <form  id='form' method='POST'>
     <button hidden>Grammar</button>
     <button hidden>Vocab</button>
-    <input hidden id='articleNumber' name='articleNumber'>
+    <input hidden id='Text' name='Text'>
     </form>
 
   
