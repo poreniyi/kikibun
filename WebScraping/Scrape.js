@@ -24,7 +24,8 @@ getTextOfArticle= (url,stream) =>{
     let articleText =Cheers('#js-article-body').text().trim();
     let title=Cheers('.article-main__title').text().trim();
     let today=new Date();
-    let date= `${today.getMonth()}/${today.getDay()}/${today.getFullYear()}`;
+   // let date= `${today.getMonth()}/${today.getDay()}/${today.getFullYear()}`;
+    let date=new Date(today.getFullYear(),today.getMonth(),today.getDate());;
     let fullText=date+'。'+title+"。"+articleText;
     let obj={
       date:date,
@@ -84,9 +85,10 @@ writeArticlesToFile = async()=>{
   let counter=1;
    let articleLinksList= await getArticleLinks(articleLinks);
    articleLinksList.forEach(element =>{
-    let name='Article'+String(counter)+'.txt';
-    let writeStream=fs.createWriteStream(name);
-    console.log(`The url is ${element.url} its type is:${typeof element.url}`);
+    let name="Article"+i+'.txt';
+    let writeData=JSON.stringify(JSONdata);
+    let writeStream=fs.createWriteStream(path.join(__dirname,"..","txtFiles","NHKArticles",name));
+   console.log(`The url is ${element.url} its type is:${typeof element.url}`);
     let text=getTextOfArticle(element.url,writeStream);
     console.log(`The ${name} has been written to`);
     counter++;
@@ -97,8 +99,22 @@ let testLink='https://www3.nhk.or.jp/news/easy/k10012483421000/k10012483421000.h
 //writeArticlesToFile();
 //readArticles();
 
+makeDatesProper=async()=>{
+  for(let i=1;i<6;i++){
+    let name="Article"+i+'.txt';
+    let writePath="Test2"+i+'.txt';
+      const data= await  fs.promises.readFile(path.join(__dirname,"..","txtFiles","NHKArticles",name),'utf8');
+      const JSONdata=JSON.parse(data);
+      let today=new Date();
+    let date=new Date(today.getFullYear(),today.getMonth(),26);
+      JSONdata.date=date;
+      let writeData=JSON.stringify(JSONdata);
+      let writeStream=fs.createWriteStream(path.join(__dirname,"..","txtFiles","NHKArticles",name));
+      writeStream.write(writeData);
+    }
+}
 
-
+makeDatesProper();
 module.exports={
   writeArticlesToFile:writeArticlesToFile,
   readArticles:readArticles,
