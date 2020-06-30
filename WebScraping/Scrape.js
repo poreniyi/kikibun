@@ -114,7 +114,7 @@ makeDatesProper=async()=>{
     }
 }
 
-makeDatesProper();
+//makeDatesProper();
 module.exports={
   writeArticlesToFile:writeArticlesToFile,
   readArticles:readArticles,
