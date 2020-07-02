@@ -130,7 +130,11 @@ router.get("/NHK",async  (req,res)=>{
    let today=new Date();
    let todayDate=new Date(today.getFullYear(),today.getMonth(),today.getDate());
    if(todayDate>articleDate){
-        console.log(`User viewing old article. It is ${todayDate.getDate()-articleDate.getDate()} days old`);
+       let difference=today.getTime()-articleDate.getTime();
+       let days=1000*60*60*24;
+       let dayDiffernce= Math.round(difference/days);
+       today.getMonth()-articleDate.getMonth();
+        console.log(`User viewing old article. It is ${dayDiffernce} days old`);
    }
    console.log(`Todays date is ${todayDate}`);
    console.log(`Article's date is ${articleDate}`);
@@ -144,12 +148,15 @@ res.render("NHK",{
 router.post('/NHK',async (req,res)=>{
    let articleText=req.body.Text;
    let sentences=articleText.split('。');
-   let grammarSentences,vocabSentences=[];
+   let grammarSentences=[];
+   let vocabSentences=[];
    for(let i=0;i<sentences.length;i++){
-    grammarSentences=await grammarTokenizer(sentences[i]); 
-    vocabSentences=await grammarTokenizer(sentences[i]); 
-   }
-   console.log(`Article Text is: ${articleText}`);
+       let grammar= await grammarTokenizer(sentences[i]); 
+       let vocab=await vocabTokenizer(sentences[i]); 
+       grammarSentences.push(grammar);
+       vocabSentences.push(vocab);
+    }
+    // res.send(vocabSentences);
    res.render('Results3',
    {   original:articleText,
        grammar:grammarSentences,
