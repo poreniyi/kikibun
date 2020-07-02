@@ -4,6 +4,14 @@ body{
 .Grammar{
     
 }
+:root {
+    --Verb-Color: #ffa500;
+    --Noun-Color: #008b8b;
+    --Particle-Color: #ff1493;
+    --I-Adjective-Color: #0000ff;
+    --Na-Adjective-Color: #00bfff;
+
+  }
 .box{
     display:inline-flex;
     flex-wrap:wrap;
@@ -19,19 +27,19 @@ div,p{
     letter-spacing: 0px;
 } */
 .Verb{
-    color:blue;
+    color:var(--Verb-Color);
 }
 .Noun{
-    color: red;
+    color:var(--Noun-Color);
 }
 .Particle{
-    color: green;
+    color:var(--Particle-Color);
 }
 .I-Adjective{
-    color: peru;
+    color:var(--I-Adjective-Color);
 }
 .Na-Adjective{
-    color:#dcbeff;
+    color:var(--Na-Adjective-Color);
 }
 .Verb,.Noun,.Particle,.Na-Adjective,.I-Adjective,.before,.surface,.conjugations{
     -webkit-user-select: none; /* Safari */
