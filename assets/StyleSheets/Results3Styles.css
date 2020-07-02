@@ -1,15 +1,17 @@
 body{
     padding-top: 20px;
+    background-color: lightblue;
 }
 .Grammar{
     
 }
 :root {
     --Verb-Color: #ffa500;
-    --Noun-Color: #008b8b;
+    --Noun-Color: #00ff7f;
     --Particle-Color: #ff1493;
-    --I-Adjective-Color: #0000ff;
+    --I-Adjective-Color: #00ced1;
     --Na-Adjective-Color: #00bfff;
+    --Dark-Background-color: #393f44;
 
   }
 .box{
@@ -19,6 +21,9 @@ body{
     -webkit-user-select: text; /* Safari */
     -ms-user-select: text; /* IE 10+ and Edge */
     user-select: text;
+}
+#Vocab{
+    background-color:var( --Dark-Background-color);
 }
 /* div{
     display: inline;
