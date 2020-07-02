@@ -190,8 +190,9 @@ grammarTokenizer=async (text)=>{
         continue;
     }
     //adding to previous
-        // this checks for ん and　And adds it to previous conjugation；
-        if((token.word_id===22540|| token.word_id==23430||token.word_id==23650||token.word_id==3447280|| token.word_id==92740 ||(token.word_id==1249100&& token.pos_detail_1=='非自立')) &&previousWord.getLastConjugation()){
+    if(previousWord!=undefined&&previousWord.getLastConjugation()!=undefined){
+         // this checks for ん and　And adds it to previous conjugation；
+         if((token.word_id===22540|| token.word_id==23430||token.word_id==23650||token.word_id==3447280|| token.word_id==92740 ||(token.word_id==1249100&& token.pos_detail_1=='非自立')) &&previousWord.getLastConjugation()){
             //console.log(`${token.surface_form} and the previous word is ${previousWord}`);
             console.log(`This is the alst conjugation ${previousWord.getLastConjugation()}`);
             previousWord.getLastConjugation().addConjugation(token.surface_form);
@@ -203,6 +204,8 @@ grammarTokenizer=async (text)=>{
             console.log('adding to previous conjugation')
             continue;
         }
+    }
+       
     
     //new conjugation
 
