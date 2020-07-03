@@ -37,8 +37,8 @@
 
     </div>
     <h2>Grammar</h2>
-    <p class="Grammar">
-        <div class="box">
+    <p>
+        <div class="box" id="Grammar">
             <% let counter =0%>
            <%grammar.forEach(sentence=>{%>
                 <% sentence.forEach(word=>{%>
@@ -50,7 +50,7 @@
                             <span class='tooltiptext'> <%=word.base%></span>
                         </div>
                         <%word.conjugatedParts.forEach(part =>{ %>
-                            <div  title="Conjugation tooltip"class="conjugations"><%=part.text%></div>
+                            <div  title="Conjugation tooltip"class=<%=part.status%>><%=part.text%></div>
                         <% })%>
 
                 <%})%>。

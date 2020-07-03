@@ -27,28 +27,31 @@ router.get('/',function(req,res){
 router.post('/results.html',async(req,res)=>{
     let text=req.body.text.trim();
     let sentences=text.split("。");
+    let grammarSentences=[];
+   let vocabSentences=[];
     console.log("Results page: \n");
     console.log(`The Genki Chapter is ${req.body.Genki} and the JLPT lvl is ${req.body.JLPT}`);
         try{
             for(let i =0;i<sentences.length;i++){
-                sentences[i]=await grammarTokenizer(sentences[i]);
+                let grammar= await grammarTokenizer(sentences[i]); 
+                let vocab=await vocabTokenizer(sentences[i]);
+                grammar=await UpdatedParser(grammar,22); 
+                grammarSentences.push(grammar);
+                vocabSentences.push(vocab);
             }
             let results=await grammarTokenizer(text);
             let vocab = await vocabTokenizer(text);
             console.log(results);
             res.render('Results3',
             {   original:text,
-                grammar:sentences,
-                vocab:vocab,
+                grammar:grammarSentences,
+                vocab:vocabSentences,
                 Chapter:req.body.Genki,
                 NLVL:req.body.JLPT,
             });
         }catch(err){
             console.log(err);
-        }
-      
-        
-        
+        }  
 });
 
 router.get("/GenkiVocabList",async(req,res)=>{
@@ -149,9 +152,11 @@ router.post('/NHK',async (req,res)=>{
    let articleText=req.body.Text;
    let sentences=articleText.split('。');
    let grammarSentences=[];
+   let Chapter=parseInt(req.body.Genki);
    let vocabSentences=[];
    for(let i=0;i<sentences.length;i++){
        let grammar= await grammarTokenizer(sentences[i]); 
+       //grammar=await UpdatedParser(grammar,22);
        let vocab=await vocabTokenizer(sentences[i]); 
        grammarSentences.push(grammar);
        vocabSentences.push(vocab);
@@ -168,15 +173,6 @@ router.post('/NHK',async (req,res)=>{
 })
 router.get("/test", async (req,res)=>{
     string='毎日歩くよく話す時々食べる中国のほうが日本より静かな花大きいです食べます犬があります';
-
-   // string='食べていました食べた';
-    // string=('犬があります家がありました');
-    // string=('犬じゃありません犬ではありません');
-    // string='犬がない食べない'
-    // string=('食べてる');
-    //  string=('犬があるんです');
-    // string= '話した';
-   // string='話した犬がいた'
     let tokens;
     let grammar;
     let vocab;
@@ -186,10 +182,6 @@ router.get("/test", async (req,res)=>{
     }catch(err){
         console.log(err);
     }
- 
-    // let test='と';
-    // let found= await Particles.findOne({Form:test,Chapter:{$lte:1}}) ?true : false;
-    // console.log(`The result of the test on ${test} is ${found}`);
     grammar= await UpdatedParser(grammar, 4);
     vocab = await vocabTokenizer(string);
     let sizeofINdex= await Genki.find({Hiragana:{$size:2}});
