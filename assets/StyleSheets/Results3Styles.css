@@ -31,7 +31,7 @@ body{
 div,p{
     letter-spacing: 0px;
 } */
-.Verb{
+/* .Verb{
     color:var(--Verb-Color);
 }
 .Noun{
@@ -45,6 +45,9 @@ div,p{
 }
 .Na-Adjective{
     color:var(--Na-Adjective-Color);
+} */
+.Noun,.Verb,.Particle,.I-Adjective,.Na-Adjective{
+    color:white;
 }
 .Verb,.Noun,.Particle,.Na-Adjective,.I-Adjective,.before,.surface,.conjugations{
     -webkit-user-select: none; /* Safari */
