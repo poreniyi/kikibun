@@ -1,9 +1,10 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
 body{
     padding-top: 20px;
     background-color: lightblue;
-}
-.Grammar{
-    
 }
 :root {
     --Verb-Color: #ffa500;
@@ -22,8 +23,16 @@ body{
     -ms-user-select: text; /* IE 10+ and Edge */
     user-select: text;
 }
-#Vocab{
+#Vocab,#Grammar{
     background-color:var( --Dark-Background-color);
+    color:white;
+}
+
+.unknown{
+    color:red;
+}
+.known{
+    color:peach;
 }
 /* div{
     display: inline;
@@ -65,3 +74,4 @@ div,p{
     visibility: visible;
     display: inline-block;
 }
+
