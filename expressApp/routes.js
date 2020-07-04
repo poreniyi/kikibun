@@ -184,15 +184,13 @@ router.get("/test", async (req,res)=>{
     }
     grammar= await UpdatedParser(grammar, 4);
     vocab = await vocabTokenizer(string);
-    let sizeofINdex= await Genki.find({Hiragana:{$size:2}});
-    console.log(`Things with more than 1 hirgana are ${sizeofINdex}`);
     tokens='';
     //grammar='';
+    vocab='';
     res.send({
         tokens:tokens,
         grammar:grammar,
         vocab:vocab,
-        size:sizeofINdex,
     });
 })
 
