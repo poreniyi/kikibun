@@ -46,32 +46,30 @@ GenkiParser=async (tokens,chapter)=>{
         if(singleToken.statusKnown){
           //  singleToken.Chapter=await  Genki.findOne({Kanji:base}).select(' -_id Chapter'));
             //singleToken.Chapter= await Genki.findOne({Kanji:base}).Chapter;
-            let chapter=(await Genki.findOne({Kanji:base}) ||await Genki.findOne({Hiragana:base}));
-            singleToken.Chapter=chapter.Chapter;
-            //singleToken.Chapter="2";
-           console.log(`The Chaper is: ${chapter}`);
+            let word=(await Genki.findOne({Kanji:base}) ||await Genki.findOne({Hiragana:base}));
+            singleToken.Chapter=word.Chapter;
+            singleToken.addDescription(word.English);
         }
-       // console.log(`The element is ${singleToken} the before is ${beforePart} and the after is ${afterPart}`);
-        if (beforePart.length!=0){
-           if(beforePart.every(async element=>{
-               // return await particleFound(element,chapter);
-           })){
-               console.log(beforePart);
-                //singleToken.MakeGrammarUnknown();
-           }
-        }
-       for(let j=0 ; j<afterPart.length; j++){
-           let element=afterPart[j];
-           let text=afterPart[j].text;
-           console.log(`The text of the element is ${text}`);
-           if(await particleFound(text,chapter)==true){
-               element.makeKnown();
-           }
-       }
+        findParticles(afterPart,chapter);
+        findParticles(beforePart,chapter);
        
     }
     return tokens;
 }
+let findParticles=async(array,chapter)=>{
+    for(let j=0 ; j<array.length; j++){
+        let element=array[j];
+        let text=array[j].text;
+        console.log(`The text of the element is ${text}`);
+        let data=await Particles.findOne({Form:text,Chapter:{$lte:chapter}}) ? true: false;
+        if(data){
+            let particle=await Particles.findOne({Form:text});
+            element.makeKnown();
+            element.updateDescription(particle.Name);
+            element.updateChapter(particle.Chapter);
+        }
+    } 
+ }
 
 module.exports={
     Chapter1:Chapter1,
