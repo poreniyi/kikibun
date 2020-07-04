@@ -12,6 +12,7 @@
     this.statusKnown=false;
     this.Chapter;
     this.grammarKnown=false;
+    this.description;
 };
 Word.prototype.sayKanji=function(){    
     console.log(this.base);   
@@ -60,22 +61,31 @@ Word.prototype.getGivenForm=function(){
 Word.prototype.setStatus=function(text){
     this.StatusKnown=!this.StatusKnown;
     console.log(this.StatusKnown);
-
 }
 Word.prototype.MakeGrammarUnknown=function(){
     this.GrammarKnown=false;
+}
+Word.prototype.addDescription=function(text){
+    this.description=text;
 }
 function conjugation(text){
     this.status='unknown';
     this.text=text;
     this.POS;
     this.description;
+    this.Chapter;
 }
 conjugation.prototype.addConjugation=function(string){
     this.text+=string;
 }
 conjugation.prototype.makeKnown=function(){
     this.status='known';
+}
+conjugation.prototype.updateDescription=function(string){
+    this.description=string;
+}
+conjugation.prototype.updateChapter=function(string){
+    this.Chapter=string;
 }
 module.exports={
     Word:Word,
