@@ -13,6 +13,8 @@
     this.Chapter;
     this.grammarKnown=false;
     this.description;
+    this.percentBeforeKnown=0;
+    this.percentAfterKnown=0;
 };
 Word.prototype.sayKanji=function(){    
     console.log(this.base);   
@@ -67,6 +69,9 @@ Word.prototype.MakeGrammarUnknown=function(){
 }
 Word.prototype.addDescription=function(text){
     this.description=text;
+}
+Word.prototype.updateNumberBeforeKnown=function(text){
+    this.percentBeforeKnown++;
 }
 function conjugation(text){
     this.status='unknown';
