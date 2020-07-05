@@ -37,37 +37,50 @@ Chapter1= async (string)=>{
  } 
    
 GenkiParser=async (tokens,chapter)=>{
+    let wordKnownCounter=0;
     for(let i=0; i<tokens.length; i++){
         let singleToken=tokens[i];
         let afterPart=singleToken.conjugatedParts;
         let beforePart=singleToken.before;
         let base=singleToken.base;
+        findParticles(afterPart,chapter,singleToken);
+        findParticles(beforePart,chapter,singleToken);   
         singleToken.statusKnown= await Genki.findOne({Kanji:base,Chapter:{$lte:chapter}})? true:  await Genki.findOne({Chapter:{$lte:chapter},Hiragana:base, Kanji:"none"})?true :false;
         if(singleToken.statusKnown){
+            wordKnownCounter++;
           //  singleToken.Chapter=await  Genki.findOne({Kanji:base}).select(' -_id Chapter'));
             //singleToken.Chapter= await Genki.findOne({Kanji:base}).Chapter;
             let word=(await Genki.findOne({Kanji:base}) ||await Genki.findOne({Hiragana:base}));
             singleToken.Chapter=word.Chapter;
             singleToken.addDescription(word.English);
         }
-        findParticles(afterPart,chapter);
-        findParticles(beforePart,chapter);
        
     }
-    return tokens;
+    let wordKnownPercentage=Math.round(wordKnownCounter/tokens.length*100);
+
+    console.log(`The total amount of words known is${tokens.length} The amount of words known is:${wordKnownCounter}`);
+    console.log(`The % of words known is ${wordKnownPercentage}%`);
+    return {tokens:tokens,
+            percentage:wordKnownPercentage,
+        };
 }
-let findParticles=async(array,chapter)=>{
+let findParticles=async(array,chapter,counter)=>{
     for(let j=0 ; j<array.length; j++){
         let element=array[j];
         let text=array[j].text;
-        console.log(`The text of the element is ${text}`);
         let data=await Particles.findOne({Form:text,Chapter:{$lte:chapter}}) ? true: false;
         if(data){
             let particle=await Particles.findOne({Form:text});
             element.makeKnown();
+            element.cheese='ME';
+            console.log(`Cheese is ${element.cheese}`);
+            console.log(element.status);
             element.updateDescription(particle.Name);
             element.updateChapter(particle.Chapter);
-        }
+            counter.updateNumberBeforeKnown();
+            console.log(`Success ${text} has been found of ${counter.base}`);
+           // console.log(`The counter is now:${counter}`);
+        }else{console.log(`Failure!! ${text} not found of ${counter.base} `)}
     } 
  }
 
