@@ -56,7 +56,7 @@ GenkiParser=async (tokens,chapter)=>{
         }
        
     }
-    let wordKnownPercentage=Math.round(wordKnownCounter/tokens.length*100);
+    let wordKnownPercentage=+(wordKnownCounter/tokens.length*100).toFixed(2);
 
     console.log(`The total amount of words known is${tokens.length} The amount of words known is:${wordKnownCounter}`);
     console.log(`The % of words known is ${wordKnownPercentage}%`);
@@ -72,9 +72,6 @@ let findParticles=async(array,chapter,counter)=>{
         if(data){
             let particle=await Particles.findOne({Form:text});
             element.makeKnown();
-            element.cheese='ME';
-            console.log(`Cheese is ${element.cheese}`);
-            console.log(element.status);
             element.updateDescription(particle.Name);
             element.updateChapter(particle.Chapter);
             counter.updateNumberBeforeKnown();
