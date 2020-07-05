@@ -210,7 +210,7 @@ grammarTokenizer=async (text)=>{
     //new conjugation
 
                     // for いる　Andある
-     if((token.word_id===3491630　|| token.word_id===3324170|| token.word_id==1799070)&& prePos!=="Noun"){
+     if((token.word_id===3491630　|| token.word_id===3324170|| token.word_id==1799070)&& prePos!=="Noun" &&previousWord!=undefined){
         previousWord.addConjugatedPart(conjugation);
         console.log(`The previous wrod is${previousWord.base} pos is ${prePos} conjugatedpart is ${token.surface_form}`);
         continue;
