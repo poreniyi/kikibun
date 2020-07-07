@@ -4,13 +4,18 @@ let nounColor=getComputedStyle(document.body).getPropertyValue('--Noun-Color');
 let particleColor=getComputedStyle(document.body).getPropertyValue('--Particle-Color');
 let naAdjectiveColor=getComputedStyle(document.body).getPropertyValue('--Na-Adjective-Color');
 let iAdjectiveColor=getComputedStyle(document.body).getPropertyValue('--I-Adjective-Color');
-
 let verbs=document.querySelectorAll('.Verb');
 let nouns=document.querySelectorAll('.Noun');
 let particles=document.querySelectorAll('.Particle');
 let naAdjectives=document.querySelectorAll('.Na-Adjective');
 let iAdjectives=document.querySelectorAll('.I-Adjective');
 let words=[verbs,nouns,particles,naAdjectives,iAdjectives];
+
+let info=document.getElementById('info');
+let surfaceWords=[...document.querySelectorAll('.surface')];
+let conjugations=[...document.querySelectorAll('.a')];
+let before=[...document.querySelectorAll('.before')];
+
 let pos={
     "Nouns":nouns,
     "Verbs":verbs,
@@ -59,3 +64,34 @@ let changeColors=function(aButton){
         if (element.style.color=='') element.style.color=operatedArrayColor;
         else element.style.color='';    })
 }
+
+surfaceWords.forEach(word=>{
+    if(word.children[0] ){
+        let theInfo=word.children[0];
+        let infoLI=document.createElement('li');
+        infoLI.textContent=theInfo.textContent;
+        let isShown=false;
+        word.addEventListener('mouseenter',()=>{
+            if(!isShown){
+                info.appendChild(infoLI);
+            }
+        })
+        word.addEventListener('mouseleave',()=>{
+            if(!isShown){
+                info.removeChild(infoLI);
+            }
+        })
+        word.addEventListener('click',()=>{
+            if(isShown){
+                info.removeChild(infoLI);
+                isShown=false;
+            }else{
+                info.appendChild(infoLI);
+                isShown=true;
+            }
+        })
+    }else{
+        console.log(`The word ${word.textContent} has no description`);
+    }
+   
+})
