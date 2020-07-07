@@ -47,11 +47,16 @@
                         <% })%>
                         <div class="surface" name=<%=counter %>>
                             <%=word.surfaceForm%> 
-                            <span class='tooltiptext'> <%=word.base%></span>
+                                <% if (word.description){ %>
+                                    <span hidden> 
+                                     <%= word.description%>
+                                    </span>
+                                 <%}%>    
                         </div>
                         <%word.conjugatedParts.forEach(part =>{ %>
                             <div  title="Conjugation tooltip"class=<%=part.status%>><%=part.text%></div>
                         <% })%>
+                  
 
                 <%})%>。
                 
@@ -59,7 +64,13 @@
         </div>      
     </p>
 
+
     <h2>Info</h2>
+    <div id='info'>
+        <ul>
+
+        </ul>
+    </div>
     <button value="All"type="button">開く</button>
     <button value= Nouns type="button">Show Nouns</button>
     <button value = "Verbs" type="button">Show Verbs</button>
