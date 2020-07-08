@@ -9,10 +9,7 @@
 <%- include ('partials/nav.ejs') %>
 
 <body>
-    
     <h3>You chose a lvl of<span>
-
-
         Genki Chapter:
         <%if(locals.Chapter) {%>
             <%=Chapter%>
@@ -65,12 +62,13 @@
     </p>
 
 
-    <h2>Info</h2>
     <div id='info'>
-        <ul>
 
+    <h2>Info</h2>
+        <ul id='infoUL'>
         </ul>
     </div>
+    
     <button value="All"type="button">開く</button>
     <button value= Nouns type="button">Show Nouns</button>
     <button value = "Verbs" type="button">Show Verbs</button>
