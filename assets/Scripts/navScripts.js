@@ -9,9 +9,5 @@ list.forEach(element=>{
    if(href==pathname || href == url){
        element.className="active";
    }
-   console.log(`The href is: ${href} and the pathname is: ${pathname} the url is: ${url}`)
-
-    //console.log(`The element is:${element.firstChild.getAttribute('href')}`);
 });
 
-console.log(`the pathname is ${window.location.pathname}`);
