@@ -39,13 +39,20 @@ let initalColor=false;
 let posButtons=buttons.slice(1);
 console.log(`posbuttons length is ${posButtons.length} posButtons1 is ${typeof posButtons[0].value}`);
 buttons.forEach(button=>{
+    //  button.style.backgroundColor='gray';
+    button.style.color=colors[button.value];
     button.addEventListener('click',()=>{
        console.log(`${button.value} ${typeof button.value}`);
         if (button.value==="All"){
+            if(button.textContent=='開く'){
+                button.textContent='開かない'
+            }else{
+                button.textContent='開く'
+            }
             for(let i=0;i<posButtons.length;i++){
                 console.log('Hello');
                 operatedArrayColor=colors[button.value];
-                changeColors(posButtons[i],operatedArrayColor);
+                changeColors(posButtons[i]);
             }
             console.log(`clicked`)
         }else{
@@ -54,9 +61,6 @@ buttons.forEach(button=>{
         }      
     })
 })
-let change={
-
-}
 let changeColors=function(aButton){
     let operatedArray=pos[aButton.value] ;
     let operatedArrayColor=colors[aButton.value];
@@ -69,7 +73,7 @@ surfaceWords.forEach(word=>{
     if(word.children[0] ){
         let theInfo=word.children[0];
         let infoLI=document.createElement('li');
-        infoLI.textContent=theInfo.textContent;
+        infoLI.textContent=theInfo.textContent.trim();
         let isShown=false;
         word.addEventListener('mouseenter',()=>{
             if(!isShown){
