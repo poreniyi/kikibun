@@ -9,8 +9,8 @@
     --I-Adjective-Color: #00ced1;
     --Na-Adjective-Color: #00bfff;
     --Dark-Background-color: #393f44;
-
   }
+  
   body{
     padding-top: 20px;
     color:white;
@@ -30,13 +30,21 @@
     color:#ffa8d4;
 }
 .known{
-    color:peach;
+    color:gray;
 }
+#info{
+    position: absolute;
+    right: 50%;
+    top: 50px;
+    float: none;
+    float: left;
+    clear: left;
+}
+
 
 .Verb,.Noun,.Particle,.Na-Adjective,.I-Adjective,.before,.surface,.conjugations{
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10+ and Edge */
     user-select: none; /* Standard syntax */
 }
-
 
