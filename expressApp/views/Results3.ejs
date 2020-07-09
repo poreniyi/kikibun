@@ -19,7 +19,7 @@
         <%}%>
     </span></h3>
     <h1>Original</h1>
-    <p title ="Tool TOp">
+    <p  id='Original' title ="Tool TOp">
         <%=original%>
     </p>
     <h2>Vocab</h2>
@@ -36,7 +36,7 @@
     <h2>Grammar</h2>
     <p>
         <div class="box" id="Grammar">
-            <% let counter =0%>
+            <% let counter =1%>
            <%grammar.forEach(sentence=>{%>
                 <% sentence.forEach(word=>{%>
                     <%word.before.forEach(part=>{%>
@@ -64,7 +64,7 @@
         </div>      
     </p>
 
-
+    <div id='Line'></div>
     <div id='info'>
 
     <h2>Info</h2>
