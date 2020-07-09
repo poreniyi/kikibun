@@ -35,13 +35,12 @@ router.post('/results.html',async(req,res)=>{
             for(let i =0;i<sentences.length;i++){
                 let grammar= await grammarTokenizer(sentences[i]); 
                 let vocab=await vocabTokenizer(sentences[i]);
-                grammar=await UpdatedParser(grammar,22); 
-                grammarSentences.push(grammar);
+                 grammar=await UpdatedParser(grammar,req.body.Genki); 
+                let updatedGrammmar=grammar.tokens;
+                grammarSentences.push(updatedGrammmar);
                 vocabSentences.push(vocab);
             }
-            let results=await grammarTokenizer(text);
-            let vocab = await vocabTokenizer(text);
-            console.log(results);
+         
             res.render('Results3',
             {   original:text,
                 grammar:grammarSentences,
@@ -150,6 +149,7 @@ res.render("NHK",{
 });
 router.post('/NHK',async (req,res)=>{
    let articleText=req.body.Text;
+   articleText=articleText.substring(0,Math.min(articleText.length,500));
    let sentences=articleText.split('。');
    let grammarSentences=[];
    let Chapter=parseInt(req.body.Genki);
@@ -172,28 +172,58 @@ router.post('/NHK',async (req,res)=>{
 
 })
 router.get("/test", async (req,res)=>{
+    res.render('Test.ejs');
+    // string='毎日歩くよく話す時々食べる中国のほうが日本より静かな花大きいです食べます犬があります';
+    // string='あります';
+    // let tokens;
+    // let grammar;
+    // let vocab;
+    // try{
+    //     tokens = await tokenizer.tokenize(string);
+    //     grammar = await tokenizer.grammarTokenizer(string);
+    // }catch(err){
+    //     console.log(err);
+    // }
+    // // let lasToken=grammar[grammar.length-1];
+    // // let lastTokenText=lasToken.conjugatedParts[0].text;
+    // // let lastTokenFound=await Particles.findOne({Form:lastTokenText});
+    // let allGrammar= await UpdatedParser(grammar, 22);
+    // let percentage=allGrammar.percentage;
+    // grammar=allGrammar.tokens;
+    // // let testPolite=await Particles.find({Form:'ます'});
+    // //  console.log(`The last token is ${lasToken}`);
+    // vocab = await vocabTokenizer(string);
+    // tokens='';
+    // //grammar='';
+    // vocab='';
+    // res.send({
+    //     tokens:tokens,
+    //     grammar:allGrammar,
+    //     vocab:vocab,
+    //     percentage:percentage,
+    // });
+    // res.send({word:lasToken,found:lastTokenFound});
+})
+router.post('/testResults', async (req,res)=>{
     string='毎日歩くよく話す時々食べる中国のほうが日本より静かな花大きいです食べます犬があります';
-    let tokens;
+    console.log(req.body.text);
+    let text=req.body.text;
     let grammar;
     let vocab;
-    try{
-        tokens = await tokenizer.tokenize(string);
-        grammar = await tokenizer.grammarTokenizer(string);
-    }catch(err){
-        console.log(err);
-    }
-    grammar= await UpdatedParser(grammar, 4);
-    vocab = await vocabTokenizer(string);
-    tokens='';
-    //grammar='';
-    vocab='';
-    res.send({
-        tokens:tokens,
-        grammar:grammar,
-        vocab:vocab,
-    });
+    grammar=await grammarTokenizer(text);
+    vocab=await vocabTokenizer(text);
+    const toString = Object.prototype.toString;
+    console.log(`type of object is ${toString.call(grammar)}`);
+
+    let gramString=JSON.stringify(grammar);
+    res.render('TestResults',{
+        grammar:gramString,
+        vocab:vocab.toString(),
+    })
 })
 
-
+textValidator=(string)=>{
+    
+}
 
 module.exports=router;
