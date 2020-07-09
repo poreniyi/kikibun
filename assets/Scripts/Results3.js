@@ -40,7 +40,8 @@ let posButtons=buttons.slice(1);
 console.log(`posbuttons length is ${posButtons.length} posButtons1 is ${typeof posButtons[0].value}`);
 buttons.forEach(button=>{
     //  button.style.backgroundColor='gray';
-    button.style.color=colors[button.value];
+    button.style.backgroundColor=colors[button.value];
+    // button.style.color=colors[button.value];
     button.addEventListener('click',()=>{
        console.log(`${button.value} ${typeof button.value}`);
         if (button.value==="All"){
@@ -70,18 +71,31 @@ let changeColors=function(aButton){
 }
 
 surfaceWords.forEach(word=>{
+    let beforePart;
+    let previousSibling=word.previousSibling;
+    let nextSiblingsList= [5];
+    let nextSibling=word.nextElementSibling;
+    let counter=word.querySelector('.numberCounter');
+    while(nextSibling && nextSibling.classList.contains('conjugations')){
+        console.log(nextSibling);
+        nextSiblingsList.push(nextSibling.textContent);
+        nextSibling=nextSibling.nextElementSibling;
+    }
     if(word.children[0] ){
         let theInfo=word.children[0];
         let infoLI=document.createElement('li');
-        infoLI.textContent=theInfo.textContent.trim();
+        infoLI.textContent=counter.textContent+theInfo.textContent.trim();
         let isShown=false;
         word.addEventListener('mouseenter',()=>{
+         console.log(nextSiblingsList);
             if(!isShown){
+                counter.style.display='inherit';
                 info.appendChild(infoLI);
             }
         })
         word.addEventListener('mouseleave',()=>{
             if(!isShown){
+                counter.style.display='none';
                 info.removeChild(infoLI);
             }
         })
