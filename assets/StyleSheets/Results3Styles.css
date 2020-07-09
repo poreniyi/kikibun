@@ -48,3 +48,9 @@
     user-select: none; /* Standard syntax */
 }
 
+.numberCounter{
+    color:red;
+}
+.box{
+    width: 50%;
+}
