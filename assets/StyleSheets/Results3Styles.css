@@ -24,6 +24,7 @@
     -webkit-user-select: text; /* Safari */
     -ms-user-select: text; /* IE 10+ and Edge */
     user-select: text;
+    width: 50%;
 }
 
 .unknown{
@@ -34,7 +35,7 @@
 }
 #info{
     position: absolute;
-    right: 50%;
+    right: 35%;
     top: 50px;
     float: none;
     float: left;
@@ -50,7 +51,16 @@
 
 .numberCounter{
     color:red;
+    font-size:10px;
+    display: none;
 }
-.box{
+#Original{
     width: 50%;
+}
+#Line{
+    border-left: 6px solid green;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50px;
 }
