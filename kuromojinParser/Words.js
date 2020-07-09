@@ -73,6 +73,12 @@ Word.prototype.addDescription=function(text){
 Word.prototype.updateNumberBeforeKnown=function(text){
     this.percentBeforeKnown++;
 }
+// Word.prototype.toString=function wordToString(){
+// return `ret;`;
+// }
+
+
+/////
 function conjugation(text){
     this.status='unknown';
     this.text=text;
