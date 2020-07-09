@@ -72,22 +72,22 @@ let changeColors=function(aButton){
 
 surfaceWords.forEach(word=>{
     let beforePart;
+    let chapter=word.querySelector('.chapter');
     let previousSibling=word.previousSibling;
-    let nextSiblingsList= [5];
+    let conjugations= [];
     let nextSibling=word.nextElementSibling;
     let counter=word.querySelector('.numberCounter');
+    let description= word.querySelector('.description');
     while(nextSibling && nextSibling.classList.contains('conjugations')){
-        console.log(nextSibling);
-        nextSiblingsList.push(nextSibling.textContent);
+        conjugations.push(nextSibling);
         nextSibling=nextSibling.nextElementSibling;
     }
-    if(word.children[0] ){
-        let theInfo=word.children[0];
+    if(description ){
+        let theInfo=description;
         let infoLI=document.createElement('li');
-        infoLI.textContent=counter.textContent+theInfo.textContent.trim();
+        infoLI.textContent=`Word# ${counter.textContent} Chapter ${chapter.textContent} ${theInfo.textContent.trim()}   ${word.childNodes[0].nodeValue}`;
         let isShown=false;
         word.addEventListener('mouseenter',()=>{
-         console.log(nextSiblingsList);
             if(!isShown){
                 counter.style.display='inherit';
                 info.appendChild(infoLI);
@@ -108,8 +108,37 @@ surfaceWords.forEach(word=>{
                 isShown=true;
             }
         })
+        conjugations.forEach(conjugation=>{
+            console.log(`typeof conjugatio is ${typeof conjugation}`);
+            let conjugationIsShown=false;
+            let conjugationDescription=conjugation.querySelector('.description');
+            let conjugationLI=document.createElement('li');
+            if(conjugationDescription!=''){
+                console.log(conjugation);
+                conjugationLI.textContent=`${conjugationDescription.textContent}`;
+                conjugation.addEventListener('mouseenter',()=>{
+                    if(!conjugationIsShown){
+                        info.appendChild(conjugationLI);    
+                    }
+                })
+                conjugation.addEventListener('mouseleave',()=>{
+                    if(!conjugationIsShown){
+                        info.removeChild(conjugationLI);   
+                    }
+                })
+                conjugation.addEventListener(`click`,()=>{
+                    if(conjugationIsShown){
+                       info.removeChild(conjugationLI);   
+                       conjugationIsShown=false;
+                    }else{
+                        conjugationIsShown=true;
+                        info.appendChild(conjugationLI);    
+                    }
+                })
+            }    
+        })
+
     }else{
-        console.log(`The word ${word.textContent} has no description`);
     }
    
 })
