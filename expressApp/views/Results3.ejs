@@ -48,13 +48,16 @@
                                     <span hidden> 
                                      <%= word.description%>
                                     </span>
-                                 <%}%>    
+                                 <%}%>   
+                                 <div class='numberCounter'>
+                                     <%=counter%>
+                                 </div> 
                         </div>
                         <%word.conjugatedParts.forEach(part =>{ %>
                             <div  title="Conjugation tooltip"class="conjugations <%=part.status%>"><%=part.text%></div>
                         <% })%>
                   
-
+                    <%counter ++%>
                 <%})%>。
                 
             <% })%>
