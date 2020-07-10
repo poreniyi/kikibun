@@ -78,14 +78,15 @@ surfaceWords.forEach(word=>{
     let nextSibling=word.nextElementSibling;
     let counter=word.querySelector('.numberCounter');
     let description= word.querySelector('.description');
-    while(nextSibling && nextSibling.classList.contains('conjugations')){
+    let wordOL=document.createElement();
+    while(nextSibling && nextSibling.classList.contains('conjugations')&&nextSibling.classList.contains('known')){
         conjugations.push(nextSibling);
         nextSibling=nextSibling.nextElementSibling;
     }
     if(description ){
         let theInfo=description;
         let infoLI=document.createElement('li');
-        infoLI.textContent=`Word# ${counter.textContent} Chapter ${chapter.textContent} ${theInfo.textContent.trim()}   ${word.childNodes[0].nodeValue}`;
+        infoLI.textContent=`# ${counter.textContent} Chapter ${chapter.textContent} ${theInfo.textContent.trim()}   ${word.childNodes[0].nodeValue}`;
         let isShown=false;
         word.addEventListener('mouseenter',()=>{
             if(!isShown){
