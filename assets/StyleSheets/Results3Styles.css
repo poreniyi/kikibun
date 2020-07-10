@@ -35,11 +35,10 @@
 }
 #info{
     position: absolute;
-    right: 35%;
-    top: 50px;
-    float: none;
-    float: left;
-    clear: left;
+    left: 51%;
+    top: 8%;
+    width: 50%;
+    border-style: solid;
 }
 
 
@@ -60,7 +59,7 @@
 #Line{
     border-left: 6px solid green;
     height: 100%;
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 50px;
 }
