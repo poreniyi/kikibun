@@ -63,3 +63,9 @@
     left: 50%;
     top: 50px;
 }
+.conjugationsUL{
+    margin-left: 10px;
+    padding-left: 5px;
+    color:green;    
+    list-style-position: inside;
+}
