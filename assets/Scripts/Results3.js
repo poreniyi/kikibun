@@ -23,10 +23,6 @@ let pos={
     "I-Adjective":iAdjectives,
     "Na-Adjective":naAdjectives,
 }
-console.log(`Number of pos is: ${words.length}`);
-words.forEach(word=>{
-    console.log(`I am ${word.length} words long`);
-})
 
 let colors={
     "Nouns":nounColor,
@@ -37,13 +33,11 @@ let colors={
 }
 let initalColor=false;
 let posButtons=buttons.slice(1);
-console.log(`posbuttons length is ${posButtons.length} posButtons1 is ${typeof posButtons[0].value}`);
 buttons.forEach(button=>{
     //  button.style.backgroundColor='gray';
     button.style.backgroundColor=colors[button.value];
     // button.style.color=colors[button.value];
     button.addEventListener('click',()=>{
-       console.log(`${button.value} ${typeof button.value}`);
         if (button.value==="All"){
             if(button.textContent=='開く'){
                 button.textContent='開かない'
@@ -51,13 +45,10 @@ buttons.forEach(button=>{
                 button.textContent='開く'
             }
             for(let i=0;i<posButtons.length;i++){
-                console.log('Hello');
                 operatedArrayColor=colors[button.value];
                 changeColors(posButtons[i]);
             }
-            console.log(`clicked`)
         }else{
-            console.log(`else clicked`);
             changeColors(button);
         }      
     })
@@ -78,7 +69,7 @@ surfaceWords.forEach(word=>{
     let nextSibling=word.nextElementSibling;
     let counter=word.querySelector('.numberCounter');
     let description= word.querySelector('.description');
-    let wordOL=document.createElement();
+   
     while(nextSibling && nextSibling.classList.contains('conjugations')&&nextSibling.classList.contains('known')){
         conjugations.push(nextSibling);
         nextSibling=nextSibling.nextElementSibling;
@@ -88,6 +79,14 @@ surfaceWords.forEach(word=>{
         let infoLI=document.createElement('li');
         infoLI.textContent=`# ${counter.textContent} Chapter ${chapter.textContent} ${theInfo.textContent.trim()}   ${word.childNodes[0].nodeValue}`;
         let isShown=false;
+        infoLI.addEventListener('mouseenter',()=>{
+            word.style.transform='scale(1.1,1.1)';
+            word.style.textShadow="0 0 5px red";
+        })
+        infoLI.addEventListener('mouseleave',()=>{
+            word.style.transform='scale(1,1)';
+            word.style.textShadow="none";
+        })
         word.addEventListener('mouseenter',()=>{
             if(!isShown){
                 counter.style.display='inherit';
@@ -109,31 +108,35 @@ surfaceWords.forEach(word=>{
                 isShown=true;
             }
         })
+        let isConjugationParentShown=true;
+        let wordUL=document.createElement('ul');
+        let ulTitle=document.createElement('li');
+        ulTitle.textContent=word.childNodes[0].nodeValue;
+        wordUL.appendChild(ulTitle);
+        let conjugationsUL= document.createElement('ul');
+        conjugationsUL.classList.add('conjugationsUL');
+        ulTitle.appendChild(conjugationsUL);
         conjugations.forEach(conjugation=>{
-            console.log(`typeof conjugatio is ${typeof conjugation}`);
             let conjugationIsShown=false;
             let conjugationDescription=conjugation.querySelector('.description');
             let conjugationLI=document.createElement('li');
             if(conjugationDescription!=''){
-                console.log(conjugation);
                 conjugationLI.textContent=`${conjugationDescription.textContent}`;
                 conjugation.addEventListener('mouseenter',()=>{
                     if(!conjugationIsShown){
-                        info.appendChild(conjugationLI);    
+                        conjugationsUL.appendChild(conjugationLI);
+                       info.appendChild(wordUL);
                     }
                 })
                 conjugation.addEventListener('mouseleave',()=>{
                     if(!conjugationIsShown){
-                        info.removeChild(conjugationLI);   
                     }
                 })
                 conjugation.addEventListener(`click`,()=>{
                     if(conjugationIsShown){
-                       info.removeChild(conjugationLI);   
                        conjugationIsShown=false;
                     }else{
                         conjugationIsShown=true;
-                        info.appendChild(conjugationLI);    
                     }
                 })
             }    
