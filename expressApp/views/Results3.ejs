@@ -44,7 +44,7 @@
                             <div class=''><%=part.description%></div>                 
                         </div>
                         <% })%>
-                        <div class="surface" name=<%=counter %> value=<%word.surfaceForm%>>
+                        <div class="surface <%=word.statusKnown%>" name=<%=counter %> value=<%word.surfaceForm%>>
                             <%=word.surfaceForm%> 
                                 <% if (word.description){ %>
                                     <span class='description' hidden> 
@@ -53,6 +53,8 @@
                                     <% if(word.Chapter){ %>
                                         <div hidden class='chapter'><%=word.Chapter%></div>
                                     <%}%>
+                                  
+
                                  <%}%>   
                                  <div class='numberCounter'>
                                      <%=counter%>
