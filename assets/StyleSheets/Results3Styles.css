@@ -34,7 +34,7 @@
     color:gray;
 }
 #info{
-    position: absolute;
+    position: fixed;
     left: 51%;
     top: 8%;
     width: 50%;
@@ -68,4 +68,7 @@
     padding-left: 5px;
     color:green;    
     list-style-position: inside;
+}
+div.surface.true{
+    color:green
 }
