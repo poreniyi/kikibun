@@ -284,7 +284,10 @@ vocabTokenizer=async(text)=>{
     })
     return wordArray;
 }
-
+let textValidation=(text)=>{
+    text=text.substring(0,Math.min(text.length,500));
+    let sentences=text.split('。');
+}
 module.exports={
     tokenize:tokenize,
     tokenizeOne:tokenizeOne,
