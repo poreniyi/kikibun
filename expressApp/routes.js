@@ -28,6 +28,7 @@ router.post('/results.html',async(req,res)=>{
     let text=req.body.text.trim();
     let sentences=text.split("。");
     let grammarSentences=[];
+    let grammarStats=[];
    let vocabSentences=[];
     console.log("Results page: \n");
     console.log(`The Genki Chapter is ${req.body.Genki} and the JLPT lvl is ${req.body.JLPT}`);
@@ -35,18 +36,20 @@ router.post('/results.html',async(req,res)=>{
             for(let i =0;i<sentences.length;i++){
                 let grammar= await grammarTokenizer(sentences[i]); 
                 let vocab=await vocabTokenizer(sentences[i]);
-                 grammar=await UpdatedParser(grammar,req.body.Genki); 
+                grammar=await UpdatedParser(grammar,req.body.Genki); 
                 let updatedGrammmar=grammar.tokens;
+                grammarStats.push(grammar.percentage);
                 grammarSentences.push(updatedGrammmar);
                 vocabSentences.push(vocab);
             }
-         
+            console.log(grammarStats);
             res.render('Results3',
             {   original:text,
                 grammar:grammarSentences,
                 vocab:vocabSentences,
                 Chapter:req.body.Genki,
                 NLVL:req.body.JLPT,
+                gramStats:grammarStats,
             });
         }catch(err){
             console.log(err);
