@@ -3,6 +3,13 @@ const XLSX = require('xlsx');
 let Particles=require  ('./dataApp').Particles;
 const path = require('path');
 
+removeNewLineChars=(array)=>{
+    if(array.length>0){
+        for(let j=0;j<array.length;j++){
+            array[j]=array[j].replace(/[\n\r]+/g,"");
+        }
+    }
+}
 
 addParticles=()=>{
     //let workbook=XLSX.readFile('../txtFiles/particles/GenkiGrammar.xlsx');
@@ -22,27 +29,32 @@ addParticles=()=>{
             let after=row['Form After']? row['Form After'].split('+'): [];
             let formAfter=after.filter(e=> {return e})
             let LVL=row.NLVL ? row.NLVL :"";
+            let pos=row['POS acted on'].split('/');
+            removeNewLineChars(pos);
+            removeNewLineChars(formAfter);
+            removeNewLineChars(before);
             let currentParticle={
-                Name:row.Name,
-                POSActedOn:row['POS acted on'].split('/'),
+                Name:row.Name.replace(/\n|\r/g, ""),
+                POSActedOn:pos,
                 Before:before,
                 Form:formAfter,
                 Chapter:(i+1),
                 NLvl:LVL,
             }
-            Particles.create(currentParticle).then(function(data){
-                console.log(data);
-            });
+            // Particles.create(currentParticle).then(function(data){
+            //     console.log(data);
+            // });
             // console.log(currentParticle);
             array.push(currentParticle);
         })     
     }  
     array.forEach(e=>{
-       // console.log(e)
+        if(e.Chapter==9){
+            console.log(e)
+        }
      })
 }
-
-
+addParticles();
 
 module.exports={
     addParticles:addParticles,
