@@ -46,6 +46,9 @@
                         <% })%>
                         <div class="surface <%=word.statusKnown%>" name=<%=counter %> value=<%word.surfaceForm%>>
                             <%=word.surfaceForm%> 
+                            <div hidden class='base'>
+                                <%=word.base%>
+                            </div>
                                 <% if (word.description){ %>
                                     <span class='description' hidden> 
                                      <%= word.description%>
@@ -53,7 +56,7 @@
                                     <% if(word.Chapter){ %>
                                         <div hidden class='chapter'><%=word.Chapter%></div>
                                     <%}%>
-                                  
+                                 
 
                                  <%}%>   
                                  <div class='numberCounter'>
@@ -83,13 +86,16 @@
         <ul id='infoUL'>
         </ul>
         <table id='wordTable'>
+            <caption>Word Info</caption>
             <tr>
                 <th>Word #</th>
                 <th>Given Form</th>
                 <th>Base Form</th>
                 <th>English Meaning</th>
+                <th>Chapter</th>
             </tr>
         </table>
+        <caption>Conjugations Info</caption>
         <table id='conjugationsTable'>
 
         </table>
