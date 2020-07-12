@@ -56,10 +56,10 @@ GenkiParser=async (tokens,chapter)=>{
         }
        
     }
-    let wordKnownPercentage=+(wordKnownCounter/tokens.length*100).toFixed(2);
+   // let wordKnownPercentage=+(wordKnownCounter/tokens.length*100).toFixed(2);
+    let wordKnownPercentage=wordKnownCounter
 
     console.log(`The total amount of words known is${tokens.length} The amount of words known is:${wordKnownCounter}`);
-    console.log(`The % of words known is ${wordKnownPercentage}%`);
     return {tokens:tokens,
             percentage:wordKnownPercentage,
         };
