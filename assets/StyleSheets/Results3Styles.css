@@ -28,9 +28,6 @@
 }
 
 .unknown{
-    color:#ffa8d4;
-}
-.known{
     color:gray;
 }
 #info{
@@ -71,6 +68,10 @@
 }
 div.surface.true{
     color:green
+}
+
+div.surface.false{
+    color:#ffa8d4;
 }
 table, th, td {
     border: 1px solid white;
