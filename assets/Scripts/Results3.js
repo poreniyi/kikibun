@@ -232,6 +232,13 @@ surfaceWords.forEach(word=>{
                     conjugationsTable.removeChild(conjugationsRow);
                 }
             })
+            conjugationsRow.addEventListener('mouseenter',()=>{
+                conjugation.style.transform='scale(1.1,1.1)';
+                conjugation.style.textShadow="0 0 5px blue";        })
+            conjugationsRow.addEventListener('mouseleave',()=>{
+                conjugation.style.transform='scale(1,1)';
+                conjugation.style.textShadow="none"; 
+            })
         })
     }
 })
