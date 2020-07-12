@@ -41,7 +41,7 @@ let ParticleSchema= new Schema({
   Name:{type:String,required:false, set: v=>v.toLowerCase()},
   Form:{type:[String],required:true},
   Before:{type:[String],required:false},
-  POSActedOn:{type:[String],required:true},
+  POSActedOn:{type:[String],required:true,set:v=>v.toLowerCase()},
   Chapter:{type:Number},
   NLvl:{type:Number}
 })
