@@ -208,8 +208,10 @@ surfaceWords.forEach(word=>{
             let conjugationsRow=document.createElement('tr');
             let wordActedOn=conjugationsRow.insertCell(-1);
             wordActedOn.textContent=word.childNodes[0].nodeValue;
-            let conjugationPattern=conjugationsRow.insertCell(-1);
-            conjugationPattern.textContent=conjugation.querySelector('.description').textContent;
+            let conjugationForm=conjugationsRow.insertCell(-1);
+            conjugationForm.textContent=conjugation.childNodes[0].nodeValue;
+            let conjugationTitle=conjugationsRow.insertCell(-1);
+            conjugationTitle.textContent=conjugation.querySelector('.description').textContent;
             let conjugationIsShown=false;
             conjugation.addEventListener('mouseenter',()=>{
                 if(!conjugationIsShown){
