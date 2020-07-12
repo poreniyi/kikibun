@@ -33,6 +33,9 @@ router.post('/results.html',async(req,res)=>{
     console.log("Results page: \n");
     console.log(`The Genki Chapter is ${req.body.Genki} and the JLPT lvl is ${req.body.JLPT}`);
         try{
+            if (/[^\u0000-\u00ff]/.test(text)==false){
+                throw 'Not japanese';
+             }
             for(let i =0;i<sentences.length;i++){
                 let grammar= await grammarTokenizer(sentences[i]); 
                 let vocab=await vocabTokenizer(sentences[i]);
@@ -52,6 +55,7 @@ router.post('/results.html',async(req,res)=>{
                 gramStats:grammarStats,
             });
         }catch(err){
+            res.render('Home');
             console.log(err);
         }  
 });
