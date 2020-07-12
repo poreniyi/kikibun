@@ -146,6 +146,7 @@ let changeColors=function(aButton){
 // })
 //Table
 let wordTable=document.querySelector('#wordTable');
+let conjugationsTable=document.querySelector('#conjugationsTable');
 surfaceWords.forEach(word=>{
     if (word.classList.contains('true')){
         let counter=word.querySelector('.numberCounter');
@@ -201,5 +202,34 @@ surfaceWords.forEach(word=>{
     while(nextSibling && nextSibling.classList.contains('conjugations')&&nextSibling.classList.contains('known')){
         conjugations.push(nextSibling);
         nextSibling=nextSibling.nextElementSibling;
+    }
+    if(conjugations.length>0){
+        conjugations.forEach(conjugation=>{
+            let conjugationsRow=document.createElement('tr');
+            let wordActedOn=conjugationsRow.insertCell(-1);
+            wordActedOn.textContent=word.childNodes[0].nodeValue;
+            let conjugationPattern=conjugationsRow.insertCell(-1);
+            conjugationPattern.textContent=conjugation.querySelector('.description').textContent;
+            let conjugationIsShown=false;
+            conjugation.addEventListener('mouseenter',()=>{
+                if(!conjugationIsShown){
+                    conjugationsTable.appendChild(conjugationsRow);
+                }
+            })
+            conjugation.addEventListener('mouseleave',()=>{
+                if(!conjugationIsShown){
+                    conjugationsTable.removeChild(conjugationsRow);
+                }
+            })
+            conjugation.addEventListener('click',()=>{
+                if(!conjugationIsShown){
+                    conjugationsTable.appendChild(conjugationsRow);
+                    conjugationIsShown=true;
+                }else{
+                    conjugationIsShown=false;
+                    conjugationsTable.removeChild(conjugationsRow);
+                }
+            })
+        })
     }
 })
