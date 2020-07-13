@@ -60,90 +60,6 @@ let changeColors=function(aButton){
         if (element.style.color=='') element.style.color=operatedArrayColor;
         else element.style.color='';    })
 }
-
-// surfaceWords.forEach(word=>{
-//     let beforePart;
-//     let chapter=word.querySelector('.chapter');
-//     let previousSibling=word.previousSibling;
-//     let conjugations= [];
-//     let nextSibling=word.nextElementSibling;
-//     let counter=word.querySelector('.numberCounter');
-//     let description= word.querySelector('.description');
-   
-//     while(nextSibling && nextSibling.classList.contains('conjugations')&&nextSibling.classList.contains('known')){
-//         conjugations.push(nextSibling);
-//         nextSibling=nextSibling.nextElementSibling;
-//     }
-//     if(description ){
-//         let theInfo=description;
-//         let infoLI=document.createElement('li');
-//         infoLI.textContent=`# ${counter.textContent} Chapter ${chapter.textContent} ${theInfo.textContent.trim()}   ${word.childNodes[0].nodeValue}`;
-//         let isShown=false;
-//         infoLI.addEventListener('mouseenter',()=>{
-//             word.style.transform='scale(1.1,1.1)';
-//             word.style.textShadow="0 0 5px red";
-//         })
-//         infoLI.addEventListener('mouseleave',()=>{
-//             word.style.transform='scale(1,1)';
-//             word.style.textShadow="none";
-//         })
-//         word.addEventListener('mouseenter',()=>{
-//             if(!isShown){
-//                 counter.style.display='inherit';
-//                 info.appendChild(infoLI);
-//             }
-//         })
-//         word.addEventListener('mouseleave',()=>{
-//             if(!isShown){
-//                 counter.style.display='none';
-//                 info.removeChild(infoLI);
-//             }
-//         })
-//         word.addEventListener('click',()=>{
-//             if(isShown){
-//                 info.removeChild(infoLI);
-//                 isShown=false;
-//             }else{
-//                 info.appendChild(infoLI);
-//                 isShown=true;
-//             }
-//         })
-//         let isConjugationParentShown=true;
-//         let wordUL=document.createElement('ul');
-//         let ulTitle=document.createElement('li');
-//         ulTitle.textContent=word.childNodes[0].nodeValue;
-//         wordUL.appendChild(ulTitle);
-//         let conjugationsUL= document.createElement('ul');
-//         conjugationsUL.classList.add('conjugationsUL');
-//         ulTitle.appendChild(conjugationsUL);
-//         conjugations.forEach(conjugation=>{
-//             let conjugationIsShown=false;
-//             let conjugationDescription=conjugation.querySelector('.description');
-//             let conjugationLI=document.createElement('li');
-//             if(conjugationDescription!=''){
-//                 conjugationLI.textContent=`${conjugationDescription.textContent}`;
-//                 conjugation.addEventListener('mouseenter',()=>{
-//                     if(!conjugationIsShown){
-//                         conjugationsUL.appendChild(conjugationLI);
-//                        info.appendChild(wordUL);
-//                     }
-//                 })
-//                 conjugation.addEventListener('mouseleave',()=>{
-//                     if(!conjugationIsShown){
-//                     }
-//                 })
-//                 conjugation.addEventListener(`click`,()=>{
-//                     if(conjugationIsShown){
-//                        conjugationIsShown=false;
-//                     }else{
-//                         conjugationIsShown=true;
-//                     }
-//                 })
-//             }    
-//         })
-
-//     }
-// })
 //Table
 let wordTable=document.querySelector('#wordTable');
 let conjugationsTable=document.querySelector('#conjugationsTable');
@@ -199,8 +115,10 @@ surfaceWords.forEach(word=>{
     let conjugations= [];
     let nextSibling=word.nextElementSibling;
    
-    while(nextSibling && nextSibling.classList.contains('conjugations')&&nextSibling.classList.contains('known')){
-        conjugations.push(nextSibling);
+    while(nextSibling && nextSibling.classList.contains('conjugations')){
+        if(nextSibling.classList.contains('known')){
+            conjugations.push(nextSibling);
+        }
         nextSibling=nextSibling.nextElementSibling;
     }
     if(conjugations.length>0){
