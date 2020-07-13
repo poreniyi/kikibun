@@ -69,7 +69,7 @@
                                  </div> 
                         </div>
                         <%word.conjugatedParts.forEach(part =>{ %>
-                            <div  title="Conjugation tooltip"class="conjugations <%=part.status%>"><%=part.text%>
+                            <div  class="conjugations <%=part.status%>"><%=part.text%>
                                 <div hidden class='description'><%=part.description%></div>
                             </div>
                         <% })%>
@@ -111,18 +111,19 @@
             </tr>
         </table>
         <p>Stats
-            <p>Total Sentences Known
+            <p>
                 <%let totalKnown=0;%>
                 <%let totalSentences=0;%>
                 <%for(let i=0;i<gramStats.length;i++){ %>
-                <p>Sentence <%=i+1%> has <%=gramStats[i]%> known words out of <%=grammar[i].length%> words</p>
+                <p>Sentence<%=i+1%>:
+                    <br><%=gramStats[i]%> / <%=grammar[i].length%> words known</p>
                 <%totalKnown+=gramStats[i]%>
                 <%totalSentences+=grammar[i].length%>
                 <% }%>
             </p>
-            <p>Total Article Known:
+            <p>Total Text:
                 <p>
-                    <%=totalKnown%> words out of <%=totalSentences%> total words
+                    <%=totalKnown%>/<%=totalSentences%> total words or <%=+(totalKnown/totalSentences*100).toFixed(2)%>% of total words known
                 </p>
             </p>
             
@@ -130,13 +131,15 @@
     </div>
       
     </div>
+    <div id='buttons'>
+        <button value="All"type="button">開く</button>
+        <button value= Nouns type="button">Show Nouns</button>
+        <button value = "Verbs" type="button">Show Verbs</button>
+        <button value ="Na-Adjective"  type="button">Show Na-Adjective</button>
+        <button value ="I-Adjective"  type="button">Show I-Adjective</button>
+        <button value = "Particles" type="button">Show Particles</button>
+    </div>
     
-    <button value="All"type="button">開く</button>
-    <button value= Nouns type="button">Show Nouns</button>
-    <button value = "Verbs" type="button">Show Verbs</button>
-    <button value ="Na-Adjective"  type="button">Show Na-Adjective</button>
-    <button value ="I-Adjective"  type="button">Show I-Adjective</button>
-    <button value = "Particles" type="button">Show Particles</button>
 <script src='../../assets/Scripts/Results3.js'></script>
 </body>
 </html>
