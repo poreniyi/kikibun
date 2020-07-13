@@ -31,11 +31,11 @@ closeDB=async()=>{
     //  await console.log(`The Db object is: ${doc}`);
   }
 let insertIntoDB=require('./addToDB').insertIntoDB;
+let addParticles= require('./addParticles').addParticles;
+//  connectToDB();
+//  addParticles();
 
 
-//   Genki.create(testObj).then(function(data){
-//     console.log(data);
-// });
 
 documentExists=async(text,chapter)=>{
   let data=await Genki.findOne({Chapter:{$lte:chapter},Kanji:text}) ? true:  await Genki.findOne({Chapter:{$lte:chapter},Hiragana:text, Kanji:"none"})?true :false;
@@ -52,13 +52,8 @@ particleExists=async(text,chapter)=>{
   
 //documentExists("私aa");
 
-updateAll=async()=>{
-  await Genki.updateMany({}, {Chapter:1});
-} 
-
 module.exports={
   updateThis:updateThis,
   documentExists:documentExists,
   particleExists,particleExists,
 }
-//updateAll();

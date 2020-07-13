@@ -38,10 +38,10 @@ let WordSchemaGenki= new Schema({
 )
 
 let ParticleSchema= new Schema({
-  Name:{type:String,required:false, set: v=>v.toLowerCase()},
+  Name:{type:String,required:false},
   Form:{type:[String],required:true},
   Before:{type:[String],required:false},
-  POSActedOn:{type:[String],required:true,set:v=>v.toLowerCase()},
+  POSActedOn:{type:[String],required:true},
   Chapter:{type:Number},
   NLvl:{type:Number}
 })

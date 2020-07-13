@@ -44,17 +44,16 @@ addParticles=()=>{
             // Particles.create(currentParticle).then(function(data){
             //     console.log(data);
             // });
-            // console.log(currentParticle);
+            console.log(currentParticle);
             array.push(currentParticle);
         })     
     }  
-    array.forEach(e=>{
-        if(e.Chapter==9){
-            console.log(e)
-        }
-     })
+    // array.forEach(e=>{
+    //     if(e.Chapter==9){
+    //         console.log(e)
+    //     }
+    //  })
 }
-addParticles();
 
 module.exports={
     addParticles:addParticles,
