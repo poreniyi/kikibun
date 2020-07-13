@@ -12,7 +12,7 @@
   }
   
   body{
-    padding-top: 20px;
+    padding-top: 50px; /*  fix*/
     color:white;
     background-color: var( --Dark-Background-color);
 }
@@ -67,7 +67,7 @@
     list-style-position: inside;
 }
 div.surface.true{
-    color:green
+    color:#66ff00;
 }
 
 div.surface.false{
@@ -76,4 +76,7 @@ div.surface.false{
 table, th, td {
     border: 1px solid white;
     border-collapse: collapse;
-  }
+}
+#buttons{
+    width: 50%;
+}
