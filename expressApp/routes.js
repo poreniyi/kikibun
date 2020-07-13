@@ -219,12 +219,10 @@ router.post('/testResults', async (req,res)=>{
     let vocab;
     grammar=await grammarTokenizer(text);
     vocab=await vocabTokenizer(text);
-    const toString = Object.prototype.toString;
-    console.log(`type of object is ${toString.call(grammar)}`);
-
-    let gramString=JSON.stringify(grammar);
-    res.render('TestResults',{
-        grammar:gramString,
+    console.log(grammar);
+    grammar=await UpdatedParser(grammar,22);
+    res.send({
+        grammar:grammar.tokens,
         vocab:vocab.toString(),
     })
 })
