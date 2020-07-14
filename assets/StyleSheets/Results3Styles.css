@@ -10,9 +10,13 @@
     --Na-Adjective-Color: #00bfff;
     --Dark-Background-color: #393f44;
   }
-  
+  #container{
+    position: absolute;
+    top:  var(--navHeight); 
+    width: 50%;
+
+  }
   body{
-    padding-top: 50px; /*  fix*/
     color:white;
     background-color: var( --Dark-Background-color);
 }
@@ -24,7 +28,6 @@
     -webkit-user-select: text; /* Safari */
     -ms-user-select: text; /* IE 10+ and Edge */
     user-select: text;
-    width: 50%;
 }
 
 .unknown{
@@ -49,9 +52,6 @@
     color:red;
     font-size:10px;
     display: none;
-}
-#Original{
-    width: 50%;
 }
 #Line{
     border-left: 6px solid green;
