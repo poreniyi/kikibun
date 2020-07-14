@@ -34,9 +34,9 @@
     color:gray;
 }
 #info{
-    position: fixed;
+    position: absolute;
     left: 51%;
-    top: 8%;
+    top:  var(--navHeight); 
     width: 50%;
 }
 
@@ -57,14 +57,9 @@
     height: 100%;
     position: fixed;
     left: 50%;
-    top: 50px;
+    top:  var(--navHeight); 
 }
-.conjugationsUL{
-    margin-left: 10px;
-    padding-left: 5px;
-    color:green;    
-    list-style-position: inside;
-}
+
 div.surface.true{
     color:#66ff00;
 }
@@ -81,4 +76,8 @@ button{
     border-radius: 4px;
     width:25%;
     /* font-size: 15px; */
+}
+
+#numberColumn{
+    width:10%;
 }
