@@ -9,136 +9,139 @@
 <%- include ('partials/nav.ejs') %>
 
 <body>
-    <h3>You chose a lvl of<span>
-        Genki Chapter:
-        <%if(locals.Chapter) {%>
-            <%=Chapter%>
-        <%}%>and
-        <%if(locals.NLVL) {%>
-            NLVL:  <%=NLVL%>
-        <%}%>
-    </span></h3>
-    <h1>Original</h1>
-    <p  id='Original' title ="Tool TOp">
-        <%=original%>
-    </p>
-    <h2>Vocab</h2>
-    <div class="box" id='Vocab'>
-        <%vocab.forEach(sentence=>{%>
-            <%sentence.forEach(word=>{%>
-                <div class=<%=word.POS%>>
-                    <%=word.text%>
-                </div>
-          <%  })%>
-        <%})%>
-
-    </div>
-    <h2>Grammar</h2>
-    <p>
-        <div class="box" id="Grammar">
-            <% let counter =1%>
-           <%grammar.forEach(sentence=>{%>
-            <% let totalGrammarKnown=0%>
-                <% sentence.forEach(word=>{%>
-                    <% let totalSentenceGrammarKnown=0%>
-                    <%word.before.forEach(part=>{%>
-                        <div class='before'><%=part.text%>
-                            <div class=''><%=part.description%></div>                 
-                        </div>
-                        <% })%>
-                        <div class="surface <%=word.statusKnown%>" name=<%=counter %> value=<%word.surfaceForm%>>
-                            <%if(word.statusKnown){%>
-                               <% totalSentenceGrammarKnown++;%>
-                            <%}%>
-                            <%=word.surfaceForm%> 
-                            <div hidden class='base'>
-                                <%=word.base%>
-                            </div>
-                                <% if (word.description){ %>
-                                    <span class='description' hidden> 
-                                     <%= word.description%>
-                                    </span>
-                                    <% if(word.Chapter){ %>
-                                        <div hidden class='chapter'><%=word.Chapter%></div>
-                                    <%}%>
-                                 
-
-                                 <%}%>   
-                                 <div class='numberCounter'>
-                                     <%=counter%>
-                                 </div> 
-                        </div>
-                        <%word.conjugatedParts.forEach(part =>{ %>
-                            <div  class="conjugations <%=part.status%>"><%=part.text%>
-                                <div hidden class='description'><%=part.description%></div>
-                            </div>
-                        <% })%>
-                  
-                    <%counter ++%>
-                <%})%>。
-                
-            <% })%>
-        </div>      
-    </p>
-
-    <div id='Line'></div>
-    <div id='info'>
-        <div>
-            <h2>Info</h2>
-
-        </div>
-    <div>
-        <ul id='infoUL'>
-        </ul>
-        <table id='wordTable'>
-            <caption>Word Info</caption>
-            <tr>
-                <th>Word #</th>
-                <th>Given Form</th>
-                <th>Base Form</th>
-                <th>English Meaning</th>
-                <th>Chapter</th>
-            </tr>
-        </table>
-        <table id='conjugationsTable'>
-            <caption>Conjugations Info</caption>
-            <tr>
-                <th>Word Acted On</th>
-                <th>Conjugation Form</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Chapter</th>
-            </tr>
-        </table>
-        <p>Stats
-            <p>
-                <%let totalKnown=0;%>
-                <%let totalSentences=0;%>
-                <%for(let i=0;i<gramStats.length;i++){ %>
-                <p>Sentence<%=i+1%>:
-                    <br><%=gramStats[i]%> / <%=grammar[i].length%> words known</p>
-                <%totalKnown+=gramStats[i]%>
-                <%totalSentences+=grammar[i].length%>
-                <% }%>
-            </p>
-            <p>Total Text:
-                <p>
-                    <%=totalKnown%>/<%=totalSentences%> total words or <%=+(totalKnown/totalSentences*100).toFixed(2)%>% of total words known
-                </p>
-            </p>
-            
+    <div id='container'>
+        <h3>You chose a lvl of<span>
+            Genki Chapter:
+            <%if(locals.Chapter) {%>
+                <%=Chapter%>
+            <%}%>and
+            <%if(locals.NLVL) {%>
+                NLVL:  <%=NLVL%>
+            <%}%>
+        </span></h3>
+        <h1>Original</h1>
+        <p  id='Original' title ="Tool TOp">
+            <%=original%>
         </p>
+        <h2>Vocab</h2>
+        <div class="box" id='Vocab'>
+            <%vocab.forEach(sentence=>{%>
+                <%sentence.forEach(word=>{%>
+                    <div class=<%=word.POS%>>
+                        <%=word.text%>
+                    </div>
+              <%  })%>
+            <%})%>
+    
+        </div>
+        <h2>Grammar</h2>
+        <p>
+            <div class="box" id="Grammar">
+                <% let counter =1%>
+               <%grammar.forEach(sentence=>{%>
+                <% let totalGrammarKnown=0%>
+                    <% sentence.forEach(word=>{%>
+                        <% let totalSentenceGrammarKnown=0%>
+                        <%word.before.forEach(part=>{%>
+                            <div class='before'><%=part.text%>
+                                <div class=''><%=part.description%></div>                 
+                            </div>
+                            <% })%>
+                            <div class="surface <%=word.statusKnown%>" name=<%=counter %> value=<%word.surfaceForm%>>
+                                <%if(word.statusKnown){%>
+                                   <% totalSentenceGrammarKnown++;%>
+                                <%}%>
+                                <%=word.surfaceForm%> 
+                                <div hidden class='base'>
+                                    <%=word.base%>
+                                </div>
+                                    <% if (word.description){ %>
+                                        <span class='description' hidden> 
+                                         <%= word.description%>
+                                        </span>
+                                        <% if(word.Chapter){ %>
+                                            <div hidden class='chapter'><%=word.Chapter%></div>
+                                        <%}%>
+                                     
+    
+                                     <%}%>   
+                                     <div class='numberCounter'>
+                                         <%=counter%>
+                                     </div> 
+                            </div>
+                            <%word.conjugatedParts.forEach(part =>{ %>
+                                <div  class="conjugations <%=part.status%>"><%=part.text%>
+                                    <div hidden class='description'><%=part.description%></div>
+                                </div>
+                            <% })%>
+                      
+                        <%counter ++%>
+                    <%})%>。
+                    
+                <% })%>
+            </div>      
+        </p>
+    
+        <div id='Line'></div>
+        <div id='info'>
+            <div>
+                <h2>Info</h2>
+    
+            </div>
+        <div>
+            <ul id='infoUL'>
+            </ul>
+            <table id='wordTable'>
+                <caption>Word Info</caption>
+                <tr>
+                    <th>Word #</th>
+                    <th>Given Form</th>
+                    <th>Base Form</th>
+                    <th>English Meaning</th>
+                    <th>Chapter</th>
+                </tr>
+            </table>
+            <table id='conjugationsTable'>
+                <caption>Conjugations Info</caption>
+                <tr>
+                    <th>Word Acted On</th>
+                    <th>Conjugation Form</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Chapter</th>
+                </tr>
+            </table>
+            <p>Stats
+                <p>
+                    <%let totalKnown=0;%>
+                    <%let totalSentences=0;%>
+                    <%for(let i=0;i<gramStats.length;i++){ %>
+                    <p>Sentence<%=i+1%>:
+                        <br><%=gramStats[i]%> / <%=grammar[i].length%> words known</p>
+                    <%totalKnown+=gramStats[i]%>
+                    <%totalSentences+=grammar[i].length%>
+                    <% }%>
+                </p>
+                <p>Total Text:
+                    <p>
+                        <%=totalKnown%>/<%=totalSentences%> total words or <%=+(totalKnown/totalSentences*100).toFixed(2)%>% of total words known
+                    </p>
+                </p>
+                
+            </p>
+        </div>
+          
+        </div>
+        <div id='buttons'>
+            <button value="All"type="button">開く</button>
+            <button value= Nouns type="button">Show Nouns</button>
+            <button value = "Verbs" type="button">Show Verbs</button>
+            <button value ="Na-Adjective"  type="button">Show Na-Adjective</button>
+            <button value ="I-Adjective"  type="button">Show I-Adjective</button>
+            <button value = "Particles" type="button">Show Particles</button>
+        </div>
     </div>
-      
-    </div>
-    <div id='buttons'>
-        <button value="All"type="button">開く</button>
-        <button value= Nouns type="button">Show Nouns</button>
-        <button value = "Verbs" type="button">Show Verbs</button>
-        <button value ="Na-Adjective"  type="button">Show Na-Adjective</button>
-        <button value ="I-Adjective"  type="button">Show I-Adjective</button>
-        <button value = "Particles" type="button">Show Particles</button>
-    </div>
+    
     
 <script src='../../assets/Scripts/Results3.js'></script>
 </body>
