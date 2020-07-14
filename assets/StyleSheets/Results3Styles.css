@@ -34,10 +34,10 @@
     color:gray;
 }
 #info{
-    position: absolute;
-    top:  var(--navHeight); 
+    position: fixed;
     left: 51%;
-    width:50%;
+    top: 8%;
+    width: 50%;
 }
 
 
@@ -57,7 +57,7 @@
     height: 100%;
     position: fixed;
     left: 50%;
-    top: var(--navHeight);
+    top: 50px;
 }
 .conjugationsUL{
     margin-left: 10px;
@@ -75,7 +75,10 @@ div.surface.false{
 table, th, td {
     border: 1px solid white;
     border-collapse: collapse;
+    /* width: 90%; */
 }
-#buttons{
-    width: 50%;
+button{
+    border-radius: 4px;
+    width:25%;
+    /* font-size: 15px; */
 }
