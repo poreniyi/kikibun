@@ -34,11 +34,10 @@
     color:gray;
 }
 #info{
-    position: fixed;
+    position: absolute;
+    top:  var(--navHeight); 
     left: 51%;
-    top: 8%;
-    width: 50%;
-    border-style: solid;
+    width:50%;
 }
 
 
@@ -58,7 +57,7 @@
     height: 100%;
     position: fixed;
     left: 50%;
-    top: 50px;
+    top: var(--navHeight);
 }
 .conjugationsUL{
     margin-left: 10px;
