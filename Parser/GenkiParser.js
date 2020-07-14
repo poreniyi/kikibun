@@ -39,6 +39,10 @@ Chapter1= async (string)=>{
 GenkiParser=async (tokens,chapter)=>{
     let wordKnownCounter=0;
     for(let i=0; i<tokens.length; i++){
+        if (tokens[i].EnPOS=='Symbol'){
+            console.log(`Symbol so skipped`);
+            continue;
+        }
         let singleToken=tokens[i];
         let afterPart=singleToken.conjugatedParts;
         let beforePart=singleToken.before;

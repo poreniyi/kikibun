@@ -178,6 +178,13 @@ grammarTokenizer=async (text)=>{
         let token=tokens[i];
         let word= new Word(token.basic_form,token.surface_form);
         let conjugation= new Conjugation(token.surface_form);
+    //Symbols
+
+    if(token.pos=='記号'||token.word_id==51340){
+        word.setEnPos('Symbol');
+        tokenArray.push(word);
+        continue;
+    }
     //beforePart
     if(token.pos_detail_1.includes('副詞')||token.pos.includes('副詞')){
        // previousWord.addBefore(token.surface_form);
