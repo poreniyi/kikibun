@@ -182,6 +182,8 @@ grammarTokenizer=async (text)=>{
 
     if(token.pos=='記号'||token.word_id==51340){
         word.setEnPos('Symbol');
+        word.grammarKnown=true;
+        word.statusKnown=true;
         tokenArray.push(word);
         continue;
     }
