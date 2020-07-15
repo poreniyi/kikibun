@@ -26,7 +26,8 @@ router.get('/',function(req,res){
 });
 router.post('/results.html',async(req,res)=>{
     let text=req.body.text.trim();
-    let sentences=text.split("。");
+    let sentences=textValidator(req.body.text);
+    
     let grammarSentences=[];
     let grammarStats=[];
    let vocabSentences=[];
@@ -212,23 +213,43 @@ router.get("/test", async (req,res)=>{
     // res.send({word:lasToken,found:lastTokenFound});
 })
 router.post('/testResults', async (req,res)=>{
-    string='毎日歩くよく話す時々食べる中国のほうが日本より静かな花大きいです食べます犬があります';
     console.log(req.body.text);
-    let text=req.body.text;
-    let grammar;
-    let vocab;
-    grammar=await grammarTokenizer(text);
-    vocab=await vocabTokenizer(text);
-    console.log(grammar);
-    grammar=await UpdatedParser(grammar,22);
+    let text=req.body.text.trim();
+     text=text.trim();
+    let array=[];
+    array=text.split('。');
+    res.send(array);
+    // let grammar;
+    // let vocab;
+    // let tokens;
+    // tokens = await tokenizer.tokenize(array);
+    // grammar=await grammarTokenizer(array);
+    // let updatedGrammar;
+    // vocab=await vocabTokenizer(array);
+    // console.log(grammar);
+    // updatedGrammar=await UpdatedParser(grammar,22);
     res.send({
-        grammar:grammar.tokens,
-        vocab:vocab.toString(),
+        // tokens:tokens,
+        // myTokenizer:grammar,
+        // updatedGrammar:updatedGrammar.tokens,
+        // stats:updatedGrammar.stats,
+        // vocab:vocab,
     })
 })
 
 textValidator=(string)=>{
-    
+    string.trim();
+    let sentences=string.split('。');
+    for(let i=0;i<sentences.length;i++){
+        if (!sentences[i].replace(/\s/g, '').length) {
+            console.log(`string ${i} only contains whitespace (ie. spaces, tabs or line breaks)`);
+            sentences.splice(i,1);
+          }
+    }
+    let lastSentence=sentences[sentences.length-1];
+    console.log(`The last sentence is ${lastSentence} the end`);
+    console.log(`The last sentence is sentence`);
+    return sentences;
 }
 
 module.exports=router;
