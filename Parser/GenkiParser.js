@@ -38,9 +38,13 @@ Chapter1= async (string)=>{
    
 GenkiParser=async (tokens,chapter)=>{
     let wordKnownCounter=0;
+    let wordStats={};
+    let totalWords=tokens.length;
+
     for(let i=0; i<tokens.length; i++){
         if (tokens[i].EnPOS=='Symbol'){
             console.log(`Symbol so skipped`);
+            totalWords--;
             continue;
         }
         let singleToken=tokens[i];
@@ -61,11 +65,13 @@ GenkiParser=async (tokens,chapter)=>{
        
     }
    // let wordKnownPercentage=+(wordKnownCounter/tokens.length*100).toFixed(2);
-    let wordKnownPercentage=wordKnownCounter
+    let wordKnownPercentage=wordKnownCounter;
+    wordStats.total=totalWords;
+    wordStats.known=wordKnownCounter;
 
     console.log(`The total amount of words known is${tokens.length} The amount of words known is:${wordKnownCounter}`);
     return {tokens:tokens,
-            percentage:wordKnownPercentage,
+            stats:wordStats,
         };
 }
 let findParticles=async(array,chapter,counter)=>{
