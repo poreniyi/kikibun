@@ -62,6 +62,8 @@ let changeColors=function(aButton){
 //Table
 let wordTable=document.querySelector('#wordTable');
 let conjugationsTable=document.querySelector('#conjugationsTable');
+let totalConjugations;
+let knownConjugations;
 surfaceWords.forEach(word=>{
     if (word.classList.contains('true')){
         let counter=word.querySelector('.numberCounter');
@@ -168,3 +170,12 @@ surfaceWords.forEach(word=>{
         })
     }
 })
+//Stats
+totalConjugations=document.getElementsByClassName('conjugations');
+knownConjugations=document.getElementsByClassName('conjugations known').length;
+console.log(totalConjugations);
+console.log(`Total # of conjugations is ${totalConjugations.length}`);
+console.log(`Total # of known conjugations is ${knownConjugations}`);
+let conjugationStats=document.getElementById('ConjugationStats');
+
+conjugationStats.textContent=`${knownConjugations}/${totalConjugations.length} or ${+(knownConjugations/totalConjugations.length*100).toFixed(2)}% of all conjugations`;

@@ -140,14 +140,17 @@
                 <%let totalSentences=0;%>
                 <%for(let i=0;i<gramStats.length;i++){ %>
                 <p>Sentence<%=i+1%>:
-                    <br><%=gramStats[i]%> / <%=grammar[i].length%> words known</p>
-                <%totalKnown+=gramStats[i]%>
-                <%totalSentences+=grammar[i].length%>
+                    <br><%=gramStats[i].known%> / <%=gramStats[i].total%> words known</p>
+                <%totalKnown+=gramStats[i].known%>
+                <%totalSentences+=gramStats[i].total%>
                 <% }%>
             </p>
             <p>Total Text:
-                <p>
+                <p id='GrammarWordsStats'>
                     <%=totalKnown%>/<%=totalSentences%> total words or <%=+(totalKnown/totalSentences*100).toFixed(2)%>% of total words known
+                </p>
+                Total Conjugations Known:
+                <p id='ConjugationStats'>
                 </p>
             </p>
             
