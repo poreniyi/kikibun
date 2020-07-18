@@ -184,8 +184,8 @@ grammarTokenizer=async (text)=>{
 
     if(token.pos=='記号'||token.word_id==51340){
         word.setEnPos('Symbol');
-        word.grammarKnown=true;
-        word.statusKnown=true;
+        // word.grammarKnown=true;
+        // word.statusKnown=true;
         tokenArray.push(word);
         continue;
     }
@@ -331,7 +331,7 @@ let fileData;
     filesLoaded=true;
     console.log(`Files are loaded? :${filesLoaded}`);
 }
-loadConditons();
+//loadConditons();
 let counter=0;
 let isLoaded=false;
 
