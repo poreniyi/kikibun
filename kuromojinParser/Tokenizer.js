@@ -2,10 +2,12 @@ let kuromojin=require('kuromojin');
 let word=require('./Words');
 let Word=word.Word;
 let Conjugation=word.Conjugation;
+const fs= require('fs');
+const path = require('path');
+const XLSX = require('xlsx');
 
-// kuromojin.getTokenizer().then(tokenizer => {
-//     // kuromoji.js's `tokenizer` instance
-// });
+
+
 
 
 
@@ -297,10 +299,57 @@ let textValidation=(text)=>{
     text=text.substring(0,Math.min(text.length,500));
     let sentences=text.split('。');
 }
+let filesLoaded=false;
+let fileData;
+ loadConditons=()=>{
+    let workbook=XLSX.readFile(path.join(__dirname, '..', 'txtFiles','conditions', 'Conditions.xlsx'));
+    const sheetNames=workbook.SheetNames;
+    for(let i=0;i<3;i++){
+        let idArray=[];
+        let posArray=[];
+        let posDetail1Array=[];
+        let currentSheet=workbook.SheetNames[i];
+        let data=XLSX.utils.sheet_to_json(workbook.Sheets[currentSheet]);
+        let id=data
+        data.forEach(row=>{
+            if(row.Id!=undefined){
+                idArray.push(row.Id)
+            }
+            if(row.pos!=undefined){
+                posArray.push(row.pos);
+            }
+            if(row.pos_detail_1!=undefined){
+                posDetail1Array.push(row.pos_detail_1);
+            }
+        })
+        console.log(`The values of Id of ${currentSheet} is ${idArray}`);
+        console.log(`The values of pos of ${currentSheet} is ${posArray}`);
+        console.log(`The values of posdetail1 of ${currentSheet} is ${posDetail1Array}`);
+
+    }
+   
+    filesLoaded=true;
+    console.log(`Files are loaded? :${filesLoaded}`);
+}
+loadConditons();
+let counter=0;
+let isLoaded=false;
+
+testConditons=()=>{
+    counter++;
+    console.log(`Files are loaded?${filesLoaded}`);
+    console.log(`Current value of counter is ${counter}`);
+    console.log(`Isloaded is ${isLoaded}`);
+    if(!isLoaded){
+        isLoaded=true;
+    }
+}
 module.exports={
     tokenize:tokenize,
     tokenizeOne:tokenizeOne,
     tokenize2:tokenize2,
     grammarTokenizer: grammarTokenizer,
     vocabTokenizer:vocabTokenizer,
+    loadConditons:loadConditons,
+    testConditons:testConditons,
 }
