@@ -68,12 +68,15 @@
                             </div>
                             <%word.conjugatedParts.forEach(part =>{ %>
                                 <div  class="conjugations <%=part.status%>"><%=part.text%>
+                                   <% if(part.status=='known'){%>
                                     <div hidden class='description'><%=part.description%></div>
+                                    <div hidden class='chapter'> <%=part.Chapter%>  </div>
+                                    <%}%>
                                 </div>
                             <% })%>
-                      
+                            <div hidden class='seperator'></div>
                         <%counter ++%>
-                    <%})%>。
+                    <%})%><div>。</div>
                     
                 <% })%>
             </div>      
