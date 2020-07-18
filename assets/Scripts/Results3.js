@@ -14,7 +14,6 @@ let words=[verbs,nouns,particles,naAdjectives,iAdjectives];
 let info=document.getElementById('info');
 let surfaceWords=[...document.querySelectorAll('.surface')];
 let conjugations=[...document.querySelectorAll('.a')];
-let before=[...document.querySelectorAll('.before')];
 
 let pos={
     "Nouns":nouns,
@@ -103,7 +102,7 @@ surfaceWords.forEach(word=>{
         }
     })
         wordRow.addEventListener('mouseenter',()=>{
-            word.style.transform='scale(1.1,1.1)';
+            word.style.transform='scale(1.28,1.28)';
             word.style.textShadow="0 0 5px red";        })
         wordRow.addEventListener('mouseleave',()=>{
             word.style.transform='scale(1,1)';
@@ -114,7 +113,12 @@ surfaceWords.forEach(word=>{
     let previousSibling=word.previousElementSibling;
     let conjugations= [];
     let nextSibling=word.nextElementSibling;
-   
+   while(previousSibling){
+       if(previousSibling.classList.contains('known')){
+        conjugations.push(previousSibling);
+       }
+       previousSibling=previousSibling.previousElementSibling;
+   }
     while(nextSibling && nextSibling.classList.contains('conjugations')){
         if(nextSibling.classList.contains('known')){
             conjugations.push(nextSibling);
@@ -151,7 +155,7 @@ surfaceWords.forEach(word=>{
                 }
             })
             conjugationsRow.addEventListener('mouseenter',()=>{
-                conjugation.style.transform='scale(1.1,1.1)';
+                conjugation.style.transform='scale(1.28,1.28)';
                 conjugation.style.textShadow="0 0 5px blue";        })
             conjugationsRow.addEventListener('mouseleave',()=>{
                 conjugation.style.transform='scale(1,1)';
