@@ -78,9 +78,19 @@ let findParticles=async(array,chapter,counter)=>{
     for(let j=0 ; j<array.length; j++){
         let element=array[j];
         let text=array[j].text;
-        let data=await Particles.findOne({Form:text,Chapter:{$lte:chapter}}) ? true: false;
+       // let data=await Particles.findOne({Form:text,Chapter:{$lte:chapter}}) ? true: false;
+        let data=await Particles.findOne({$or:
+            [
+                {Form:text,Chapter:{$lte:chapter},POSActedOn:counter.EnPOS},
+                {Form:text,Chapter:{$lte:chapter},POSActedOn:'All'}
+            ]}) ? true: false;
+
         if(data){
-            let particle=await Particles.findOne({Form:text,Chapter:{$lte:chapter}});
+            let particle=await Particles.findOne({$or:
+                [
+                    {Form:text,Chapter:{$lte:chapter},POSActedOn:counter.EnPOS},
+                    {Form:text,Chapter:{$lte:chapter},POSActedOn:'All'}
+                ]});
             element.makeKnown();
             element.updateDescription(particle.Name);
             element.updateChapter(particle.Chapter);
