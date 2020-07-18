@@ -32,11 +32,19 @@
                     <% sentence.forEach(word=>{%>
                         <% let totalSentenceGrammarKnown=0%>
                         <%word.before.forEach(part=>{%>
-                            <div class='before'><%=part.text%>
-                                <div class=''><%=part.description%></div>                 
+                            <div class="conjugations <%=part.status%>">
+                                <%=part.text%>
+                                <%if(part.description){ %>
+                                    <div hidden class="description">
+                                        <%=part.description%>
+                                    </div> 
+                                    <div hidden class='chapter'>
+                                        <%=part.Chapter%>
+                                    </div>
+                                    <%}%>
                             </div>
                             <% })%>
-                            <div class="surface <%=word.statusKnown%>" name=<%=counter %> value=<%word.surfaceForm%>>
+                            <div class="surface <%=word.statusKnown%>" name=<%=counter %> data-given=<%=word.surfaceForm%>>
                                 <%if(word.statusKnown){%>
                                    <% totalSentenceGrammarKnown++;%>
                                 <%}%>
@@ -86,8 +94,8 @@
             <button value="All"type="button">開く</button>
             <button value= Nouns type="button">Show Nouns</button>
             <button value = "Verbs" type="button">Show Verbs</button>
-            <button value ="Na-Adjective"  type="button">Show Na-Adjective</button>
-            <button value ="I-Adjective"  type="button">Show I-Adjective</button>
+            <button value ="Na-Adjective"  type="button">Show Na-Adjectives</button>
+            <button value ="I-Adjective"  type="button">Show I-Adjectives</button>
             <button value = "Particles" type="button">Show Particles</button>
         </div>
         
@@ -100,7 +108,7 @@
     </div>
     <div id='info'>
         <div>
-            <h2>Info</h2>
+            <h2>Grammar Info</h2>
 
         </div>
     <div>
@@ -109,7 +117,7 @@
         <table id='wordTable'>
             <caption>Word Info</caption>
             <tr>
-                <th>Word #</th>
+                <th id='numberColumn'>Word #</th>
                 <th>Given Form</th>
                 <th>Base Form</th>
                 <th>English Meaning</th>

@@ -113,7 +113,7 @@ surfaceWords.forEach(word=>{
     let previousSibling=word.previousElementSibling;
     let conjugations= [];
     let nextSibling=word.nextElementSibling;
-   while(previousSibling){
+   while(previousSibling&&previousSibling.classList.contains('conjugations') ){
        if(previousSibling.classList.contains('known')){
         conjugations.push(previousSibling);
        }
@@ -125,11 +125,14 @@ surfaceWords.forEach(word=>{
         }
         nextSibling=nextSibling.nextElementSibling;
     }
+    console.log(`The conjugations length is ${conjugations.length}`);
+
+    console.log(`Word is ${word.dataset.given} it's conjugations are ${conjugations}`);
     if(conjugations.length>0){
         conjugations.forEach(conjugation=>{
             let conjugationsRow=document.createElement('tr');
             let wordActedOn=conjugationsRow.insertCell(-1);
-            wordActedOn.textContent=word.childNodes[0].nodeValue;
+            wordActedOn.textContent=word.dataset.given;
             let conjugationForm=conjugationsRow.insertCell(-1);
             conjugationForm.textContent=conjugation.childNodes[0].nodeValue;
             let conjugationTitle=conjugationsRow.insertCell(-1);
@@ -155,8 +158,9 @@ surfaceWords.forEach(word=>{
                 }
             })
             conjugationsRow.addEventListener('mouseenter',()=>{
-                conjugation.style.transform='scale(1.28,1.28)';
-                conjugation.style.textShadow="0 0 5px blue";        })
+                conjugation.style.transform='scale(1.28 ,1.28)';
+                conjugation.style.textShadow="0 0 5px blue";       
+             })
             conjugationsRow.addEventListener('mouseleave',()=>{
                 conjugation.style.transform='scale(1,1)';
                 conjugation.style.textShadow="none"; 
