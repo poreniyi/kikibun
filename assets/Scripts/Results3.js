@@ -124,12 +124,11 @@ surfaceWords.forEach(word=>{
     while(nextSibling && nextSibling.classList.contains('conjugations')){
         if(nextSibling.classList.contains('known')){
             conjugations.push(nextSibling);
+            console.log(`The conjugation fonud is ${nextSibling.childNodes[0].nodeValue}`)
         }
         nextSibling=nextSibling.nextElementSibling;
     }
-    console.log(`The conjugations length is ${conjugations.length}`);
 
-    console.log(`Word is ${word.dataset.given} it's conjugations are ${conjugations}`);
     if(conjugations.length>0){
         conjugations.forEach(conjugation=>{
             let conjugationsRow=document.createElement('tr');
@@ -139,6 +138,8 @@ surfaceWords.forEach(word=>{
             conjugationForm.textContent=conjugation.childNodes[0].nodeValue;
             let conjugationTitle=conjugationsRow.insertCell(-1);
             conjugationTitle.textContent=conjugation.querySelector('.description').textContent;
+            let conjugationChapter=conjugationsRow.insertCell(-1);
+            conjugationChapter.textContent=conjugation.querySelector('.chapter').textContent;
             let conjugationIsShown=false;
             conjugation.addEventListener('mouseenter',()=>{
                 if(!conjugationIsShown){
@@ -147,16 +148,15 @@ surfaceWords.forEach(word=>{
             })
             conjugation.addEventListener('mouseleave',()=>{
                 if(!conjugationIsShown){
-                    conjugationsTable.removeChild(conjugationsRow);
+                    //conjugationsTable.removeChild(conjugationsRow);
+                    conjugationsRow.parentNode.removeChild(conjugationsRow);
                 }
             })
             conjugation.addEventListener('click',()=>{
                 if(!conjugationIsShown){
-                    conjugationsTable.appendChild(conjugationsRow);
                     conjugationIsShown=true;
                 }else{
                     conjugationIsShown=false;
-                    conjugationsTable.removeChild(conjugationsRow);
                 }
             })
             conjugationsRow.addEventListener('mouseenter',()=>{
@@ -173,7 +173,6 @@ surfaceWords.forEach(word=>{
 //Stats
 totalConjugations=document.getElementsByClassName('conjugations');
 knownConjugations=document.getElementsByClassName('conjugations known').length;
-console.log(totalConjugations);
 console.log(`Total # of conjugations is ${totalConjugations.length}`);
 console.log(`Total # of known conjugations is ${knownConjugations}`);
 let conjugationStats=document.getElementById('ConjugationStats');
