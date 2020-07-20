@@ -51,8 +51,8 @@ GenkiParser=async (tokens,chapter)=>{
         let afterPart=singleToken.conjugatedParts;
         let beforePart=singleToken.before;
         let base=singleToken.base;
-        await findParticles(afterPart,chapter,singleToken);
-        await findParticles(beforePart,chapter,singleToken);   
+        await findParticles(afterPart,chapter,singleToken,'Form');
+        await findParticles(beforePart,chapter,singleToken,'Before');   
         singleToken.statusKnown= await 
         Genki.findOne({$or:[
             {Kanji:base,Chapter:{$lte:chapter}},
@@ -82,19 +82,20 @@ GenkiParser=async (tokens,chapter)=>{
             stats:wordStats,
         };
 }
-let findParticles=async(array,chapter,word)=>{
+let findParticles=async(array,chapter,word,position)=>{
     for(let j=0 ; j<array.length; j++){
         let element=array[j];
         let text=array[j].text;
-        let pos=word.EnPOS
+        let pos=word.EnPOS.toLowerCase();
+        let test='Chapter';
        // let data=await Particles.findOne({Form:text,Chapter:{$lte:chapter}}) ? true: false;
         let data=await Particles.findOne({
-            Form:text,Chapter:{$lte:chapter},POSActedOn:{$in:[pos,'All']}
+            [position]:text,Chapter:{$lte:chapter},POSActedOn:{$in:[pos,'All']}
              }).lean() ? true: false;
 
         if(data){
             let particle=await Particles.findOne({
-                Form:text,Chapter:{$lte:chapter},POSActedOn:{$in:[pos,'All']}
+                [position]:text,Chapter:{$lte:chapter},POSActedOn:{$in:[pos,'All']}
                  },'Name Chapter').lean();
             element.makeKnown();
             element.updateDescription(particle.Name);
