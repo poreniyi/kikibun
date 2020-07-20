@@ -171,18 +171,18 @@ let exclusivePos={
 grammarTokenizer=async (text)=>{
     let tokens=await kuromojin.tokenize(text);
     let tokenArray=[];
-    console.log(`${text}`)
     let prePart;
     let previousWord;
     let prePos;
     console.log(`Length of tokens is${tokens.length}`)
     for(let i=0;i<tokens.length;i++){
         let token=tokens[i];
-        let word= new Word(token.basic_form,token.surface_form);
         let conjugation= new Conjugation(token.surface_form);
     //Symbols
 
     if(token.pos=='記号'||token.word_id==51340){
+        let word= new Word(token.basic_form,token.surface_form);
+
         word.setEnPos('Symbol');
         // word.grammarKnown=true;
         // word.statusKnown=true;
@@ -193,7 +193,7 @@ grammarTokenizer=async (text)=>{
     if(token.pos_detail_1.includes('副詞')||token.pos.includes('副詞')){
        // previousWord.addBefore(token.surface_form);
         prePart=conjugation;
-        console.log(`Before part is present and it is ${prePart}`);
+       // console.log(`Before part is present and it is ${prePart}`);
         continue;
     }
     if(token.word_id==92760){
@@ -204,15 +204,13 @@ grammarTokenizer=async (text)=>{
     if(previousWord!=undefined&&previousWord.getLastConjugation()!=undefined){
          // this checks for ん and　And adds it to previous conjugation；
          if((token.word_id===22540|| token.word_id==23430||token.word_id==23650||token.word_id==3447280|| token.word_id==92740 ||(token.word_id==1249100&& token.pos_detail_1=='非自立')) &&previousWord.getLastConjugation()){
-            //console.log(`${token.surface_form} and the previous word is ${previousWord}`);
-            console.log(`This is the alst conjugation ${previousWord.getLastConjugation()}`);
+            //console.log(`This is the last conjugation ${previousWord.getLastConjugation()}`);
             previousWord.getLastConjugation().addConjugation(token.surface_form);
             continue;
         }   
         //for ない
         if(token.word_id==23470){
             previousWord.getLastConjugation().addConjugation(token.surface_form);
-            console.log('adding to previous conjugation')
             continue;
         }
     }
@@ -223,11 +221,11 @@ grammarTokenizer=async (text)=>{
                     // for いる　Andある
      if((token.word_id===3491630　|| token.word_id===3324170|| token.word_id==1799070)&& prePos!=="Noun" &&previousWord!=undefined){
         previousWord.addConjugatedPart(conjugation);
-        console.log(`The previous wrod is${previousWord.base} pos is ${prePos} conjugatedpart is ${token.surface_form}`);
+      //  console.log(`The previous wrod is${previousWord.base} pos is ${prePos} conjugatedpart is ${token.surface_form}`);
         continue;
     }
     if(token.word_id==352790){
-        console.log(`This is the alst conjugation ${previousWord.getLastConjugation()}`);
+        //console.log(`This is the last conjugation ${previousWord.getLastConjugation()}`);
         previousWord.addConjugatedPart(conjugation);
         continue;
     }
@@ -242,6 +240,7 @@ grammarTokenizer=async (text)=>{
         // makes new word
 
         if(exclusivePos.hasOwnProperty(token.pos)){ //Noun na dj iadj and verb
+            let word= new Word(token.basic_form,token.surface_form);
             tokenArray.push(word);
             if(token.pos=='名詞'){
                 token.pos_detail_1=='形容動詞語幹' ? word.setEnPos("Na-Adjective"): word.setEnPos("Noun");
@@ -252,16 +251,15 @@ grammarTokenizer=async (text)=>{
             previousWord=word;
             if(prePart){
                 previousWord.addBefore(prePart);
-                console.log(`Attempting to add prePart`)
+                //console.log(`Attempting to add prePart`);
                 prePart='';
             }
-        
             prePos= previousWord.getEnPos();
-            console.log(prePos);
         }     
   }
    //console.log(previousWord.getEnPos());
 
+   
   return tokenArray;
 }
 vocabTokenizer=async(text)=>{
