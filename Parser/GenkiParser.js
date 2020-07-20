@@ -57,7 +57,7 @@ GenkiParser=async (tokens,chapter)=>{
         Genki.findOne({$or:[
             {Kanji:base,Chapter:{$lte:chapter}},
             {Chapter:{$lte:chapter},Hiragana:base, Kanji:"none"}
-        ]})? true: false;
+        ]}).lean()? true: false;
         if(singleToken.statusKnown){
             wordKnownCounter++;
           //  singleToken.Chapter=await  Genki.findOne({Kanji:base}).select(' -_id Chapter'));
@@ -66,7 +66,7 @@ GenkiParser=async (tokens,chapter)=>{
             Genki.findOne({$or:[
                 {Kanji:base,Chapter:{$lte:chapter}},
                 {Chapter:{$lte:chapter},Hiragana:base, Kanji:"none"}
-            ]}).lean;
+            ]},'Chapter English').lean();
             singleToken.Chapter=word.Chapter;
             singleToken.addDescription(word.English);
         }
@@ -95,7 +95,7 @@ let findParticles=async(array,chapter,word)=>{
         if(data){
             let particle=await Particles.findOne({
                 Form:text,Chapter:{$lte:chapter},POSActedOn:{$in:[pos,'All']}
-                 }).lean();
+                 },'Name Chapter').lean();
             element.makeKnown();
             element.updateDescription(particle.Name);
             element.updateChapter(particle.Chapter);
