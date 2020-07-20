@@ -73,8 +73,12 @@ router.post('/results.html',async(req,res)=>{
                 gramStats:grammarStats,
             });
         }catch(err){
-            res.render('Home');
             console.log(err);
+            let message='Something has gone wrong';
+            if(err.message='Not Japanese'){
+                message='Please enter Japanese input';
+            }
+            res.render('Home',{err:message});
         }  
 });
 
