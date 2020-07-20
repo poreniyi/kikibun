@@ -53,12 +53,20 @@ GenkiParser=async (tokens,chapter)=>{
         let base=singleToken.base;
         await findParticles(afterPart,chapter,singleToken);
         await findParticles(beforePart,chapter,singleToken);   
-        singleToken.statusKnown= await Genki.findOne({Kanji:base,Chapter:{$lte:chapter}})? true:  await Genki.findOne({Chapter:{$lte:chapter},Hiragana:base, Kanji:"none"})?true :false;
+        singleToken.statusKnown= await 
+        Genki.findOne({$or:[
+            {Kanji:base,Chapter:{$lte:chapter}},
+            {Chapter:{$lte:chapter},Hiragana:base, Kanji:"none"}
+        ]})? true: false;
         if(singleToken.statusKnown){
             wordKnownCounter++;
           //  singleToken.Chapter=await  Genki.findOne({Kanji:base}).select(' -_id Chapter'));
             //singleToken.Chapter= await Genki.findOne({Kanji:base}).Chapter;
-            let word=(await Genki.findOne({Kanji:base}) ||await Genki.findOne({Hiragana:base}));
+            let word=await 
+            Genki.findOne({$or:[
+                {Kanji:base,Chapter:{$lte:chapter}},
+                {Chapter:{$lte:chapter},Hiragana:base, Kanji:"none"}
+            ]});
             singleToken.Chapter=word.Chapter;
             singleToken.addDescription(word.English);
         }
@@ -74,27 +82,24 @@ GenkiParser=async (tokens,chapter)=>{
             stats:wordStats,
         };
 }
-let findParticles=async(array,chapter,counter)=>{
+let findParticles=async(array,chapter,word)=>{
     for(let j=0 ; j<array.length; j++){
         let element=array[j];
         let text=array[j].text;
+        let pos=word.EnPOS
        // let data=await Particles.findOne({Form:text,Chapter:{$lte:chapter}}) ? true: false;
-        let data=await Particles.findOne({$or:
-            [
-                {Form:text,Chapter:{$lte:chapter},POSActedOn:counter.EnPOS},
-                {Form:text,Chapter:{$lte:chapter},POSActedOn:'All'}
-            ]}) ? true: false;
+        let data=await Particles.findOne({
+            Form:text,Chapter:{$lte:chapter},POSActedOn:{$in:[pos,'All']}
+             }).lean() ? true: false;
 
         if(data){
-            let particle=await Particles.findOne({$or:
-                [
-                    {Form:text,Chapter:{$lte:chapter},POSActedOn:counter.EnPOS},
-                    {Form:text,Chapter:{$lte:chapter},POSActedOn:'All'}
-                ]});
+            let particle=await Particles.findOne({
+                Form:text,Chapter:{$lte:chapter},POSActedOn:{$in:[pos,'All']}
+                 }).lean();
             element.makeKnown();
             element.updateDescription(particle.Name);
             element.updateChapter(particle.Chapter);
-            counter.updateNumberBeforeKnown();
+            word.updateNumberBeforeKnown();
             //console.log(`Success ${text} has been found of ${counter.base}`);
            // console.log(`The counter is now:${counter}`);
         }else{
