@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 
 def newLinks():
-    for x in range(5,6): 
+    for x in range(1,6): 
         startoFlink ='http://www.tanos.co.uk/jlpt/jlpt'
         endofLink='/vocab/'
         val=str(x)
