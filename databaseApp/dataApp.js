@@ -41,7 +41,7 @@ let ParticleSchema= new Schema({
   Name:{type:String,required:false},
   Form:{type:[String],required:true},
   Before:{type:[String],required:false},
-  POSActedOn:{type:[String],required:true},
+  POSActedOn:{type:[String],required:true,set:toLower},
   Chapter:{type:Number},
   NLvl:{type:Number}
 })
@@ -55,6 +55,12 @@ let Genki=mongoose.model("GenkiWord",WordSchemaGenki);
 let JLPT=mongoose.model('JLPT Word',WordScehmaJLPT);
 let Particles=mongoose.model('Particle',ParticleSchema);
 
+function toLower (posArray) {
+  for(let i=0;i<posArray.length;i++){
+    posArray[i]=posArray[i].toLowerCase();
+  }
+  return posArray;
+}
 
 let N5=mongoose.model('N2',WordScehmaJLPT);
 module.exports  ={
