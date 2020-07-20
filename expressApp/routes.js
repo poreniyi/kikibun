@@ -27,26 +27,43 @@ router.get('/',function(req,res){
 router.post('/results.html',async(req,res)=>{
     let text=req.body.text.trim();
     let sentences=textValidator(req.body.text);
-    
     let grammarSentences=[];
     let grammarStats=[];
    let vocabSentences=[];
-    console.log("Results page: \n");
+    console.log("Results page:");
     console.log(`The Genki Chapter is ${req.body.Genki} and the JLPT lvl is ${req.body.JLPT}`);
         try{
             if (/[^\u0000-\u00ff]/.test(text)==false){
                 throw 'Not japanese';
              }
+             let totalElapsedTime=0;
             for(let i =0;i<sentences.length;i++){
+                let start=Date.now();
                 let grammar= await grammarTokenizer(sentences[i]); 
+                let end =Date.now();
+                let elapsedTime=(end-start)/1000;
+                totalElapsedTime+=elapsedTime;
+                console.log(`For grammar tokenizer It took sentence${i} ${elapsedTime}  seconds`);
+                start=Date.now();
                 let vocab=await vocabTokenizer(sentences[i]);
+                end=Date.now();
+                elapsedTime=(end-start)/1000;
+                console.log(`For vocab tokenizer It took sentence${i} ${elapsedTime}  seconds`);
+                totalElapsedTime+=elapsedTime;
+                start=Date.now();
                 grammar=await UpdatedParser(grammar,req.body.Genki); 
+                end=Date.now();
+                elapsedTime=(end-start)/1000;
+                totalElapsedTime+=elapsedTime;
+                console.log(`For the parser It took sentence${i} ${elapsedTime}  seconds to complete`);
                 let updatedGrammmar=grammar.tokens;
-                grammarStats.push(grammar.percentage);
+                grammarStats.push(grammar.stats);
                 grammarSentences.push(updatedGrammmar);
                 vocabSentences.push(vocab);
             }
-            console.log(grammarStats);
+
+             console.log(`Total Elapsed time is:${totalElapsedTime}`);
+           
             res.render('Results3',
             {   original:text,
                 grammar:grammarSentences,
@@ -218,22 +235,22 @@ router.post('/testResults', async (req,res)=>{
      text=text.trim();
     let array=[];
     array=text.split('。');
-    res.send(array);
-    // let grammar;
-    // let vocab;
-    // let tokens;
-    // tokens = await tokenizer.tokenize(array);
-    // grammar=await grammarTokenizer(array);
-    // let updatedGrammar;
-    // vocab=await vocabTokenizer(array);
-    // console.log(grammar);
-    // updatedGrammar=await UpdatedParser(grammar,22);
+    let grammar;
+    let vocab;
+    let tokens;
+    tokens = await tokenizer.tokenize(text);
+    grammar=await grammarTokenizer(text);
+    let updatedGrammar;
+    vocab=await vocabTokenizer(text);
+    console.log(grammar);
+    updatedGrammar=await UpdatedParser(grammar,22);
+    console.log(tokenizer.testConditons());
     res.send({
-        // tokens:tokens,
-        // myTokenizer:grammar,
-        // updatedGrammar:updatedGrammar.tokens,
-        // stats:updatedGrammar.stats,
-        // vocab:vocab,
+        tokens:tokens,
+        myTokenizer:grammar,
+        updatedGrammar:updatedGrammar.tokens,
+        stats:updatedGrammar.stats,
+        vocab:vocab,
     })
 })
 
@@ -246,9 +263,6 @@ textValidator=(string)=>{
             sentences.splice(i,1);
           }
     }
-    let lastSentence=sentences[sentences.length-1];
-    console.log(`The last sentence is ${lastSentence} the end`);
-    console.log(`The last sentence is sentence`);
     return sentences;
 }
 
