@@ -66,7 +66,7 @@ GenkiParser=async (tokens,chapter)=>{
             Genki.findOne({$or:[
                 {Kanji:base,Chapter:{$lte:chapter}},
                 {Chapter:{$lte:chapter},Hiragana:base, Kanji:"none"}
-            ]});
+            ]}).lean;
             singleToken.Chapter=word.Chapter;
             singleToken.addDescription(word.English);
         }
