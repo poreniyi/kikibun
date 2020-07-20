@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="../assets/StyleSheets/indexStyles.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/StyleSheets/indexStyles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hirakibun</title>
@@ -14,11 +14,16 @@
     <form  id="form" action="./results.html" method="POST">
     <textarea autofocus="true" name="text" id="textContent"  placeholder="Sentence Here" wrap="soft" required ></textarea>
     <span>JLPT LVL</span>
-    <input id="JLPT"name="JLPT" type="number" min="0" max="5" value=0 >
+    <input id="JLPT"name="JLPT" type="number" min="0" max="5">
     <span>Genki Chapter</span>
-    <input id="genki"  name="Genki" type="number" min="0" max="22" value=0>
+    <input id="genki"  name="Genki" type="number" min="0" max="22">
     <input id="button" type="submit" value="Submit" id="Submit">
     </form>
+    <%if (locals.err){%>
+        <h2 id='error'>
+            <%=err%>
+        </h2>
+    <%}%>
 </body>
 <script src="../../assets/Scripts/indexScript.js"></script>
 </html>    

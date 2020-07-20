@@ -5,7 +5,6 @@ const button= document.querySelector("#button")
 const genki=document.querySelector("#genki");
 const jlpt=document.querySelector("#JLPT");
 let inputs=[jlpt,genki];
-button.style.visibility='hidden';
 
 inputs.forEach(element=>{
     element.addEventListener("change",()=>{
@@ -14,6 +13,5 @@ inputs.forEach(element=>{
         }else{
             button.style.visibility='hidden';
         }
-        console.log(`Change test ${element.value}`);
     })   
 })
