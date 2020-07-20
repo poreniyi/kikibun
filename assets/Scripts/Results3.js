@@ -170,6 +170,7 @@ surfaceWords.forEach(word=>{
         })
     }
 })
+
 //Stats
 totalConjugations=document.getElementsByClassName('conjugations');
 knownConjugations=document.getElementsByClassName('conjugations known').length;
@@ -178,3 +179,7 @@ console.log(`Total # of known conjugations is ${knownConjugations}`);
 let conjugationStats=document.getElementById('ConjugationStats');
 
 conjugationStats.textContent=`${knownConjugations}/${totalConjugations.length} or ${+(knownConjugations/totalConjugations.length*100).toFixed(2)}% of all conjugations`;
+//reload
+// if ( window.history.replaceState ) {
+//     window.history.replaceState( null, null, window.location.href );
+//   }
