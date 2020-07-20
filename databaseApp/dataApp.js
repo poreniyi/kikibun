@@ -3,15 +3,6 @@ const unqieValidator=require('mongoose-unique-validator');
 
 
 let Schema=mongoose.Schema;
-
-let WordScehmaJLPT= new Schema({
-    English:{type:String,required:false},
-    Kanji:{type:String,required:false, unique:true},
-    Hiragana:{type:String,required:false},
-    nLevel:{type:String, required:false, min:1, max:5},
-    length:Number,
-    }
-);
 let pos=[
   'Noun',
   'Verb',
@@ -25,6 +16,16 @@ let pos=[
   'Auxillary Verb',
   'none',
 ]
+let WordScehmaJLPT= new Schema({
+    English:{type:String,required:false},
+    Kanji:{type:String,required:false, unique:true},
+    Hiragana:{type:[String],required:false},
+    nLevel:{type:String, required:false, min:1, max:5},
+    POS:{type:String, required:false,enum:pos},
+    length:Number,
+    }
+);
+
 
 WordScehmaJLPT.plugin(unqieValidator);
 let WordSchemaGenki= new Schema({
