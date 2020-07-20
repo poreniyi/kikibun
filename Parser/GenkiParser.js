@@ -43,7 +43,7 @@ GenkiParser=async (tokens,chapter)=>{
 
     for(let i=0; i<tokens.length; i++){
         if (tokens[i].EnPOS=='Symbol'){
-            console.log(`Symbol so skipped`);
+            //console.log(`Symbol so skipped`);
             totalWords--;
             continue;
         }
@@ -95,9 +95,11 @@ let findParticles=async(array,chapter,counter)=>{
             element.updateDescription(particle.Name);
             element.updateChapter(particle.Chapter);
             counter.updateNumberBeforeKnown();
-            console.log(`Success ${text} has been found of ${counter.base}`);
+            //console.log(`Success ${text} has been found of ${counter.base}`);
            // console.log(`The counter is now:${counter}`);
-        }else{console.log(`Failure!! ${text} not found of ${counter.base} `)}
+        }else{
+            //console.log(`Failure!! ${text} not found of ${counter.base} `)
+        }
     } 
  }
 
