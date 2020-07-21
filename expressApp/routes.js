@@ -27,7 +27,7 @@ router.get('/',function(req,res){
 });
 router.get('/results',getDataBack=>{
 })
-router.post('/results',async(req,res)=>{
+router.post('/resultsProcess',async(req,res)=>{
     let data=await tokeniZAndQuery(req);
     console.log(data.gramStats);
     res.render('Results3',
