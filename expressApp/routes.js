@@ -12,6 +12,7 @@ const unqieValidator=require('mongoose-unique-validator');
 const fs=require('fs');
 let tokenizer=require('../kuromojinParser/Tokenizer');
 const { grammarTokenizer } = require('../kuromojinParser/Tokenizer');
+const { nextTick } = require('process');
 let tokenOne=tokenizer.tokenizeOne;
 let tokenize2=tokenizer.tokenize2;
 let vocabTokenizer=tokenizer.vocabTokenizer;
@@ -24,63 +25,21 @@ router.get('/About',function(req,res){
 router.get('/',function(req,res){
     res.render("Home");
 });
-router.post('/results.html',async(req,res)=>{
-    let text=req.body.text.trim();
-    let sentences=textValidator(req.body.text);
-    let grammarSentences=[];
-    let grammarStats=[];
-   let vocabSentences=[];
-    console.log("Results page:");
-    console.log(`The Genki Chapter is ${req.body.Genki} and the JLPT lvl is ${req.body.JLPT}`);
-        try{
-            if (/[^\u0000-\u00ff]/.test(text)==false){
-                throw 'Not japanese';
-             }
-             let totalElapsedTime=0;
-            for(let i =0;i<sentences.length;i++){
-                let start=Date.now();
-                let grammar= await grammarTokenizer(sentences[i]); 
-                let end =Date.now();
-                let elapsedTime=(end-start)/1000;
-                totalElapsedTime+=elapsedTime;
-                console.log(`For grammar tokenizer It took sentence${i} ${elapsedTime}  seconds`);
-                start=Date.now();
-                let vocab=await vocabTokenizer(sentences[i]);
-                end=Date.now();
-                elapsedTime=(end-start)/1000;
-                console.log(`For vocab tokenizer It took sentence${i} ${elapsedTime}  seconds`);
-                totalElapsedTime+=elapsedTime;
-                start=Date.now();
-                grammar=await UpdatedParser(grammar,req.body.Genki); 
-                end=Date.now();
-                elapsedTime=(end-start)/1000;
-                totalElapsedTime+=elapsedTime;
-                console.log(`For the parser It took sentence${i} ${elapsedTime}  seconds to complete`);
-                let updatedGrammmar=grammar.tokens;
-                grammarStats.push(grammar.stats);
-                grammarSentences.push(updatedGrammmar);
-                vocabSentences.push(vocab);
-            }
-
-             console.log(`Total Elapsed time is:${totalElapsedTime}`);
-           
-            res.render('Results3',
-            {   original:text,
-                grammar:grammarSentences,
-                vocab:vocabSentences,
-                Chapter:req.body.Genki,
-                NLVL:req.body.JLPT,
-                gramStats:grammarStats,
-            });
-        }catch(err){
-            console.log(err);
-            let message='Something has gone wrong';
-            if(err.message='Not Japanese'){
-                message='Please enter Japanese input';
-            }
-            res.render('Home',{err:message});
-        }  
+router.get('/results',getDataBack=>{
+})
+router.post('/results',async(req,res)=>{
+    let data=await tokeniZAndQuery(req);
+    console.log(data.gramStats);
+    res.render('Results3',
+    {   original:data.original,
+        grammar:data.grammar,
+        vocab:data.vocab,
+        Chapter:req.body.Genki,
+        NLVL:req.body.JLPT,
+        gramStats:data.gramStats,
+    });   
 });
+
 
 router.get("/GenkiVocabList",async(req,res)=>{
     let chapter = parseInt(req.query.chapter);
@@ -202,36 +161,6 @@ router.post('/NHK',async (req,res)=>{
 })
 router.get("/test", async (req,res)=>{
     res.render('Test.ejs');
-    // string='毎日歩くよく話す時々食べる中国のほうが日本より静かな花大きいです食べます犬があります';
-    // string='あります';
-    // let tokens;
-    // let grammar;
-    // let vocab;
-    // try{
-    //     tokens = await tokenizer.tokenize(string);
-    //     grammar = await tokenizer.grammarTokenizer(string);
-    // }catch(err){
-    //     console.log(err);
-    // }
-    // // let lasToken=grammar[grammar.length-1];
-    // // let lastTokenText=lasToken.conjugatedParts[0].text;
-    // // let lastTokenFound=await Particles.findOne({Form:lastTokenText});
-    // let allGrammar= await UpdatedParser(grammar, 22);
-    // let percentage=allGrammar.percentage;
-    // grammar=allGrammar.tokens;
-    // // let testPolite=await Particles.find({Form:'ます'});
-    // //  console.log(`The last token is ${lasToken}`);
-    // vocab = await vocabTokenizer(string);
-    // tokens='';
-    // //grammar='';
-    // vocab='';
-    // res.send({
-    //     tokens:tokens,
-    //     grammar:allGrammar,
-    //     vocab:vocab,
-    //     percentage:percentage,
-    // });
-    // res.send({word:lasToken,found:lastTokenFound});
 })
 router.post('/testResults', async (req,res)=>{
     console.log(req.body.text);
@@ -270,4 +199,71 @@ textValidator=(string)=>{
     return sentences;
 }
 
+async function  tokeniZAndQuery (req){
+    let text=req.body.text.trim();
+    console.log(`The text is ${text}`);
+    let sentences=textValidator(req.body.text);
+    let grammarSentences=[];
+    let grammarStats=[];
+   let vocabSentences=[];
+   let data={};
+    console.log("Results page:");
+    console.log(`The Genki Chapter is ${req.body.Genki} and the JLPT lvl is ${req.body.JLPT}`);
+        try{
+            if (/[^\u0000-\u00ff]/.test(text)==false){
+                throw 'Not japanese';
+             }
+             let totalElapsedTime=0;
+            for(let i =0;i<sentences.length;i++){
+                let start=Date.now();
+                let grammar= await grammarTokenizer(sentences[i]); 
+                let end =Date.now();
+                let elapsedTime=(end-start)/1000;
+                totalElapsedTime+=elapsedTime;
+                console.log(`For grammar tokenizer It took sentence${i} ${elapsedTime}  seconds`);
+                start=Date.now();
+                let vocab=await vocabTokenizer(sentences[i]);
+                end=Date.now();
+                elapsedTime=(end-start)/1000;
+                console.log(`For vocab tokenizer It took sentence${i} ${elapsedTime}  seconds`);
+                totalElapsedTime+=elapsedTime;
+                start=Date.now();
+                grammar=await UpdatedParser(grammar,req.body.Genki); 
+                end=Date.now();
+                elapsedTime=(end-start)/1000;
+                totalElapsedTime+=elapsedTime;
+                console.log(`For the parser It took sentence${i} ${elapsedTime}  seconds to complete`);
+                let updatedGrammmar=grammar.tokens;
+                grammarStats.push(grammar.stats);
+                grammarSentences.push(updatedGrammmar);
+                vocabSentences.push(vocab);
+            }
+data.original=text;
+data.grammar=grammarSentences;
+data.vocab=vocabSentences;
+data.Chapter=req.body.Genki;
+data.NLVL=req.body.JLPT;
+data.gramStats=grammarStats,
+             console.log(`Total Elapsed time is:${totalElapsedTime}`);
+              }catch(err){
+            console.log(err);
+            let message='Something has gone wrong';
+            if(err.message='Not Japanese'){
+                message='Please enter Japanese input';
+            }
+            res.render('Home',{err:message});
+        } 
+        return data; 
+}
+function getDataBack(req,res){
+    let data=req.dataProcessed;
+    res.render('Results3',
+    {   original:text,
+        grammar:grammarSentences,
+        vocab:vocabSentences,
+        Chapter:req.body.Genki,
+        NLVL:req.body.JLPT,
+        gramStats:grammarStats,
+    });
+}
 module.exports=router;
