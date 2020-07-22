@@ -25,11 +25,8 @@ router.get('/About',function(req,res){
 router.get('/',function(req,res){
     res.render("Home");
 });
-router.get('/results',getDataBack=>{
-})
-router.post('/resultsProcess',async(req,res)=>{
-    let data=await tokeniZAndQuery(req);
-    console.log(data.gramStats);
+router.get('/results',(req,res)=>{
+    let data=req.session.data;
     res.render('Results3',
     {   original:data.original,
         grammar:data.grammar,
@@ -38,6 +35,13 @@ router.post('/resultsProcess',async(req,res)=>{
         NLVL:req.body.JLPT,
         gramStats:data.gramStats,
     });   
+})
+router.post('/resultsProcess',async(req,res)=>{
+    let data=await tokeniZAndQuery(req);
+    req.session.data=data;
+    console.log(data.gramStats);
+    res.redirect('/results');
+ 
 });
 
 
