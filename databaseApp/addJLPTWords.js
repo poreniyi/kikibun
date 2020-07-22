@@ -2,17 +2,22 @@ const fs=require('fs');
 let tokenizer=require('../kuromojinParser/Tokenizer');
 const path =require('path');
 const JLPT=require('./dataApp').JLPT;
-for(let i=0;i<1;i++){
-    let name=`JLPT:5.txt`;
-    let fileName=path.join(__dirname,"..",'txtFiles','JlptWords',name);
-    fs.readFile(fileName,'utf8',(err,data)=>{
-        let array=data.split('\n');
-        array.pop();
-      // console.log(array);
-        makeWords(array,i);
-    });
+
+let insertJLPTWords=async ()=>{
+    for(let i=5;i<6;i++){
+        let name=`JLPT:${i}.txt`;
+        let fileName=path.join(__dirname,"..",'txtFiles','JlptWords',name);
+        fs.readFile(fileName,'utf8',(err,data)=>{
+            let array=data.split('\n');
+            array.pop();
+          // console.log(array);
+            makeJLPTDocs(array,i);
+        });
+    }
 }
-let makeWords=(array,iterator)=>{
+let noPosArray=[];
+
+let makeJLPTDocs=(array,iterator)=>{
     array.forEach(async element => {
         let line=element.split('+');
         let hiragana=line[0].split('/');
@@ -25,25 +30,34 @@ let makeWords=(array,iterator)=>{
         }else{
             pos=await tokenizer.tokenizeOne(kanji[0]); 
         }
+        if (pos==undefined){
+            pos='none';
+        }
         let currentWord={
             English:english,
             Kanji:kanji,
             Hiragana:hiragana,
-            nLevel:iterator+1,
+            nLevel:iterator,
             POS:pos
         }
-        if(currentWord.POS==undefined){
+        // JLPT.create(currentWord).then(function(data){
+        //     console.log(data);
+        // })
+        if(currentWord.POS=='none'){
             console.log(currentWord);
-            let test2=await tokenizer.tokenizeOne(currentWord.Kanji[0]);
-            console.log(test2);
+            noPosArray.push(currentWord);
+            console.log(`# of no POS words is ${noPosArray.length}`);
         }
-      //  console.log(currentWord);
     });
-    myfnc=async()=>{
-        let string='五';
-        let test=await tokenizer.tokenizeOne(string);
-        console.log(`The result of the test on ${string} is ${test}`);
-    }
-    myfnc();
 
+}
+
+myfnc=async()=>{
+    let string='五';
+    let test=await tokenizer.tokenizeOne(string);
+    console.log(`The result of the test on ${string} is ${test}`);
+}
+//myfnc();
+module.exports={
+    insertJLPTWords:insertJLPTWords,
 }
