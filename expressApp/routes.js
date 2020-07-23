@@ -232,7 +232,7 @@ async function  tokeniZAndQuery (req){
                 console.log(`For vocab tokenizer It took sentence${i} ${elapsedTime}  seconds`);
                 totalElapsedTime+=elapsedTime;
                 start=Date.now();
-                grammar=await UpdatedParser(grammar,req.body.Genki); 
+                grammar=await UpdatedParser(grammar,req.body.Genki,req.body.JLPT); 
                 end=Date.now();
                 elapsedTime=(end-start)/1000;
                 totalElapsedTime+=elapsedTime;
