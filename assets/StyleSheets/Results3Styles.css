@@ -39,6 +39,7 @@
     top:  var(--navHeight); 
     width: 50%;
     overflow-y:scroll; 
+    height:100%;
 }
 #LeftSide{
     height:80%;
