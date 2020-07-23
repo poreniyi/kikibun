@@ -14,7 +14,7 @@
     position: absolute;
     top:  var(--navHeight); 
     width: 50%;
-
+    height:100%;
   }
   body{
     color:white;
@@ -38,8 +38,12 @@
     left: 51%;
     top:  var(--navHeight); 
     width: 50%;
+    overflow-y:scroll; 
 }
-
+#LeftSide{
+    height:80%;
+    overflow:scroll; 
+}
 
 .Verb,.Noun,.Particle,.Na-Adjective,.I-Adjective,.before,.surface,.conjugations{
     -webkit-user-select: none; /* Safari */
