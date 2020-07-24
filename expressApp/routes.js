@@ -27,6 +27,9 @@ router.get('/',function(req,res){
 });
 router.get('/results',(req,res)=>{
     let data=req.session.data;
+    if(!data){
+        res.render('Home');
+    }
     res.render('Results3',
     {   original:data.original,
         grammar:data.grammar,
@@ -212,7 +215,12 @@ async function  tokeniZAndQuery (req){
    let vocabSentences=[];
    let data={};
     console.log("Results page:");
-    console.log(`The Genki Chapter is ${req.body.Genki} and the JLPT lvl is ${req.body.JLPT}`);
+    let jlptLvl=req.body.JLPT
+    if (jlptLvl==0||!jlptLvl){
+        jlptLvl=6;
+    }
+    console.log(`The Genki Chapter is ${req.body.Genki} and the JLPT lvl is ${jlptLvl}`);
+
         try{
             if (/[^\u0000-\u00ff]/.test(text)==false){
                 throw 'Not japanese';
@@ -232,7 +240,7 @@ async function  tokeniZAndQuery (req){
                 console.log(`For vocab tokenizer It took sentence${i} ${elapsedTime}  seconds`);
                 totalElapsedTime+=elapsedTime;
                 start=Date.now();
-                grammar=await UpdatedParser(grammar,req.body.Genki,req.body.JLPT); 
+                grammar=await UpdatedParser(grammar,req.body.Genki,jlptLvl); 
                 end=Date.now();
                 elapsedTime=(end-start)/1000;
                 totalElapsedTime+=elapsedTime;
