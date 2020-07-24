@@ -69,18 +69,27 @@ let findParticles=async(array,chapter,nLVL,word,position)=>{
         let text=array[j].text;
         let pos=word.EnPOS.toLowerCase();
         let test='Chapter';
-        let data=await Particles.findOne({
+        let genkiData=await Particles.findOne({
             [position]:text,Chapter:{$lte:chapter},POSActedOn:{$in:[pos,'All']}
              }).select('Name Chapter').lean();
-        if(data){
+        if(genkiData){
             element.makeKnown();
-            element.updateDescription(data.Name);
-            element.updateChapter(data.Chapter);
+            element.updateDescription(genkiData.Name);
+            element.updateChapter(genkiData.Chapter);
             word.updateNumberBeforeKnown();
             //console.log(`Success ${text} has been found of ${counter.base}`);
            // console.log(`The counter is now:${counter}`);
-        }else{
-            //console.log(`Failure!! ${text} not found of ${counter.base} `)
+        }
+        let jlptData=await Particles.findOne({
+            [position]:text,NLvl:{$gte:nLVL},POSActedOn:{$in:[pos,'All']}
+        }).select('Name NLvl').lean();
+        if(jlptData){
+            element.JLPTLvl=jlptData.NLvl;
+            if(element.status=='unknown'){
+                element.makeKnown();
+                element.updateDescription(jlptData.Name);
+                word.updateNumberBeforeKnown();
+            }
         }
     } 
  }
