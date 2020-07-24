@@ -34,8 +34,27 @@ GenkiParser=async (tokens,chapter,nLVL)=>{
             singleToken.Chapter=word.Chapter;
             singleToken.addDescription(word.English);
         }
+        if(nLVL!=0){
+            console.log(`The nLVL query search Is ${nLVL}`);
+            let jlptWord= await JLPT.findOne({$or:[
+                {Kanji:base,nLevel:{$gte:nLVL}},
+                {nLevel:{$gte:nLVL},Hiragana:base, Kanji:"None"}
+            ]}).select('nLevel English').lean();
+            if(jlptWord){
+                console.log(`The found query result is`, jlptWord);
+                console.log(`Word ${base} found in JLPTLVL is N${jlptWord.nLevel}`);
+                singleToken.JLPTLvl=jlptWord.nLevel;
+                if(!singleToken.statusKnown){
+                    singleToken.statusKnown=true;
+                    wordKnownCounter++;
+                    console.log(`The English definition is ${jlptWord.English}`);
+                    singleToken.addDescription(jlptWord.English);
+                }
+            }
+        }
        
     }
+    
     wordStats.total=totalWords;
     wordStats.known=wordKnownCounter;
 
