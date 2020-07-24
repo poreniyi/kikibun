@@ -88,7 +88,11 @@ surfaceWords.forEach(word=>{
             chapterRow.textContent=chapter.textContent;
         }
         let jlptRow=wordRow.insertCell(-1);
-        jlptRow.textContent=jlpt.textContent;
+        if(jlpt!=null){
+            jlptRow.textContent=jlpt.textContent;
+        }else{
+            jlptRow.textContent='N/A';
+        }
         let wordIsShown=false;
      word.addEventListener('mouseenter',()=>{
         if(!wordIsShown){
