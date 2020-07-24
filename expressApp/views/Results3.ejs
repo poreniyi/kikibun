@@ -54,15 +54,18 @@
                                     <%=word.base%>
                                 </div>
                                     <% if (word.description){ %>
-                                        <span class='description' hidden> 
+                                        <span hidden class='description' > 
                                          <%= word.description%>
                                         </span>
                                         <% if(word.Chapter){ %>
                                             <div hidden class='chapter'><%=word.Chapter%></div>
                                         <%}%>
-                                     
+                                        <%if(word.JLPTLvl){%>
+                                            <div hidden class='JlptLvl'><%=word.JLPTLvl%></div>
+                                      <%}%>
     
                                      <%}%>   
+                                   
                                      <div class='numberCounter'>
                                          <%=counter%>
                                      </div> 
@@ -72,6 +75,7 @@
                                    <% if(part.status=='known'){%>
                                     <div hidden class='description'><%=part.description%></div>
                                     <div hidden class='chapter'> <%=part.Chapter%>  </div>
+                                    <div class='Nlvl'><%=part.JLPTLvl%></div>
                                     <%}%>
                                 </div>
                             <% })%>
@@ -128,6 +132,7 @@
                 <th>Base Form</th>
                 <th>English Meaning</th>
                 <th>Chapter</th>
+                <th>JLPT LVL</th>
             </tr>
         </table>
         <table id='conjugationsTable'>
@@ -138,6 +143,7 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>Chapter</th>
+                <th>JLPT LVL</th>
             </tr>
         </table>
         <p>Stats
