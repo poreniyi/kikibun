@@ -29,15 +29,17 @@ router.get('/results',(req,res)=>{
     let data=req.session.data;
     if(!data){
         res.render('Home');
-    }
-    res.render('Results3',
-    {   original:data.original,
-        grammar:data.grammar,
-        vocab:data.vocab,
-        Chapter:req.body.Genki,
-        NLVL:req.body.JLPT,
-        gramStats:data.gramStats,
-    });   
+    }else{
+        res.render('Results3',
+        {   original:data.original,
+            grammar:data.grammar,
+            vocab:data.vocab,
+            Chapter:data.Chapter,
+            NLVL:data.JLPT,
+            gramStats:data.gramStats,
+            
+        }); 
+    }  
 })
 router.post('/resultsProcess',async(req,res)=>{
     let data=await tokeniZAndQuery(req);
@@ -214,10 +216,12 @@ async function  tokeniZAndQuery (req){
     let grammarStats=[];
    let vocabSentences=[];
    let data={};
+   data.Chapter=req.body.Genki;
+   data.JLPT=req.body.JLPT;
     console.log("Results page:");
     let jlptLvl=req.body.JLPT
-    if (jlptLvl==0||!jlptLvl){
-        jlptLvl=6;
+    if (!jlptLvl){
+        jlptLvl=0;
     }
     console.log(`The Genki Chapter is ${req.body.Genki} and the JLPT lvl is ${jlptLvl}`);
 
