@@ -20,7 +20,7 @@ let WordScehmaJLPT= new Schema({
     English:{type:String,required:false},
     Kanji:{type:[String],required:false,},
     Hiragana:{type:[String],required:false},
-    nLevel:{type:String, required:false, min:1, max:5},
+    nLevel:{type:Number, required:false, min:1, max:5},
     POS:{type:String, required:false,enum:pos},
     length:Number,
     }
