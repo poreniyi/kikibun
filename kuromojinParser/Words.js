@@ -15,7 +15,7 @@
     this.description;
     this.percentBeforeKnown=0;
     this.percentAfterKnown=0;
-    this.Nvl;
+    this.JLPTLvl;
 };
 Word.prototype.sayKanji=function(){    
     console.log(this.base);   
@@ -86,7 +86,7 @@ function conjugation(text){
     this.POS;
     this.description;
     this.Chapter;
-    this.Nvl;
+    this.JLPTLvl;
 }
 conjugation.prototype.addConjugation=function(string){
     this.text+=string;
