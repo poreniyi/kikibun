@@ -71,6 +71,7 @@ surfaceWords.forEach(word=>{
         let base=word.querySelector('.base');
         let description= word.querySelector('.description');
         let chapter=word.querySelector('.chapter');
+        let jlpt=word.querySelector('.JlptLvl')
         let wordRow=document.createElement('tr');
         let counterRow=wordRow.insertCell(-1);
         counterRow.textContent=counter.textContent;
@@ -81,7 +82,13 @@ surfaceWords.forEach(word=>{
         let englishRow=wordRow.insertCell(-1);
         englishRow.textContent=description.textContent;
         let chapterRow=wordRow.insertCell(-1);
-        chapterRow.textContent=chapter.textContent;
+        if(chapter===null){
+            chapterRow.textContent="N/a";
+        }else{
+            chapterRow.textContent=chapter.textContent;
+        }
+        let jlptRow=wordRow.insertCell(-1);
+        jlptRow.textContent=jlpt.textContent;
         let wordIsShown=false;
      word.addEventListener('mouseenter',()=>{
         if(!wordIsShown){
