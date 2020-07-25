@@ -8,6 +8,19 @@
 </head>
 <%- include ('partials/nav.ejs') %>
 
+<%let addConjugationDivs=(part)=>{%>
+    <div  class="conjugations <%=part.status%>"><%=part.text%>
+        <% if(part.status=='known'){%>
+         <div hidden class='Title'><%=part.description%></div>
+         <%}%>
+         <%if(part.Chapter){%>
+             <div hidden class='chapter'> <%=part.Chapter%>  </div>
+         <%}%>
+         <%if(part.JLPTLvl){%>
+             <div  hidden class='JLPT'><%=part.JLPTLvl%></div>
+         <%}%>
+     </div>
+<%}%>
 <body>
     <div id='container'>
         <div id='LeftSide'>
@@ -32,24 +45,11 @@
                <%grammar.forEach(sentence=>{%>
                 <% let totalGrammarKnown=0%>
                     <% sentence.forEach(word=>{%>
-                        <% let totalSentenceGrammarKnown=0%>
                         <%word.before.forEach(part=>{%>
-                            <div class="conjugations <%=part.status%>">
-                                <%=part.text%>
-                                <%if(part.description){ %>
-                                    <div hidden class="description">
-                                        <%=part.description%>
-                                    </div> 
-                                    <div hidden class='chapter'>
-                                        <%=part.Chapter%>
-                                    </div>
-                                    <%}%>
-                            </div>
+                            <%addConjugationDivs(part)%>
                             <% })%>
                             <div class="surface <%=word.statusKnown%>" name=<%=counter %> data-given=<%=word.surfaceForm%>>
-                                <%if(word.statusKnown){%>
-                                   <% totalSentenceGrammarKnown++;%>
-                                <%}%>
+                             
                                 <%=word.surfaceForm%> 
                                 <div hidden class='base'>
                                     <%=word.base%>
@@ -72,17 +72,7 @@
                                      </div> 
                             </div>
                             <%word.conjugatedParts.forEach(part =>{ %>
-                                <div  class="conjugations <%=part.status%>"><%=part.text%>
-                                   <% if(part.status=='known'){%>
-                                    <div hidden class='Title'><%=part.description%></div>
-                                    <%}%>
-                                    <%if(part.Chapter){%>
-                                        <div hidden class='chapter'> <%=part.Chapter%>  </div>
-                                    <%}%>
-                                    <%if(part.JLPTLvl){%>
-                                        <div  hidden class='JLPT'><%=part.JLPTLvl%></div>
-                                    <%}%>
-                                </div>
+                                <%addConjugationDivs(part)%>
                             <% })%>
                             <div hidden class='seperator'></div>
                         <%counter ++%>
