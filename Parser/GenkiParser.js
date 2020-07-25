@@ -3,7 +3,6 @@ let Particles=require('../databaseApp/dataApp').Particles;
 let JLPT=require('../databaseApp/dataApp').JLPT;
 
 let dbScripts=require('../databaseApp/databaseScripts');
-const particleFound=dbScripts.particleExists;
 let tokenizer=require('../kuromojinParser/Tokenizer');
 
 GenkiParser=async (tokens,chapter,nLVL)=>{
@@ -35,19 +34,15 @@ GenkiParser=async (tokens,chapter,nLVL)=>{
             singleToken.addDescription(word.English);
         }
         if(nLVL!=0){
-            console.log(`The nLVL query search Is ${nLVL}`);
             let jlptWord= await JLPT.findOne({$or:[
                 {Kanji:base,nLevel:{$gte:nLVL}},
                 {nLevel:{$gte:nLVL},Hiragana:base, Kanji:"None"}
             ]}).select('nLevel English').lean();
             if(jlptWord){
-                console.log(`The found query result is`, jlptWord);
-                console.log(`Word ${base} found in JLPTLVL is N${jlptWord.nLevel}`);
                 singleToken.JLPTLvl=jlptWord.nLevel;
                 if(!singleToken.statusKnown){
                     singleToken.statusKnown=true;
                     wordKnownCounter++;
-                    console.log(`The English definition is ${jlptWord.English}`);
                     singleToken.addDescription(jlptWord.English);
                 }
             }
@@ -69,17 +64,18 @@ let findParticles=async(array,chapter,nLVL,word,position)=>{
         let text=array[j].text;
         let pos=word.EnPOS.toLowerCase();
         let test='Chapter';
-        let genkiData=await Particles.findOne({
-            [position]:text,Chapter:{$lte:chapter},POSActedOn:{$in:[pos,'All']}
-             }).select('Name Chapter').lean();
-        if(genkiData){
-            element.makeKnown();
-            element.updateDescription(genkiData.Name);
-            element.updateChapter(genkiData.Chapter);
-            word.updateNumberBeforeKnown();
-            //console.log(`Success ${text} has been found of ${counter.base}`);
-           // console.log(`The counter is now:${counter}`);
+        if(chapter>0){
+            let genkiData=await Particles.findOne({
+                [position]:text,Chapter:{$lte:chapter},POSActedOn:{$in:[pos,'All']}
+                 }).select('Name Chapter').lean();
+            if(genkiData){
+                element.makeKnown();
+                element.updateDescription(genkiData.Name);
+                element.updateChapter(genkiData.Chapter);
+                word.updateNumberBeforeKnown();
+            }
         }
+       if(nLVL>0){
         let jlptData=await Particles.findOne({
             [position]:text,NLvl:{$gte:nLVL},POSActedOn:{$in:[pos,'All']}
         }).select('Name NLvl').lean();
@@ -91,6 +87,7 @@ let findParticles=async(array,chapter,nLVL,word,position)=>{
                 word.updateNumberBeforeKnown();
             }
         }
+       }
     } 
  }
 
