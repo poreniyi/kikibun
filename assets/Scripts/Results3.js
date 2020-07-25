@@ -148,9 +148,23 @@ surfaceWords.forEach(word=>{
             let conjugationForm=conjugationsRow.insertCell(-1);
             conjugationForm.textContent=conjugation.childNodes[0].nodeValue;
             let conjugationTitle=conjugationsRow.insertCell(-1);
-            conjugationTitle.textContent=conjugation.querySelector('.description').textContent;
+            conjugationTitle.textContent=conjugation.querySelector('.Title').textContent;
+            let descriptionRow=conjugationsRow.insertCell(-1);
+            descriptionRow.textContent='Description Here';
             let conjugationChapter=conjugationsRow.insertCell(-1);
-            conjugationChapter.textContent=conjugation.querySelector('.chapter').textContent;
+            let chapter=conjugation.querySelector('.chapter');
+            if(chapter){
+                conjugationChapter.textContent=chapter.textContent;
+            }else{
+                conjugationChapter.textContent='N/a'
+            }
+            let jlpt=conjugationsRow.insertCell(-1);
+            let jlptLVl=conjugation.querySelector('.JLPT');
+            if(jlptLVl){
+                jlpt.textContent=jlptLVl.textContent;
+            }else{
+                jlpt.textContent='N/A';
+            }
             let conjugationIsShown=false;
             conjugation.addEventListener('mouseenter',()=>{
                 if(!conjugationIsShown){
