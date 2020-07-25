@@ -63,22 +63,26 @@ let findParticles=async(array,chapter,nLVL,word,position)=>{
         let element=array[j];
         let text=array[j].text;
         let pos=word.EnPOS.toLowerCase();
+        let query={
+            [position]:text,
+            POSActedOn:{$in:[pos,'all']},
+        }
+        console.log(`The query is ${query}`);
         let test='Chapter';
         if(chapter>0){
-            let genkiData=await Particles.findOne({
-                [position]:text,Chapter:{$lte:chapter},POSActedOn:{$in:[pos,'All']}
-                 }).select('Name Chapter').lean();
+            query.Chapter={$lte:chapter};
+            let genkiData=await Particles.findOne(query).select('Name Chapter').lean();
             if(genkiData){
                 element.makeKnown();
                 element.updateDescription(genkiData.Name);
                 element.updateChapter(genkiData.Chapter);
                 word.updateNumberBeforeKnown();
             }
+            delete query.Chapter;
         }
        if(nLVL>0){
-        let jlptData=await Particles.findOne({
-            [position]:text,NLvl:{$gte:nLVL},POSActedOn:{$in:[pos,'All']}
-        }).select('Name NLvl').lean();
+           query.NLvl={$gte:nLVL};
+        let jlptData=await Particles.findOne(query).select('Name NLvl').lean();
         if(jlptData){
             element.JLPTLvl=jlptData.NLvl;
             if(element.status=='unknown'){
@@ -87,6 +91,7 @@ let findParticles=async(array,chapter,nLVL,word,position)=>{
                 word.updateNumberBeforeKnown();
             }
         }
+        delete query.NLvl;
        }
     } 
  }
