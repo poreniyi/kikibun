@@ -42,7 +42,7 @@ router.get('/results',(req,res)=>{
     }  
 })
 router.post('/resultsProcess',async(req,res)=>{
-    let data=await tokeniZAndQuery(req);
+    let data=await tokeniZAndQuery(req,res);
     req.session.data=data;
     console.log(data.gramStats);
     res.redirect('/results');
@@ -208,7 +208,7 @@ textValidator=(string)=>{
     return sentences;
 }
 
-async function  tokeniZAndQuery (req){
+async function  tokeniZAndQuery (req,res){
     let text=req.body.text.trim();
     console.log(`The text is ${text}`);
     let sentences=textValidator(req.body.text);
