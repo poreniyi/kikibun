@@ -74,9 +74,13 @@
                             <%word.conjugatedParts.forEach(part =>{ %>
                                 <div  class="conjugations <%=part.status%>"><%=part.text%>
                                    <% if(part.status=='known'){%>
-                                    <div hidden class='description'><%=part.description%></div>
-                                    <div hidden class='chapter'> <%=part.Chapter%>  </div>
-                                    <div class='Nlvl'><%=part.JLPTLvl%></div>
+                                    <div hidden class='Title'><%=part.description%></div>
+                                    <%}%>
+                                    <%if(part.Chapter){%>
+                                        <div hidden class='chapter'> <%=part.Chapter%>  </div>
+                                    <%}%>
+                                    <%if(part.JLPTLvl){%>
+                                        <div class='JLPT'><%=part.JLPTLvl%></div>
                                     <%}%>
                                 </div>
                             <% })%>
