@@ -22,7 +22,31 @@
      </div>
 <%}%>
 <body>
+
     <div id='container'>
+        <button id="myBtn">Show Help</button>
+        <!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Green words in Grammar is a word.These are words that have conjugations performed on them. 
+          Hovering over a green word will provide you with with the word # and also provide information in the grammar info panel 
+          on the right side.
+          Gray words are words that you won't know with your current JLPT LVL/Genki Chapter Provided
+        White Words are known conjugations.Pink words are unknown conjugations.
+      </p>
+      <p>
+          The buttons go with vocab: And clicking on them will display the pos of each word color coded to the button.Except for 開く
+          which shows the pos of all words in the text.Clicking the button again will color the words back to normal.
+          Finally there is the Stats Panel It breaks down stats by sentence and by the total text and provides corresponding %
+          Words known counts the total of green+greyed out word
+      </p>
+    </div>
+  
+  </div>
+
         <div id='LeftSide'>
         <h3>You chose a lvl of<span>
             Genki Chapter:
