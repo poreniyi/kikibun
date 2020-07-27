@@ -96,6 +96,16 @@ let findParticles=async(array,chapter,nLVL,word,position)=>{
     } 
  }
 
+ let findSequences=async(array,chapter,JLPTLVL,)=>{
+    let pos=[];
+    let sequenceText;
+    for(let i=0;i<array.length;i++){
+        if(array[i].statusKnown='known'){
+            pos.push(i);
+            sequenceText+=(array[i].text);
+        }
+    }
+ }
 module.exports={
     GenkiParser:GenkiParser,
 };
