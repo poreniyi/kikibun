@@ -10,11 +10,19 @@ let inputs=[jlpt,genki];
 //     button.style.visibility='hidden';
 // }
 console.log(button);
-button.addEventListener('click',()=>{
-    if(jlpt.value==0&&genki.value==0){
+console.log(form);
 
-    }
-    loadScreen.textContent='Getting Results Please wait';
+form.addEventListener('submit',(e)=>{
+    if(jlpt.value==0&&genki.value==0){
+        e.preventDefault();
+        alert(`Both fields can't be empty`);
+     }else{
+            loadScreen.textContent='Getting Results Please wait';
+     }
+})
+
+button.addEventListener('click',()=>{
+   
 })
 inputs.forEach(element=>{
     element.addEventListener("change",()=>{
