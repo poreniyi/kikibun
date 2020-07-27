@@ -190,7 +190,7 @@ grammarTokenizer=async (text)=>{
         continue;
     }
     //beforePart
-    if(token.pos_detail_1.includes('副詞')||token.pos.includes('副詞')){
+    if(token.pos==='副詞'){
        // previousWord.addBefore(token.surface_form);
         prePart=conjugation;
        // console.log(`Before part is present and it is ${prePart}`);
@@ -204,7 +204,7 @@ grammarTokenizer=async (text)=>{
     if(previousWord!=undefined&&previousWord.getLastConjugation()!=undefined){
          // this checks for ん and　And adds it to previous conjugation；
          if((token.word_id===22540|| token.word_id==23430||token.word_id==23650||token.word_id==3447280|| token.word_id==92740 ||(token.word_id==1249100&& token.pos_detail_1=='非自立')) &&previousWord.getLastConjugation()){
-            //console.log(`This is the last conjugation ${previousWord.getLastConjugation()}`);
+            console.log(`This is the last conjugation ${previousWord.getLastConjugation()}`);
             previousWord.getLastConjugation().addConjugation(token.surface_form);
             continue;
         }   
@@ -220,8 +220,8 @@ grammarTokenizer=async (text)=>{
 
                     // for いる　Andある
      if((token.word_id===3491630　|| token.word_id===3324170|| token.word_id==1799070)&& prePos!=="Noun" &&previousWord!=undefined){
+        console.log(`The previous wrod is${previousWord.base} pos is ${prePos} conjugatedpart is ${token.surface_form}`);
         previousWord.addConjugatedPart(conjugation);
-      //  console.log(`The previous wrod is${previousWord.base} pos is ${prePos} conjugatedpart is ${token.surface_form}`);
         continue;
     }
     if(token.word_id==352790){
@@ -231,7 +231,7 @@ grammarTokenizer=async (text)=>{
     }
     
     // this if statement adds conjugation to the previous word　いfit's a particle or not indepedent
-    if(token.pos=='助動詞'||token.pos_detail_1=='非自立' || token.pos==('助詞')){
+    if(token.pos=='助動詞'||token.pos_detail_1=='非自立' || token.pos==('助詞')&&previousWord!=undefined){
         // console.log(`previousWord is ${previousWord} and the conjugation is ${token.surface_form}`)
          previousWord.addConjugatedPart(conjugation);
          continue;
@@ -257,9 +257,6 @@ grammarTokenizer=async (text)=>{
             prePos= previousWord.getEnPos();
         }     
   }
-   //console.log(previousWord.getEnPos());
-
-   
   return tokenArray;
 }
 vocabTokenizer=async(text)=>{
