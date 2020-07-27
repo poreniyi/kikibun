@@ -1,4 +1,4 @@
-let buttons=[...document.querySelectorAll('button')];
+let buttons=[...document.querySelectorAll('.colorButtons')];
 let verbColor=getComputedStyle(document.body).getPropertyValue('--Verb-Color');
 let nounColor=getComputedStyle(document.body).getPropertyValue('--Noun-Color');
 let particleColor=getComputedStyle(document.body).getPropertyValue('--Particle-Color');
@@ -32,6 +32,7 @@ let colors={
 }
 let initalColor=false;
 let posButtons=buttons.slice(1);
+console.log(posButtons.length);
 buttons.forEach(button=>{
     //  button.style.backgroundColor='gray';
     button.style.backgroundColor=colors[button.value];
@@ -135,7 +136,6 @@ surfaceWords.forEach(word=>{
     while(nextSibling && nextSibling.classList.contains('conjugations')){
         if(nextSibling.classList.contains('known')){
             conjugations.push(nextSibling);
-            console.log(`The conjugation fonud is ${nextSibling.childNodes[0].nodeValue}`)
         }
         nextSibling=nextSibling.nextElementSibling;
     }
@@ -208,8 +208,6 @@ conjugationStats.textContent=`${knownConjugations}/${totalConjugations.length} o
 //MODAL
 // Get the modal
 var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
 var btn = document.getElementById("myBtn");
 
 // Get the <span> element that closes the modal
