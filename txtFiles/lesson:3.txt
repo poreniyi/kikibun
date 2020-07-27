@@ -19,7 +19,7 @@
 LL（エルエル）+language lab
 がっこう+学校+school
 あさ+朝+morning
-あした+tomorrow
+あした+明日+tomorrow
 いつ+when
 きょう+今日+today
 〜ごろ+at about
