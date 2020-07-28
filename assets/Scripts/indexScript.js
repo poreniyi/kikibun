@@ -6,24 +6,30 @@ const loadScreen=document.querySelector('#loadWait');
 const genki=document.querySelector("#genki");
 const jlpt=document.querySelector("#JLPT");
 let inputs=[jlpt,genki];
-// if(!jlpt.value&&!genki.value){
-//     button.style.visibility='hidden';
-// }
-console.log(button);
-console.log(form);
+let animationDIV=document.getElementById('loadAnimation');
+let aniSpans=animationDIV.querySelectorAll('span');
+let span1=aniSpans[0];
+let span2=aniSpans[1];
+console.log( aniSpans.length);
+console.log(aniSpans[0]);
 
 form.addEventListener('submit',(e)=>{
     if(jlpt.value==0&&genki.value==0){
         e.preventDefault();
-        alert(`Both fields can't be empty`);
+        alert(`Both Genki Chapter and JlPT LVL can't be empty`);
      }else{
-            loadScreen.textContent='Getting Results Please wait';
+   
+        button.disabled=true;
+        addAnimationClasses();
+        loadScreen.textContent='Getting Results Please wait';
      }
 })
 
-button.addEventListener('click',()=>{
-   
-})
+let addAnimationClasses=()=>{
+    span1.classList.toggle('first');
+    aniSpans[1].classList.toggle('second');
+}
+
 inputs.forEach(element=>{
     element.addEventListener("change",()=>{
         if((jlpt.value!=0||genki.value!=0)){

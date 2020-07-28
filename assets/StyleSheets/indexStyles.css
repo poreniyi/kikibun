@@ -43,6 +43,7 @@ background-image: linear-gradient(to right, pink, lightgreen);
 100% {background-color:red; left:0px; top:0px;}
 }
 #loadWait{
+  width:50%;
   animation-name: load;
   animation-duration: 4s;
   animation-iteration-count: infinite;
