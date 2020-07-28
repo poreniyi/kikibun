@@ -8,7 +8,6 @@ let articleText=document.getElementById('Text');
 articleSelect.addEventListener('change',()=>{
     if(buttons[0].hidden=true){
         buttons[0].hidden=false;
-        buttons[1].hidden=false;
     }
     articleTextDiv.textContent='';
     if(articleSelect.selectedIndex!=0){
@@ -25,3 +24,29 @@ buttons.forEach(button=>{
     })
 })
 console.log(articles.length);
+function loadArticles(){
+    let jsonObj;
+    let xhttp= new XMLHttpRequest();
+    xhttp.onreadystatechange=()=>{
+        if(xhttp.readyState==4){
+        //console.log(this.response);
+        jsonObj=JSON.parse(xhttp.responseText);
+        console.log(jsonObj.dog);
+        console.log(jsonObj.cat);
+        }  
+    }
+    xhttp.open("GET", "/ajaxtest", true);
+    xhttp.send();
+}
+loadArticles();
+let sendToHome=()=>{
+    xhttp.onreadystatechange=()=>{
+        if(xhttp.readyState==4){
+        jsonObj=JSON.parse(xhttp.responseText);
+        console.log(jsonObj.dog);
+        console.log(jsonObj.cat);
+        }  
+    }
+    xhttp.open("GET", "/ajaxtest", true);
+    xhttp.send();
+}
