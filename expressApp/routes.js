@@ -22,6 +22,10 @@ const getArticleData=require('../WebScraping/Scrape').readArticles;
 router.get('/About',function(req,res){
     res.render("About");
 });
+router.post('/',(req,res)=>{
+    let article=req.body.Text.trim();
+    res.render("Home",{article:article});
+})
 router.get('/',function(req,res){
     res.render("Home");
 });
@@ -139,54 +143,32 @@ router.get("/NHK",async  (req,res)=>{
    console.log(`Article's date is ${articleDate}`);
 
 //    console.log(array);
-res.render("NHK",{
-    articles:articles,
-    pie:2
-})
+        res.render("NHK",{
+            articles:articles,
+            pie:2
+        })
 });
-router.post('/NHK',async (req,res)=>{
-   let articleText=req.body.Text;
-   articleText=articleText.substring(0,Math.min(articleText.length,500));
-   let sentences=articleText.split('。');
-   let grammarSentences=[];
-   let Chapter=parseInt(req.body.Genki);
-   let vocabSentences=[];
-   for(let i=0;i<sentences.length;i++){
-       let grammar= await grammarTokenizer(sentences[i]); 
-       //grammar=await UpdatedParser(grammar,22);
-       let vocab=await vocabTokenizer(sentences[i]); 
-       grammarSentences.push(grammar);
-       vocabSentences.push(vocab);
-    }
-    // res.send(vocabSentences);
-   res.render('Results3',
-   {   original:articleText,
-       grammar:grammarSentences,
-       vocab:vocabSentences,
-    //    Chapter:req.body.Genki,
-    //    NLVL:req.body.JLPT,
-   });
 
-})
 router.get("/test", async (req,res)=>{
     res.render('Test.ejs');
 })
 router.post('/testResults', async (req,res)=>{
     console.log(req.body.text);
     let text=req.body.text.trim();
-     text=text.trim();
+    text=text.trim();
     let array=[];
     array=text.split('。');
     let grammar;
     let vocab;
     let tokens;
+    let dataObj={};
     tokens = await tokenizer.tokenize(text);
     grammar=await grammarTokenizer(text);
     let updatedGrammar;
-    vocab=await vocabTokenizer(text);
-    console.log(grammar);
+    //vocab=await vocabTokenizer(text);
+
+    console.log(tokens);
     updatedGrammar=await UpdatedParser(grammar,22);
-    console.log(tokenizer.testConditons());
     res.send({
         tokens:tokens,
         myTokenizer:grammar,
@@ -194,6 +176,13 @@ router.post('/testResults', async (req,res)=>{
         stats:updatedGrammar.stats,
         vocab:vocab,
     })
+})
+router.get('/ajaxtest',(req,res)=>{
+    console.log(`This is an ajax request`);
+    let obj={};
+    obj.dog='dalmation';
+    obj.cat='mainecoon';
+    res.send(obj);
 })
 
 textValidator=(string)=>{
@@ -281,5 +270,6 @@ function getDataBack(req,res){
         NLVL:req.body.JLPT,
         gramStats:grammarStats,
     });
+
 }
 module.exports=router;
