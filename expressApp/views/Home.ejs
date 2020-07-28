@@ -12,7 +12,11 @@
     <h2>Add your text below</h2>
     <H3>Be sure to end your sentences with 。</H3>
     <form  id="form" action="./resultsProcess" method="POST">
-    <textarea autofocus="true" name="text" id="textContent"  placeholder="Sentence Here" wrap="soft" required ></textarea>
+ 
+    <textarea autofocus="true" name="text" id="textContent"  placeholder="Sentence Here" wrap="soft" required ><%if(locals.article){%>
+    <%=locals.article%>
+    <% }%>
+    </textarea>
     <p>JLPT LVL
         <input id="JLPT"name="JLPT" type="number" value=0 min="0" max="5" required> Leave at 0 for N/A
     <p>
