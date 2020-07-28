@@ -13,7 +13,20 @@
    <div id='container'>
     <% let counter=0%>
     <h2>Select An Article</h2>
+    <select id='year'>
+        <option>2020</option>
+    </select>
+    <select id='month'>
+        <option>s</option>
+        <option>s</option>
+        <option>s</option>
+        <option>s</option>
+        <option>s</option>
+    <select>
+        <option></option>
+    </select></select>
     <span>Article Title</span>
+
     <select id='articleSelect'>
         <option>Select An Article</option>
         <%articles.forEach(element=>{%>
@@ -25,9 +38,8 @@
         <%counter++%>
     <%})%>
     <div name='articleText'id='articleText'></div>
-    <form  id='form' method='POST'>
-    <button hidden>Grammar</button>
-    <button hidden>Vocab</button>
+    <form  id='form' action="./"" method='POST'>
+    <button hidden>GoHOME</button>
     <input hidden id='Text' name='Text'>
     </form>
 
