@@ -14,14 +14,6 @@ h3{
     color:green;
 }
 
-textarea:invalid {
-  border: 2px dashed red;
-}
-
-textarea:invalid:required {
-  /* background-image: linear-gradient(to right, red, red); */
-  background-color: #f5655b;
-}
 
 textarea:valid {
   border: 2px solid black;
