@@ -52,10 +52,17 @@ ParticleSchema.virtual('FullForm').get(()=>{
 
 WordSchemaGenki.plugin(unqieValidator);
 
+
+let ArticleSchema=new Schema({
+  title:{type:String,required:true},
+  content:{type:String, required:true},
+  date:{type: Date},
+})
+
 let Genki=mongoose.model("GenkiWord",WordSchemaGenki);
 let JLPT=mongoose.model('JLPT Word',WordScehmaJLPT);
 let Particles=mongoose.model('Particle',ParticleSchema);
-
+let Articles=mongoose.model('Article',ArticleSchema);
 function toLower (posArray) {
   for(let i=0;i<posArray.length;i++){
     posArray[i]=posArray[i].toLowerCase();
@@ -67,5 +74,6 @@ let N5=mongoose.model('N2',WordScehmaJLPT);
 module.exports  ={
     Genki:Genki,
     JLPT:JLPT,
-    Particles,Particles,
+    Particles:Particles,
+    Articles:Articles,
 }
