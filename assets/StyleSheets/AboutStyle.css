@@ -3,10 +3,13 @@
     padding: 0;
     }
 
-  body {
-    padding-top: 70px;
+body{
     background-color: lightblue;
-  }
+}
+#container{
+  position: absolute;
+  top:  var(--navHeight);
+
+}
 p{
-    padding:10px
 }
