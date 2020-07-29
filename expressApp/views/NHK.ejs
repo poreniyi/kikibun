@@ -13,33 +13,59 @@
    <div id='container'>
     <% let counter=0%>
     <h2>Select An Article</h2>
-    <select id='year'>
+    <h3>Select A Date</h3>
+    <select id='yearSelect'>
         <option>2020</option>
     </select>
-    <select id='month'>
-        <option>s</option>
-        <option>s</option>
-        <option>s</option>
-        <option>s</option>
-        <option>s</option>
-    <select>
-        <option></option>
-    </select></select>
-    <span>Article Title</span>
-
-    <select id='articleSelect'>
-        <option>Select An Article</option>
-        <%articles.forEach(element=>{%>
-            <option><%=element.title%></option>        
-            <%})%>   
+    <select id='monthSelect'>
+        <option>Choose  A year</option>
+        <option>January</option>
+        <option>February</option>
+        <option>March</option>
+        <option>April</option>
+        <option>May</option>
+        <option>June</option>
+        <option>July</option>
+        <option>August</option>
+        <option>September</option>
+        <option>October</option>
+        <option>November</option>
+        <option>December</option>
     </select>
+    <button id='findArticlesButton'>See Available Articles</button>
+    <table id='calendarTable'>
+        <caption id='tableName'>Month</caption>
+        <tr>
+            <th>Sunday</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+        </tr>
+    </table>
+    <div id='calendarGrid'>
+
+    </div>
+    <p>
+        <span>Article Title</span>
+
+        <select id='articleSelect'>
+            <option>Select An Article</option>
+            <%articles.forEach(element=>{%>
+                <option><%=element.title%></option>        
+                <%})%>   
+        </select>
+    </p>
+   
     <%articles.forEach(element =>{%>
         <div  class="selectText" id=<%=counter%> hidden><%=element.text%></div>
         <%counter++%>
     <%})%>
     <div name='articleText'id='articleText'></div>
     <form  id='form' action="./"" method='POST'>
-    <button hidden>GoHOME</button>
+    <button id='submitButton' hidden>GoHOME</button>
     <input hidden id='Text' name='Text'>
     </form>
 
