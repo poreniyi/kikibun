@@ -32,13 +32,15 @@ closeDB=async()=>{
   }
 let insertIntoDB=require('./addToDB').insertIntoDB;
 let addParticles= require('./addParticles').addParticles;
+let addArtices=require('./addArticles').addNHKtoDB;
 //  connectToDB();
 //  addParticles();
 let addNwords=require('./addJLPTWords').insertJLPTWords;
 
 let addScript= async()=>{
   await connectToDB();
-  await addNwords();
+  //await addNwords();
+  await addArtices();
   //closeDB();
 }
 //  addScript();
