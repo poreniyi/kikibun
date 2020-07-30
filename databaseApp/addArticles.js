@@ -2,29 +2,29 @@ const Articles=require('./dataApp').Articles;
 let fs=require('fs');
 let path=require('path');
 
- readArticles=()=>{
+ addArticles=async()=>{
+    let arrayArticles=[];
+    let date;
+    let obj={
+        Articles:arrayArticles,
+    }
     for(let i=1;i<6;i++){
         let name=`Article${i}.txt`;
         let fileName=path.join(__dirname,'..','txtFiles','NHKArticles',name);
-        fs.readFile(fileName,'utf8',(err,data)=>{
-            let articleData=JSON.parse(data);
-            addArticlesToDB(articleData);
-            //console.log(articleData.title);
-        })
+        let data=await fs.promises.readFile(fileName,'utf8');
+        let parsedData=JSON.parse(data);
+        date=parsedData.date;
+        delete parsedData.date;
+        data=JSON.stringify(parsedData);
+        arrayArticles.push(data);
     }
+    obj.date=date;
+     Articles.create(obj).then((mongooseData)=>{
+                console.log(mongooseData);
+            })
 }
-readArticles();
-let addArticlesToDB=(data)=>{
-    let obj={
-        title:data.title,
-        content:data.text,
-        date:data.date,
-    }
-    // console.log(obj);
-    Articles.create(obj).then((mongooseData)=>{
-        console.log(mongooseData);
-    })
-}
+// addArticles();
+
 module.exports={
-    addNHKtoDB:readArticles,
+    addNHKtoDB:addArticles,
 }
