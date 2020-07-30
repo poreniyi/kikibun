@@ -54,8 +54,7 @@ WordSchemaGenki.plugin(unqieValidator);
 
 
 let ArticleSchema=new Schema({
-  title:{type:String,required:true},
-  content:{type:String, required:true},
+  Articles:{type:[String],required:true},
   date:{type: Date},
 })
 
