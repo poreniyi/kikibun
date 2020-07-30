@@ -20,8 +20,8 @@ let path=require('path');
     }
     obj.date=date;
      Articles.create(obj).then((mongooseData)=>{
-                console.log(mongooseData);
-            })
+        console.log(mongooseData);
+    })
 }
 // addArticles();
 
