@@ -18,7 +18,7 @@
         <option>2020</option>
     </select>
     <select id='monthSelect'>
-        <option>Choose  A year</option>
+        <option value='default'>Choose A Month</option>
         <option>January</option>
         <option>February</option>
         <option>March</option>
@@ -49,20 +49,14 @@
 
     </div>
     <p>
-        <span>Article Title</span>
+        <span>Choose Article Title</span>
 
         <select id='articleSelect'>
-            <option>Select An Article</option>
-            <%articles.forEach(element=>{%>
-                <option><%=element.title%></option>        
-                <%})%>   
+
         </select>
     </p>
    
-    <%articles.forEach(element =>{%>
-        <div  class="selectText" id=<%=counter%> hidden><%=element.text%></div>
-        <%counter++%>
-    <%})%>
+
     <div name='articleText'id='articleText'></div>
     <form  id='form' action="./"" method='POST'>
     <button id='submitButton' hidden>GoHOME</button>
