@@ -7,6 +7,7 @@ const database=require("../databaseApp/dataApp");
 const Genki=database.Genki;
 const Particles=database.Particles;
 const JLPT=database.JLPT;
+const Articles=database.Articles;
 let dbScripts=require('../databaseApp/databaseScripts');
 const unqieValidator=require('mongoose-unique-validator');
 const fs=require('fs');
@@ -177,11 +178,33 @@ router.post('/testResults', async (req,res)=>{
         vocab:vocab,
     })
 })
-router.get('/ajaxtest',(req,res)=>{
+router.get('/ajaxtest',async (req,res)=>{
     console.log(`This is an ajax request`);
+    console.log(`The month is ${req.query.month}`);
+    console.log(`The year is ${req.query.year}`);
+
+    let requestMonth=parseInt(req.query.month)+1;
+    let requestyear =parseInt(req.query.year);
+    // let queryStart=new Date(year,month);
+    // let queryEnd=new Date(year,month);
+    // console.log()
+    // console.log(`This is the querystar ${queryStart}`);
     let obj={};
-    obj.dog='dalmation';
-    obj.cat='mainecoon';
+    obj.days=[];
+    // console.log(`This is the queryEnd ${queryEnd}`);
+    if(requestyear!=undefined){
+        // let data=await Articles.find({date:{$gte:queryStart,$lt:queryEnd}});
+        let data=await Articles.aggregate([
+            {$project:{Articles:1,month:{$month:'$date'},year:{$year:'$date'},day:{$dayOfMonth:'$date'}}},
+            {$match:{month:requestMonth, year:requestyear}}
+        ]);
+        // let data2=await Articles.find({});
+        data.forEach(element=>{
+            obj.days.push(element.day);
+        })
+        console.log(data);
+        // console.log(data2);
+    }
     res.send(obj);
 })
 
