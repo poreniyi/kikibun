@@ -128,26 +128,7 @@ router.post("/GenkiVocabList", (req,res)=>{
 });
 
 router.get("/NHK",async  (req,res)=>{
-   let articles= await getArticleData();
-   let articleDate=new Date(articles[0].date);
-   console.log(`The Date of this article is:${articleDate}`);
-   let today=new Date();
-   let todayDate=new Date(today.getFullYear(),today.getMonth(),today.getDate());
-   if(todayDate>articleDate){
-       let difference=today.getTime()-articleDate.getTime();
-       let days=1000*60*60*24;
-       let dayDiffernce= Math.round(difference/days);
-       today.getMonth()-articleDate.getMonth();
-        console.log(`User viewing old article. It is ${dayDiffernce} days old`);
-   }
-   console.log(`Todays date is ${todayDate}`);
-   console.log(`Article's date is ${articleDate}`);
-
-//    console.log(array);
-        res.render("NHK",{
-            articles:articles,
-            pie:2
-        })
+    res.render("NHK",{})
 });
 
 router.get("/test", async (req,res)=>{
@@ -185,27 +166,31 @@ router.get('/ajaxtest',async (req,res)=>{
 
     let requestMonth=parseInt(req.query.month)+1;
     let requestyear =parseInt(req.query.year);
-    // let queryStart=new Date(year,month);
-    // let queryEnd=new Date(year,month);
-    // console.log()
-    // console.log(`This is the querystar ${queryStart}`);
     let obj={};
     obj.days=[];
-    // console.log(`This is the queryEnd ${queryEnd}`);
     if(requestyear!=undefined){
-        // let data=await Articles.find({date:{$gte:queryStart,$lt:queryEnd}});
         let data=await Articles.aggregate([
-            {$project:{Articles:1,month:{$month:'$date'},year:{$year:'$date'},day:{$dayOfMonth:'$date'}}},
+            {$project:{month:{$month:'$date'},year:{$year:'$date'},day:{$dayOfMonth:'$date'}}},
             {$match:{month:requestMonth, year:requestyear}}
         ]);
-        // let data2=await Articles.find({});
         data.forEach(element=>{
             obj.days.push(element.day);
         })
         console.log(data);
-        // console.log(data2);
     }
     res.send(obj);
+})
+router.get('/getArticles', async(req,res)=>{
+    let requestMonth=parseInt(req.query.month)+1;
+    let requestyear =parseInt(req.query.year);
+    let requestDay=parseInt(req.query.day);
+    let data=await Articles.aggregate([
+        {$project:{Articles:1,month:{$month:'$date'},year:{$year:'$date'},day:{$dayOfMonth:'$date'}}},
+        {$match:{month:requestMonth, year:requestyear,day:requestDay}}
+    ]);
+    let articleData=data[0].Articles;
+    console.log(articleData);
+    res.send(articleData);
 })
 
 textValidator=(string)=>{
