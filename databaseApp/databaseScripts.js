@@ -43,7 +43,7 @@ let addScript= async()=>{
   await addArtices();
   //closeDB();
 }
-//  addScript();
+// addScript();
 
 documentExists=async(text,chapter)=>{
   let data=await Genki.findOne({Chapter:{$lte:chapter},Kanji:text}) ? true:  await Genki.findOne({Chapter:{$lte:chapter},Hiragana:text, Kanji:"none"})?true :false;
