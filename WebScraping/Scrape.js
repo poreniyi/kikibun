@@ -5,15 +5,8 @@ const $ = require('cheerio');
 const puppeteer = require('puppeteer');
 const fs= require('fs');
 const path = require('path');
-
-myFunc=(string)=>{
-  let today=new Date();
-  let date= `${today.getMonth()}/${today.getDay()}/${today.getFullYear()}`;
-  let time=`${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
-  console.log(string);
-  console.log(date)
-  console.log(time);
-}
+const { dirname } = require('path');
+const Articles= require('../databaseApp/dataApp').Articles
 
 getTextOfArticle= (url,stream) =>{
   rp(url)
@@ -23,12 +16,16 @@ getTextOfArticle= (url,stream) =>{
     Cheers('rt').remove();
     let articleText =Cheers('#js-article-body').text().trim();
     let title=Cheers('.article-main__title').text().trim();
+    let dateWritten=Cheers('.article-main__date').text().trim();
+    const dateRegex=/\d+/g;
+    const datesFound=dateWritten.match(dateRegex);
     let today=new Date();
-   // let date= `${today.getMonth()}/${today.getDay()}/${today.getFullYear()}`;
-    let date=new Date(today.getFullYear(),today.getMonth(),today.getDate());;
-    let fullText=date+'。'+title+"。"+articleText;
+    console.log(datesFound);
+    let articleDate=new Date(today.getFullYear(),datesFound[0]-1,datesFound[1]);
+    console.log(articleDate);
+    let fullText=articleDate+'。'+title+"。"+articleText;
     let obj={
-      date:date,
+      date:articleDate,
       title:title,
       text:articleText
     }
@@ -84,6 +81,7 @@ for(let i=1;i<6;i++){
 writeArticlesToFile = async()=>{
   let counter=1;
    let articleLinksList= await getArticleLinks(articleLinks);
+   let articleObject=[];
    for(let i=0; i<articleLinksList.length;i++){
    let name= `Article${i+1}.txt`;
    let element=articleLinksList[i].url;
@@ -96,9 +94,37 @@ writeArticlesToFile = async()=>{
    }
 }
 
+writeArticlesToDB=async()=>{
+  let pathToDir=path.join(__dirname,"..","txtFiles","NHKArticles");
+  let files=await fs.promises.readdir(pathToDir);
+  let dates=[];
+  let allArticles=[];
+  for(let i=0;i<files.length;i++){
+    let name=path.join(pathToDir,`Article${i+1}.txt`);
+    let article=await fs.promises.readFile(name,'utf8');
+    let parsedData=JSON.parse(article);
+    if(!dates.includes(parsedData.date)){
+      dates.push(parsedData.date);
+    }
+    allArticles.push(parsedData);
+  }
+  console.log(`The length of dates is ${dates.length}`);
+  for(let j=0;j<dates.length;j++){
+     let sameDateArticles=allArticles.filter((element)=>{
+      return element.date==dates[j];
+    })
+    sameDateArticles.forEach(element=>{
+      delete element.date;
+    })
+    console.log(sameDateArticles.length);
+    Articles.create(sameDateArticles).then((mongooseData)=>{
+      console.log(mongooseData);
+  })
+  }
+}
+writeArticlesToDB();
 // writeArticlesToFile();
-
-
+   
 
 makeDatesProper=async()=>{
   for(let i=1;i<6;i++){
