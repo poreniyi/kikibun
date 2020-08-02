@@ -9,8 +9,8 @@ path = require('path')
 
 let bodyParser=require('body-parser');
 const mongoDB=process.env.URL;
-mongoose.connect(mongoDB, {useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true }).then(
-    res => console.log('Connected to Database'));
+mongoose.connect(mongoDB, {useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true },startUpFunctions);
+
 const db=mongoose.connection;
  db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 let sessionSecret=process.env.Secret;
@@ -33,3 +33,10 @@ app.listen(process.env.PORT||3000   ,function(){
     let port=(process.env.PORT || 3000);
     console.log(`now listening for requests on port ${port}`);
 });
+
+const articles=require('../WebScraping/Scrape');
+
+ function startUpFunctions(){
+    console.log('Connected to Database');
+    //articles.writeArticlesToDB();
+}
