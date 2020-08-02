@@ -126,23 +126,9 @@ writeArticlesToDB();
 // writeArticlesToFile();
    
 
-makeDatesProper=async()=>{
-  for(let i=1;i<6;i++){
-    let name="Article"+i+'.txt';
-    let writePath="Test2"+i+'.txt';
-      const data= await  fs.promises.readFile(path.join(__dirname,"..","txtFiles","NHKArticles",name),'utf8');
-       const JSONdata=JSON.parse(data);
-       console.log(`The size of the text is ${JSONdata.text.length}`);
-    //   let today=new Date();
-    // let date=new Date(today.getFullYear(),today.getMonth(),26);
-    //   JSONdata.date=date;
-    //   let writeData=JSON.stringify(JSONdata);
-    //   let writeStream=fs.createWriteStream(path.join(__dirname,"..","txtFiles","NHKArticles",name));
-    //   writeStream.write(writeData);
-    }
-}
 
 module.exports={
   writeArticlesToFile:writeArticlesToFile,
+  writeArticlesToDB:writeArticlesToDB,
   readArticles:readArticles,
 }
