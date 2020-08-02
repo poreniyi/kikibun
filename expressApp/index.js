@@ -9,10 +9,31 @@ path = require('path')
 
 let bodyParser=require('body-parser');
 const mongoDB=process.env.URL;
-mongoose.connect(mongoDB, {useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true },startUpFunctions);
+const mongooseOptions={useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true,keepAlive: true, 
+    keepAliveInitialDelay: 300000  }
+ let connectToDB=async()=>{
+    try{
+        await mongoose.connect(mongoDB, mongooseOptions);
+    }catch(e){
+        console.log('Could not connect to Database'+e);
+    }
+}
+connectToDB();
 
 const db=mongoose.connection;
  db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+ db.on('open',()=>{
+     console.log(`Connected to DB`);
+ })
+ db.on('reconnected',()=>{
+     console.log(`Restablished Connection to DB`);
+ })
+ db.on('disconnected',()=>{
+    console.log(`Connection to DB lost`);
+ })
+ db.on('reconnectFailed',()=>{
+     console.log(`Failed to reconnect to DB`);
+ })
 let sessionSecret=process.env.Secret;
 let sess={
     secret:process.env.Secret,
@@ -36,7 +57,6 @@ app.listen(process.env.PORT||3000   ,function(){
 
 const articles=require('../WebScraping/Scrape');
 
- function startUpFunctions(){
+ function DBstartUpFunctions(){
     console.log('Connected to Database');
-    //articles.writeArticlesToDB();
 }
