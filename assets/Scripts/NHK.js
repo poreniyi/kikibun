@@ -10,7 +10,7 @@ let submitButton=document.querySelector('#submitButton');
 let formText=document.querySelector('#Text');
 dateButton.disabled=true;
 let articleDiv=document.querySelector('#articleText');
-
+let thedate=document.querySelector('#theDate');
 
 
 submitButton.addEventListener('click',()=>{
@@ -133,6 +133,7 @@ let clickDay=(td)=>{
             articleSelect.removeChild(articleSelect.firstChild);
         }
         getArticles(td);
+        thedate.textContent=`Now viewing articles published on ${monthSelect.value},${td.cell.textContent},${yearSelect.value}`;
      }
      hasBeenClicked=true;
     })
