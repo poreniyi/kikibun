@@ -84,20 +84,21 @@ for(let i=1;i<6;i++){
 writeArticlesToFile = async()=>{
   let counter=1;
    let articleLinksList= await getArticleLinks(articleLinks);
-   articleLinksList.forEach(element =>{
-    let name="Article"+i+'.txt';
-    let writeData=JSON.stringify(JSONdata);
+   for(let i=0; i<articleLinksList.length;i++){
+   let name= `Article${i+1}.txt`;
+   let element=articleLinksList[i].url;
+   console.log(element);
+    //let writeData=JSON.stringify(JSONdata);
     let writeStream=fs.createWriteStream(path.join(__dirname,"..","txtFiles","NHKArticles",name));
-   console.log(`The url is ${element.url} its type is:${typeof element.url}`);
-    let text=getTextOfArticle(element.url,writeStream);
+   console.log(`The url is ${element} its type is:${typeof element}`);
+    let text=getTextOfArticle(element,writeStream);
     console.log(`The ${name} has been written to`);
-    counter++;
-   })
+   }
 }
-let testLink='https://www3.nhk.or.jp/news/easy/k10012483421000/k10012483421000.html';
-//getTextOfArticle(testLink);
-//writeArticlesToFile();
-//readArticles();
+
+// writeArticlesToFile();
+
+
 
 makeDatesProper=async()=>{
   for(let i=1;i<6;i++){
@@ -115,7 +116,6 @@ makeDatesProper=async()=>{
     }
 }
 
-//makeDatesProper();
 module.exports={
   writeArticlesToFile:writeArticlesToFile,
   readArticles:readArticles,
