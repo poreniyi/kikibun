@@ -37,13 +37,15 @@ let addArtices=require('./addArticles').addNHKtoDB;
 //  addParticles();
 let addNwords=require('./addJLPTWords').insertJLPTWords;
 
+const articleADd=require('../WebScraping/Scrape').writeArticlesToDB;
 let addScript= async()=>{
   await connectToDB();
   //await addNwords();
-  await addArtices();
+ //await articleADd();
+  //await addArtices();
   //closeDB();
 }
-// addScript();
+ //addScript();
 
 documentExists=async(text,chapter)=>{
   let data=await Genki.findOne({Chapter:{$lte:chapter},Kanji:text}) ? true:  await Genki.findOne({Chapter:{$lte:chapter},Hiragana:text, Kanji:"none"})?true :false;
