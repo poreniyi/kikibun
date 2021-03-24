@@ -109,20 +109,30 @@ writeArticlesToDB=async()=>{
     allArticles.push(parsedData);
   }
   console.log(`The length of dates is ${dates.length}`);
+  let counter=0;
   for(let j=0;j<dates.length;j++){
      let sameDateArticles=allArticles.filter((element)=>{
       return element.date==dates[j];
     })
+    // console.log(sameDateArticles);
+    let dbData=[];
     sameDateArticles.forEach(element=>{
       delete element.date;
+      dbData.push(JSON.stringify(element));
     })
-    console.log(sameDateArticles.length);
-    Articles.create(sameDateArticles).then((mongooseData)=>{
+    let obj={
+      date:dates[j],
+      Articles:dbData,
+    }
+    //console.log(dbData);
+    Articles.create(obj).then((mongooseData)=>{
       console.log(mongooseData);
+      counter++
   })
   }
+  console.log(counter);
 }
-writeArticlesToDB();
+ //writeArticlesToDB();
 // writeArticlesToFile();
    
 
