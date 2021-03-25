@@ -16,7 +16,7 @@
     "express-session": "^1.17.1",
     "kuromoji": "^0.1.2",
     "kuromojin": "^2.0.0",
-    "mongoose": "^5.9.10",
+    "mongoose": "^5.12.2",
     "mongoose-unique": "0.0.5",
     "mongoose-unique-validator": "^2.0.3",
     "nlcst-parse-japanese": "^1.2.0",
