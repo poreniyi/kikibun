@@ -112,7 +112,7 @@ let requestMonths=(date)=>{
         parseMonths(jsonObj.days);
         }  
     }
-    let query=`/ajaxtest?year=${year}&month=${month}`;
+    let query=`/getArticles?year=${year}&month=${month}`;
     xhttp.open("GET", query, true);
     xhttp.send();
 }

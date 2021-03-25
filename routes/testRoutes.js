@@ -34,26 +34,6 @@ router.post('/testResults', async (req,res)=>{
         vocab:vocab,
     })
 })
-router.get('/ajaxtest',async (req,res)=>{
-    console.log(`This is an ajax request`);
-    console.log(`The month is ${req.query.month}`);
-    console.log(`The year is ${req.query.year}`);
 
-    let requestMonth=parseInt(req.query.month)+1;
-    let requestyear =parseInt(req.query.year);
-    let obj={};
-    obj.days=[];
-    if(requestyear!=undefined){
-        let data=await Articles.aggregate([
-            {$project:{month:{$month:'$date'},year:{$year:'$date'},day:{$dayOfMonth:'$date'}}},
-            {$match:{month:requestMonth, year:requestyear}}
-        ]);
-        data.forEach(element=>{
-            obj.days.push(element.day);
-        })
-        console.log(data);
-    }
-    res.send(obj);
-})
 
 module.exports=router;
