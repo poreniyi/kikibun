@@ -1,4 +1,10 @@
 const router = require('express').Router();
+let tokenizer=require('../kuromojinParser/Tokenizer');
+const { grammarTokenizer } = require('../kuromojinParser/Tokenizer');
+const Parser=require('../Parser/GenkiParser');
+let UpdatedParser=Parser.GenkiParser;
+const database= require('../databaseApp/dataApp');
+const Articles=database.Articles;
 
 router.get("/test", async (req,res)=>{
     res.render('Test.ejs');

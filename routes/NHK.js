@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const database= require('../databaseApp/dataApp');
+const Articles=database.Articles;
 
 router.get("/NHK",async  (req,res)=>{
     res.render("NHK",{})

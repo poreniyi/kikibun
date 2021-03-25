@@ -1,9 +1,7 @@
 var express=require('express');
 let app=express();
 const mongoose=require('mongoose');
-const cookieParser = require('cookie-parser')
 const session=require('express-session');
-
 require('dotenv').config();
 path = require('path')
 
@@ -34,13 +32,13 @@ const db=mongoose.connection;
  db.on('reconnectFailed',()=>{
      console.log(`Failed to reconnect to DB`);
  })
-let sessionSecret=process.env.Secret;
 let sess={
     secret:process.env.Secret,
     resave:true,
     saveUninitialized: true,
 }
-const  routes=require("./routes");
+//const  routes=require("./routes");
+const  routes=require("../routes");
 app.use(session(sess));
 app.set('view engine', 'ejs');
 app.set('views',path.join(__dirname, './views' ));
@@ -55,8 +53,4 @@ app.listen(process.env.PORT||3000   ,function(){
     console.log(`now listening for requests on port ${port}`);
 });
 
-const articles=require('../WebScraping/Scrape');
 
- function DBstartUpFunctions(){
-    console.log('Connected to Database');
-}
