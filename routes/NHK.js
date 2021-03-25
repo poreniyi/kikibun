@@ -5,7 +5,7 @@ const Articles=database.Articles;
 router.get("/NHK",async  (req,res)=>{
     res.render("NHK",{})
 });
-router.get('/getArticles',async (req,res)=>{
+router.get('/getAvailableArticleDays',async (req,res)=>{
     //gets list of Articles for that month
     let requestMonth=parseInt(req.query.month)+1;
     let requestyear =parseInt(req.query.year);
@@ -14,12 +14,13 @@ router.get('/getArticles',async (req,res)=>{
     if(requestyear!=undefined){
         let data=await Articles.aggregate([
             {$project:{month:{$month:'$date'},year:{$year:'$date'},day:{$dayOfMonth:'$date'}}},
-            {$match:{month:requestMonth, year:requestyear}}
+            {$match:{month:requestMonth, year:requestyear}},
+            {$project:{day:1,_id:0}}
         ]);
+        console.log(data);
         data.forEach(element=>{
             obj.days.push(element.day);
         })
-        console.log(data);
     }
     res.send(obj);
 })

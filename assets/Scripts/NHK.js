@@ -1,5 +1,4 @@
 
-let dateButton =document.querySelector('#findArticlesButton');
 let articleTextDiv=document.getElementById('articleText');
 let calendarTable=document.getElementById('calendarTable');
 let tableName=document.getElementById('tableName');
@@ -8,7 +7,6 @@ const yearSelect=document.querySelector('#yearSelect');
 const monthSelect=document.querySelector('#monthSelect');
 let submitButton=document.querySelector('#submitButton');
 let formText=document.querySelector('#Text');
-dateButton.disabled=true;
 let articleDiv=document.querySelector('#articleText');
 let thedate=document.querySelector('#theDate');
 
@@ -39,24 +37,14 @@ monthSelect.addEventListener('change',()=>{
     });
     weeksArray=[];
     daysArray=[];
-    if(monthValue==-1){
-        dateButton.disabled=true;
-    }else{
-        dateButton.disabled=false;
-    }
     tableIsShown=false;
     if(!tableIsShown){
         makeCalendarTable(monthValue);
         tableIsShown=true;
+        requestMonths(monthValue);
     }
 })
-dateButton.addEventListener('click',()=>{
-    dateButton.disabled=true;
-    // setTimeout(() => {
-    //     dateButton.disabled=false;
-    // }, 1000);
-    requestMonths(monthValue);
-})
+
 let makeCalendarTable=(month)=>{
     let selectedDate=new Date(2020,month,1);
     let maxAmountDays;
@@ -102,19 +90,13 @@ let makeCalendarTable=(month)=>{
   }
 }
 
-let requestMonths=(date)=>{
-    let xhttp= new XMLHttpRequest();
+let requestMonths=async ()=>{
     let month=monthSelect.selectedIndex;
     let year=parseInt(yearSelect.value);
-    xhttp.onreadystatechange=()=>{
-        if(xhttp.readyState==4){
-        jsonObj=JSON.parse(xhttp.responseText);
-        parseMonths(jsonObj.days);
-        }  
-    }
-    let query=`/getArticles?year=${year}&month=${month}`;
-    xhttp.open("GET", query, true);
-    xhttp.send();
+    let response =await fetch(`/getAvailableArticleDays?year=${year}&month=${month}`);
+    let data=await response.json();
+    console.log(data);
+    parseMonths(data.days);
 }
 let parseMonths=(array)=>{
     array.forEach(value=>{
@@ -141,6 +123,9 @@ let clickDay=(td)=>{
 let getArticles=(td)=>{
     let month=monthSelect.selectedIndex;
     let year=parseInt(yearSelect.value);
+    let query=`/getArticles?year=${year}&month=${month}&day=${td.cell.textContent}`;
+    // let response =await fetch(query);
+    // let data=await response.json();
     let xhttp= new XMLHttpRequest();
     xhttp.onreadystatechange=()=>{
         if(xhttp.readyState==4){
@@ -161,7 +146,6 @@ let getArticles=(td)=>{
         }  
 
     }
-    let query=`/getArticles?year=${year}&month=${month}&day=${td.cell.textContent}`;
     xhttp.open("GET", query, true);
     xhttp.send();
 }
