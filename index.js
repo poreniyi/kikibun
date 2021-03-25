@@ -38,13 +38,13 @@ let sess={
     saveUninitialized: true,
 }
 //const  routes=require("./routes");
-const  routes=require("../routes");
+const  routes=require("./routes");
 app.use(session(sess));
 app.set('view engine', 'ejs');
 app.set('views',path.join(__dirname, './views' ));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(routes);
-app.use('/assets',express.static(path.join(__dirname, '../assets')));
+app.use('/assets',express.static(path.join(__dirname, './assets')));
 app.use(function(err,req,res, next){
     res.status(422).send({ error: err.message});
 })
