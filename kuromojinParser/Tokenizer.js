@@ -233,8 +233,10 @@ grammarTokenizer=async (text)=>{
     // this if statement adds conjugation to the previous word　いfit's a particle or not indepedent
     if(token.pos=='助動詞'||token.pos_detail_1=='非自立' || token.pos==('助詞')&&previousWord!=undefined){
         // console.log(`previousWord is ${previousWord} and the conjugation is ${token.surface_form}`)
-         previousWord.addConjugatedPart(conjugation);
-         continue;
+        if(previousWord){
+            previousWord.addConjugatedPart(conjugation);
+            continue;
+        }
      }
 
         // makes new word
