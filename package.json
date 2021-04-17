@@ -26,7 +26,6 @@
     "validator": "^13.0.0",
     "xlsx": "^0.16.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./index.js",
@@ -41,5 +40,8 @@
   "bugs": {
     "url": "https://github.com/poreniyi/kikibun/issues"
   },
-  "homepage": "https://github.com/poreniyi/kikibun#readme"
+  "homepage": "https://github.com/poreniyi/kikibun#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
